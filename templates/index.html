@@ -9,11 +9,13 @@
 
     <!--------libraries------------------------>
     <script src="libraries/d3js.v6/d3js.v6.js" type="text/javascript"></script>
+    <script src="libraries/jquery/jquery.min.js" type="text/javascript"></script>
 
     <!--------multi languages------------------------>
     <script src="multi_language_strings/language_strings.js" type="text/javascript"></script>
 
     <!--------model------------------------>
+    <script src="model/read_in_data.js" type="text/javascript"></script>
     <script src="model/model.js" type="text/javascript"></script>
 
     <!--------controller------------------------>
@@ -21,10 +23,10 @@
 
     <!--------view------------------------>
     <script src="view/startPage.js" type="text/javascript"></script>
-    <script src="view/initialize_views.js" type="text/javascript"></script>
+    <script src="page_transition.js" type="text/javascript"></script>
 
     <!--------style------------------------>
-    <link rel="stylesheet" href="style.css">
+    <link href="style_first_page.css" rel="stylesheet">
 
 </head>
 
@@ -49,6 +51,7 @@
     </div>
 
     <script>
+        current_html_page = 0;
         initialize_startPage();
     </script>
 </body>

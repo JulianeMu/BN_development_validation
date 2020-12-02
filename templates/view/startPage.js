@@ -1,27 +1,27 @@
 
+const upload_start_open = [{
+    id: id_upload_data_svg,
+    svg: 'resources/table.svg',
+    button_text: lang_id_upload_data,
+    user_input: true,
+    function: upload_data_func
+}, {
+    id: id_start_from_scratch_svg,
+    svg: 'resources/hand.svg',
+    button_text: lang_id_startScratch,
+    user_input: false,
+    function: start_from_scratch_func
+}, {
+    id: id_open_session_svg,
+    svg: 'resources/open_session.svg',
+    button_text: lang_id_openSession,
+    user_input: false,
+    function: open_session_func
+}];
+
 function initialize_startPage() {
     d3.select('#' + id_header_text).text(get_language__label_by_id(lang_id_heading_BN_development_validation));
     d3.select('#' + id_main_content).select('.' + id_content).append('p').attr('id', id_intro_text).text(get_language__label_by_id(lang_id_intro));
-
-    const upload_start_open = [{
-        id: id_upload_data_svg,
-        svg: 'resources/table.svg',
-        button_text: lang_id_upload_data,
-        user_input: true,
-        function: upload_data_func
-    }, {
-        id: id_start_from_scratch_svg,
-        svg: 'resources/hand.svg',
-        button_text: lang_id_startScratch,
-        user_input: false,
-        function: start_from_scratch_func
-    }, {
-        id: id_open_session_svg,
-        svg: 'resources/open_session.svg',
-        button_text: lang_id_openSession,
-        user_input: false,
-        function: open_session_func
-    }];
 
     const div_width = 33.3;
 
@@ -37,7 +37,7 @@ function initialize_startPage() {
         if (upload_start_open[i].user_input) {
             d3.select('#' + id_main_content).select('#' + upload_start_open[i].id).append('input')
                 .attr('type', 'file')
-                .attr('id', 'upload_file')
+                .attr('id', id_upload_file_hidden_button)
                 .style('display', 'none')
                 .attr('size', "1") // only one file is allowed
                 .attr('accept', '.csv') // only csv files are allowed
@@ -62,7 +62,7 @@ function initialize_startPage() {
 }
 
 function upload_data_func () {
-    document.getElementById('upload_file').click();
+    document.getElementById(id_upload_file_hidden_button).click();
 }
 
 function start_from_scratch_func () {
