@@ -12,15 +12,14 @@ function select_file(evt) {
 
                 d3.csv(e.target.result).then(function(data_csv) {
 
-                    console.log(data_csv)
-                    export_data_to_FLASK(function (callback){
-                        console.log(callback)
-                        current_html_page = 1;
-                        //transitionToPage(html_pages[current_html_page]);
+                    // remove row names having no header
+                    data_csv.forEach(element => delete element[""]);
 
-                        query_data_from_FLASK(function (data) {
-                            console.log(data)
-                        });
+                    export_data_to_FLASK(function (callback){
+                        if(callback) {
+                            current_html_page = 1;
+                            transitionToPage(html_pages[current_html_page]);
+                        }
                     }, data_csv);
 
 

@@ -7,7 +7,6 @@ import pandas as pd
 
 import global_variables as gv
 
-
 start_time = time.time()
 
 app = Flask(__name__)
@@ -21,15 +20,12 @@ def transform(my_object):
     return jsonpickle.encode(my_object, unpicklable=False)
 
 
-@app.route('/set_initial_data/', methods=["POST"])
-def set_initial_data():
-    start_time_deviations = time.time()
-
-    gv.dataset = pd.DataFrame.from_dict(request.get_json())
-
-    print("--- %s seconds ---" % (time.time() - start_time_deviations))
-
-    return jsonify(transform(True))
+def is_number(s):
+    try:
+        complex(s)  # for int, long, float and complex
+    except ValueError:
+        return False
+    return True
 
 
 @app.route('/get_initial_data/', methods=["GET"])
@@ -38,9 +34,8 @@ def get_initial_data():
 
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
-    result = gv.dataset.to_json(orient="records")
-    parsed = json.loads(result)
-    json.dumps(parsed, indent=4)
+    result = gv.dataset_categorical.to_json(orient="records")
+
     return jsonify(result)
 
 
@@ -56,8 +51,32 @@ def discretize_data():
     return jsonify(transform(discretized_data))
 
 
-def discretize_variable():
-    return True
+def discretize_variable(variable_for_discretization):
+    discretized_data = pd.qcut(variable_for_discretization, 4)
+
+    return discretized_data
+
+
+@app.route('/set_initial_data/', methods=["POST"])
+def set_initial_data():
+    start_time_deviations = time.time()
+
+    gv.dataset = pd.DataFrame.from_dict(request.get_json())
+
+    # discretize data
+    for (columnName, columnData) in gv.dataset.iteritems():
+
+        list_is_numeric = [is_number(i) for i in columnData.values]
+        if False not in list_is_numeric:
+            gv.dataset_categorical.insert(loc=len(gv.dataset_categorical.columns), column=columnName,
+                                          value=discretize_variable(columnData.values.astype(float)).astype(str))
+        else:
+            gv.dataset_categorical.insert(loc=len(gv.dataset_categorical.columns), column=columnName,
+                                          value=columnData.values)
+
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
+
+    return jsonify(transform(True))
 
 
 @app.after_request
