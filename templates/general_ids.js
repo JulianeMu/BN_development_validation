@@ -33,3 +33,4 @@ const id_upload_file_hidden_button = 'upload_file';
 //------------------------inspect data and learn structure
 const id_data_inspection_div = 'id_data_inspection_div';
 const id_learnt_model_div = 'id_learnt_model_div';
+const id_beginning_columns_div = "id_col_";

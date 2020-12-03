@@ -10,13 +10,25 @@ function initialize_inspect_data_learn_model() {
         console.log(data)
 
         let columns = Object.keys(data[0]);
-        console.log(columns);
 
         columns.forEach(function (col) {
-            content_div.append('div').attr('class', 'data_col_div');
+            let div = content_div.append('div').attr('class', 'data_col_div').attr('id', id_beginning_columns_div + col);
+            div.append('p').text(col).attr('class', 'text_no_margin');
+
+            let extracted_data = extractColumn(data, col);
+
+            const map = extracted_data.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
+
+            function extractColumn(arr, column) {
+                return arr.map(x => x[column])
+            }
+
+            append_horizontal_bar_chart(id_beginning_columns_div + col, [...map.entries()], data.length);
+
+
         })
 
-        let abc = extractColumn(data, columns[0]);
+/*        let abc = extractColumn(data, columns[0]);
         console.log(abc)
 
         const map = abc.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
@@ -25,7 +37,7 @@ function initialize_inspect_data_learn_model() {
 
         function extractColumn(arr, column) {
             return arr.map(x => x[column])
-        }
+        }*/
     });
 }
 
