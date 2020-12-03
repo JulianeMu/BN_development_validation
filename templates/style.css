@@ -16,6 +16,7 @@
     --legend_height: 40px;
     --heading_height:80px;
     --footer_height:20px;
+    --highlight_color: #d96ce4;
 }
 
 body{
@@ -117,4 +118,12 @@ body{
 
 .text_no_margin {
     margin: 0;
+}
+
+.bar {
+    fill: var(--main-font-color);
+}
+
+.bar:hover{
+    fill: var(--highlight_color);
 }
