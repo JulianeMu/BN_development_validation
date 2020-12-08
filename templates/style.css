@@ -160,3 +160,50 @@ body{
     overflow-y:scroll;
 }
 
+.text {
+    margin-top: 10px;
+    margin-left: 25px;
+    background-color:#ff0000;
+    color:#fff;
+    display:inline-block;
+}
+.arrow_right {
+    border-style: dashed;
+    border-color: transparent;
+    border-width: 0.20em;
+    display: -moz-inline-box;
+    display: inline-block;
+    /* Use font-size to control the size of the arrow. */
+    font-size: 140px;
+    height: 0;
+    line-height: 0;
+    position: relative;
+    vertical-align: middle;
+    width: 0;
+    background-color: var(--main-background-color);
+    border-left-width: 0.2em;
+    border-right-width: 0.05em;
+    border-left-style: solid;
+    border-left-color: #ff0000;
+    left:0.25em;
+}
+
+.arrow_left{
+    border-style: dashed;
+    border-color: transparent;
+    border-width: 0.20em;
+    display: -moz-inline-box;
+    display: inline-block;
+    /* Use font-size to control the size of the arrow. */
+    font-size: 140px;
+    height: 0;
+    line-height: 0;
+    vertical-align: middle;
+    width: 0;
+    background-color: #ff0000;
+    border-left-width: 0.2em;
+    border-right-width: 0.1em;
+    border-left-style: solid;
+    border-left-color: var(--main-background-color);
+    z-index: 40;
+}
