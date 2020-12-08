@@ -62,6 +62,7 @@ def set_initial_data():
     start_time_deviations = time.time()
 
     gv.dataset = pd.DataFrame.from_dict(request.get_json())
+    gv.dataset_categorical = pd.DataFrame()
 
     # discretize data
     for (columnName, columnData) in gv.dataset.iteritems():
@@ -90,7 +91,7 @@ def add_headers(response):
 def index():
     """ Displays the index page accessible at '/'
     """
-    return render_template("index.html")
+    return render_template("../templates/index.html")
 
 
 if __name__ == '__main__':

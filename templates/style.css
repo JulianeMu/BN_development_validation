@@ -17,6 +17,7 @@
     --heading_height:80px;
     --footer_height:20px;
     --highlight_color: #d96ce4;
+    --header_images_width: 120px;
 }
 
 body{
@@ -43,15 +44,41 @@ body{
     height: var(--heading_height);
 }
 
+
+.back_button {
+    float: left;
+    width: var(--header_images_width);
+    height: 100%;
+    background-image: url(../templates/resources/back.svg), none;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center ;
+}
+
+.save_button {
+    float: left;
+    width: var(--header_images_width);
+    height: 100%;
+    background-image: url(../templates/resources/save.svg), none;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center ;
+}
+
+.heading_text {
+    float: left;
+    width: calc(100% - 2*var(--header_images_width));
+    height: 100%;
+    vertical-align: text-bottom;
+}
+
 .main_content {
-    fill: yellow;
     position: relative;
     width: calc(100%);
     height: calc(100% - var(--heading_height) - var(--footer_height)); /* 55vh for pictures */
 }
 
 .footer {
-    fill: green;
     position: relative;
     width: calc(100%);
     height: var(--footer_height); /* 55vh for pictures */
@@ -69,9 +96,7 @@ body{
 .h1 {
     font-size: 28px;
     font-weight: 600;
-    width: calc(100% - 300px);
-    margin: 0 0 0 60px;
-    padding: 0 0 0 0;
+    color: var(--main-font-color);
 }
 
 .h2 {
@@ -80,6 +105,7 @@ body{
     width: calc(100%);
     margin: 30px 0;
     padding: 0 0 0 0;
+    color: var(--main-font-color);
 }
 
 .triangle {
@@ -127,3 +153,10 @@ body{
 .bar:hover{
     fill: var(--highlight_color);
 }
+
+#id_data_inspection_div{
+    width: 100%;
+    max-height: 500px;
+    overflow-y:scroll;
+}
+
