@@ -36,6 +36,12 @@ const lang_id_openSession = "lang_id_openSession";
 const lang_id_inspect_data_learn_structure = "lang_id_inspect_data_learn_structure";
 
 const lang_id_data_overview = "lang_id_data_overview";
+const lang_id_data_groups_workflow = "lang_id_data_groups_workflow";
+
+const lang_id_preoperative_group = "lang_id_preoperative_group";
+const lang_id_biomarkers_group = "lang_id_biomarkers_group";
+const lang_id_demographic_group = "lang_id_demographic_group";
+const lang_id_postoperative_group = "lang_id_postoperative_group";
 
 // global variable of all used strings
 var language_string = [
@@ -46,6 +52,11 @@ var language_string = [
     {id: lang_id_openSession, eng: 'open session', de:'Öffne Session'},
 
     {id: lang_id_inspect_data_learn_structure, eng: 'Inspect Data and Learn Structure', de:'Untersuche die Daten und lerne die Struktur'},
-    {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'}
+    {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'},
+    {id: lang_id_data_groups_workflow, eng: 'Clinical Workflow/Groups', de:'Klinische Arbeitsweise/Gruppierungen'},
 
+    {id: lang_id_preoperative_group, eng: 'preoperative', de:'präoperativ'},
+    {id: lang_id_biomarkers_group, eng: 'biomarkers', de:'Biomarker'},
+    {id: lang_id_demographic_group, eng: 'demographic', de:'demografische Daten'},
+    {id: lang_id_postoperative_group, eng: 'postoperativ', de:'postoperativ'},
 ];

@@ -1,3 +1,8 @@
+
+const initial_groups = [lang_id_demographic_group, lang_id_biomarkers_group, lang_id_preoperative_group, lang_id_postoperative_group];
+let color_clinical_workflow_groups = d3.scaleSequential().domain([1,10])
+    .interpolator(d3.interpolatePuRd);
+
 function initialize_inspect_data_learn_model_view(data) {
 
     let content_div = d3.select('#' + id_main_content).select('.' + id_content);
@@ -10,13 +15,26 @@ function initialize_data_inspection_view (content_div, data) {
     let data_inspection_div = content_div.append('div')
         .attr('id', id_data_inspection_div);
 
+    data_inspection_div.append('p').attr('class', 'h2').text(get_language__label_by_id(lang_id_data_groups_workflow));
+
+    //set color domain again
+    color_clinical_workflow_groups.domain([0,initial_groups.length-1]);
+
+    for (let i = 0; i< initial_groups.length; i++) {
+
+        add_clinical_workflow_step__group(data_inspection_div, initial_groups[i], color_clinical_workflow_groups(i));
+    }
+
     data_inspection_div.append('p').attr('class', 'h2').text(get_language__label_by_id(lang_id_data_overview));
 
 
     let columns = Object.keys(data[0]);
 
     columns.forEach(function (col) {
-        let div = data_inspection_div.append('div').attr('class', 'data_col_div').attr('id', id_beginning_columns_div + col);
+        let div = data_inspection_div.append('div')
+            .attr('class', 'data_col_div')
+            .attr('id', id_beginning_columns_div + col);
+
         div.append('p').text(col).attr('class', 'text_no_margin');//.style('background-color', 'red');
 
         let extracted_data = extractColumn(data, col);

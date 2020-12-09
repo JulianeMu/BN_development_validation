@@ -160,11 +160,10 @@ body{
     overflow-y:scroll;
 }
 
-.text {
-    margin-top: 10px;
-    margin-left: 25px;
-    background-color:#ff0000;
-    color:#fff;
+.clinical_workflow_group {
+    margin-left: 12px;
+    margin-bottom: 10px;
+    font-weight: 400;
     display:inline-block;
 }
 .arrow_right {
@@ -184,8 +183,7 @@ body{
     border-left-width: 0.2em;
     border-right-width: 0.05em;
     border-left-style: solid;
-    border-left-color: #ff0000;
-    left:0.25em;
+    left:0.1em;
 }
 
 .arrow_left{
@@ -200,7 +198,6 @@ body{
     line-height: 0;
     vertical-align: middle;
     width: 0;
-    background-color: #ff0000;
     border-left-width: 0.2em;
     border-right-width: 0.1em;
     border-left-style: solid;

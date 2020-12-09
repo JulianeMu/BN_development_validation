@@ -33,3 +33,5 @@ const id_upload_file_hidden_button = 'upload_file';
 const id_data_inspection_div = 'id_data_inspection_div';
 const id_learnt_model_div = 'id_learnt_model_div';
 const id_beginning_columns_div = "id_col_";
+
+const id_class_clinical_workflow_group = "clinical_workflow_group";
