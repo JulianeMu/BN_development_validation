@@ -17,9 +17,16 @@ function initialize_header() {
     d3.select('#' + id_header_text).text(get_language__label_by_id(lang_id_inspect_data_learn_structure));
     d3.select('#' + id_heading).style('background-color', background_color);
 
-    d3.select('#' + id_header_save_button).on('click', header_save_button);
-    d3.select('#' + id_header_back_button).on('click', header_backwards_button);
+    d3.select('.' + id_header_save_button).on('click', header_save_button);
+    d3.select('.' + id_header_back_button).on('click', header_backwards_button);
 
+    tippy('.' + id_header_save_button, {
+        content: get_language__label_by_id(lang_id_tooltip_header_save),
+    });
+
+    tippy('.' + id_header_back_button, {
+        content: get_language__label_by_id(lang_id_tooltip_header_backwards),
+    });
 }
 
 function header_backwards_button() {

@@ -43,6 +43,16 @@ const lang_id_biomarkers_group = "lang_id_biomarkers_group";
 const lang_id_demographic_group = "lang_id_demographic_group";
 const lang_id_postoperative_group = "lang_id_postoperative_group";
 
+const lang_id_tooltip_header_backwards = "lang_id_tooltip_header_backwards";
+const lang_id_tooltip_header_save = "lang_id_tooltip_header_save";
+
+const lang_id_tooltip_add_clinical_workflow_group = "lang_id_tooltip_add_clinical_workflow_group";
+const lang_id_context_menu_remove_group = "lang_id_context_menu_remove_group";
+const lang_id_context_menu_rename_group = "lang_id_context_menu_rename_group";
+const lang_id_context_menu_move_left_group = "lang_id_context_menu_move_left_group";
+const lang_id_context_menu_move_right_group = "lang_id_context_menu_move_right_group";
+
+
 // global variable of all used strings
 var language_string = [
     {id: lang_id_heading_BN_development_validation, eng: 'Bayesian Network Development and Validation', de: "Erstellung und Validierung Bayes\'scher Netzwerke"},
@@ -50,6 +60,9 @@ var language_string = [
     {id: lang_id_upload_data, eng: 'upload data', de:'Lade Daten Hoch'},
     {id: lang_id_startScratch, eng: 'start from scratch', de:'Starte Neu'},
     {id: lang_id_openSession, eng: 'open session', de:'Öffne Session'},
+
+    {id: lang_id_tooltip_header_backwards, eng: 'go back', de:'gehe zurück'},
+    {id: lang_id_tooltip_header_save, eng: 'save current work', de:'speichere aktuelle Version'},
 
     {id: lang_id_inspect_data_learn_structure, eng: 'Inspect Data and Learn Structure', de:'Untersuche die Daten und lerne die Struktur'},
     {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'},
@@ -59,4 +72,11 @@ var language_string = [
     {id: lang_id_biomarkers_group, eng: 'biomarkers', de:'Biomarker'},
     {id: lang_id_demographic_group, eng: 'demographic', de:'demografische Daten'},
     {id: lang_id_postoperative_group, eng: 'postoperativ', de:'postoperativ'},
+
+    {id: lang_id_tooltip_add_clinical_workflow_group, eng: 'add clinical workflow step/group', de:'füge klinischen Arbeitsschritt/Gruppierung hinzu'},
+    {id: lang_id_context_menu_remove_group, eng: 'remove', de:'entfernen'},
+    {id: lang_id_context_menu_rename_group, eng: 'rename', de:'umbenennen'},
+    {id: lang_id_context_menu_move_left_group, eng: 'move left', de:'nach links'},
+    {id: lang_id_context_menu_move_right_group, eng: 'move right', de:'nach rechts'},
+
 ];

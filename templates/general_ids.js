@@ -16,8 +16,8 @@ const id_class_button = "button";
 
 
 //------------------------header
-const id_header_back_button = 'id_header_back_button';
-const id_header_save_button = 'id_header_save_button';
+const id_header_back_button = 'back_button';
+const id_header_save_button = 'save_button';
 
 
 //------------------------first page
@@ -34,4 +34,6 @@ const id_data_inspection_div = 'id_data_inspection_div';
 const id_learnt_model_div = 'id_learnt_model_div';
 const id_beginning_columns_div = "id_col_";
 
-const id_class_clinical_workflow_group = "clinical_workflow_group";
+const id_clinical_workflow_group = "clinical_workflow_group";
+const id_class_clinical_workflow_group = "clinical_workflow_group_class";
+const id_class_add_button = "add_button";
