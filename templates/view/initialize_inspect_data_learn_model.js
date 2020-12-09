@@ -15,11 +15,12 @@ function initialize_data_inspection_view (content_div, data) {
 
     data_inspection_div.append('p').attr('class', 'h2').text(get_language__label_by_id(lang_id_data_overview));
 
+    let data_variables_div = data_inspection_div.append('div').attr('class', id_data_variables_view_class)
 
     let columns = Object.keys(data[0]);
 
     columns.forEach(function (col) {
-        let div = data_inspection_div.append('div')
+        let div = data_variables_div.append('div')
             .attr('class', 'data_col_div')
             .attr('id', id_beginning_columns_div + col);
 

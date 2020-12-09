@@ -12,9 +12,9 @@ let initial_groups = [{
     label: get_language__label_by_id(lang_id_postoperative_group)
 }];
 
-let color_clinical_workflow_groups = d3.scaleOrdinal(d3.schemeCategory10)
-//d3.scaleSequential().domain([1,10])
-//.interpolator(d3.interpolatePuRd);
+let color_clinical_workflow_groups = //d3.scaleOrdinal(d3.schemeCategory10)
+d3.scaleSequential().domain([1,10])
+.interpolator(d3.interpolatePuRd);
 
 
 function initialize_clinical_workflow_groups(data_inspection_div) {
@@ -45,7 +45,7 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
     let group_div = data_inspection_div.append('div').attr('class', id_class_clinical_workflow_group).attr('id', group_information.id);
 
     group_div.on('click', function () {
-        console.log(this);
+        select_variables_for_group(group_information);
     });
 
     // add right click
@@ -213,4 +213,17 @@ function update_group_color_and_text() {
 function generate_id_from_text(str) {
     let newString = str.replace(/[^A-Z0-9]/ig, "_");
     return 'id_' + newString;
+}
+
+function select_variables_for_group (group_information) {
+    //console.log(group_information);
+    console.log(d3.selectAll('.' + id_class_clinical_workflow_group))
+    d3.selectAll('.' + id_class_clinical_workflow_group).each(function (d, i) {
+        console.log(this)
+        if (this.id !== group_information.id) {
+            //d3.select(this).style('opacity', '0.6');
+        }
+    });
+
+    d3.selectAll('.' + id_data_col_div_class).style('border','6px solid ' + d3.select('#' + group_information.id).style('background-color'));
 }
