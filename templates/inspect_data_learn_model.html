@@ -37,31 +37,39 @@
 
 
 <body>
-    <div class="whole_view" id="whole_view">
+<div class="whole_view" id="whole_view">
 
-        <div class="heading" id="heading">
-            <div class="back_button" id="id_header_back_button"></div>
-            <div class="heading_text">
-                <p class="h1" id="header_text"></p>
-            </div>
-            <div class="save_button"></div>
+    <div class="heading" id="heading">
+        <div class="back_button" id="id_header_back_button"></div>
+        <div class="heading_text">
+            <p class="h1" id="header_text"></p>
         </div>
-
-
-        <div class="main_content" id="main_content">
-            <div class="content"></div>
-        </div>
-        <div class="footer" id="footer">
-            <div class="content">
-            </div>
-        </div>
+        <div class="save_button"></div>
     </div>
 
-    <script>
-        current_html_page = 1;
 
-        initialize_header();
-        initialize_inspect_data_learn_model();
-    </script>
+    <div class="main_content" id="main_content">
+        <div class="content"></div>
+        <div class="user_input">
+            <p class="h2">Clinical Workflow Step/Group</p>
+            <div class="cancel_button" onclick="hide_add_group_view()"></div>
+            <label for="label_name">Name:</label>
+            <input id="label_name" name="label_name" type="text"><br><br>
+            <input class="button" disabled="disabled" id="add_group_button" style="right: 10px" type="submit"
+                   value="Submit">
+        </div>
+    </div>
+    <div class="footer" id="footer">
+        <div class="content">
+        </div>
+    </div>
+</div>
+
+<script>
+    current_html_page = 1;
+
+    initialize_header();
+    initialize_inspect_data_learn_model();
+</script>
 </body>
 </html>
