@@ -98,18 +98,19 @@ function get_font_color(color) {
 
 function add_group(original_id) {
 
-    d3.select('.user_input').style('visibility', 'visible');
-    d3.select('#add_group_button').attr('disabled', 'disabled');
+    hide_add_group_view();
+    d3.select('.' + id_class_add_clinical_workflow_group_form).style('visibility', 'visible');
+    d3.select('#' + id_add_group_button).attr('disabled', 'disabled');
 
-    d3.select('#label_name').on('input', function (d) {
+    d3.select('#' + id_group_label_name).on('input', function (d) {
         if (this.value.length > 0) {
-            d3.select('#add_group_button').attr('disabled', null);
+            d3.select('#' + id_add_group_button).attr('disabled', null);
         } else {
-            d3.select('#add_group_button').attr('disabled', 'disabled');
+            d3.select('#' + id_add_group_button).attr('disabled', 'disabled');
         }
     })
-    d3.select('#add_group_button').on('click', function (d) {
-        let group_name = d3.select('#label_name').node().value;
+    d3.select('#' + id_add_group_button).on('click', function (d) {
+        let group_name = d3.select('#' + id_group_label_name).node().value;
 
         if (typeof original_id === 'string' ) {
             initial_groups.filter(x => x.id === original_id)[0].label = group_name;
@@ -134,8 +135,13 @@ function add_group(original_id) {
 }
 
 function hide_add_group_view () {
-    d3.select('#label_name').node().value = "";
-    d3.select('.user_input').style('visibility', 'hidden');
+    d3.select('#' + id_group_label_name).node().value = "";
+    d3.select('.' + id_variable_list_class).selectAll("input").each(function (d) {
+        this.checked = null;
+    });
+    d3.select('.' + id_class_add_clinical_workflow_group_form).style('visibility', 'hidden');
+    d3.select('.' + id_class_select_group_variables).style('visibility', 'hidden');
+
 }
 
 function remove_group(group_id) {
@@ -162,7 +168,7 @@ function rename_group(group_id) {
 
     tippy.hideAll();
 
-    d3.select('#label_name').node().value = initial_groups.filter(x => x.id === group_id)[0].label;
+    d3.select('#' + id_group_label_name).node().value = initial_groups.filter(x => x.id === group_id)[0].label;
     add_group(initial_groups.filter(x => x.id === group_id)[0].id);
 
 }
@@ -188,6 +194,7 @@ function reorder_groups(group_id, direction) {
         }
     }
 
+    update_group_color_and_text();
     tippy.hideAll();
 }
 
@@ -217,13 +224,53 @@ function generate_id_from_text(str) {
 
 function select_variables_for_group (group_information) {
     //console.log(group_information);
-    console.log(d3.selectAll('.' + id_class_clinical_workflow_group))
-    d3.selectAll('.' + id_class_clinical_workflow_group).each(function (d, i) {
-        console.log(this)
-        if (this.id !== group_information.id) {
-            //d3.select(this).style('opacity', '0.6');
-        }
+    hide_add_group_view();
+
+    console.log(group_information)
+
+    d3.select('.' + id_class_select_group_variables).style('visibility', 'visible').style('border-color', color_clinical_workflow_groups(initial_groups.findIndex(x => x.id === group_information.id) + 1));
+
+    d3.select('#' + id_select_variable_group_name).text(group_information.label);
+
+    let columns = Object.keys(data[0]);
+
+    columns.forEach(function (col) {
+        let checkbox_div = d3.select('.' + id_variable_list_class).append('div');
+        let checkbox = checkbox_div
+            .append('input').attr('type', 'checkbox')
+            .attr('id', id_group_selection_ + col)
+            .attr('name', id_group_selection_ + col)
+            .attr('value', id_group_selection_ + col)
+            .style('color', 'black')
+            .style('font-size', '16px');
+
+        checkbox_div.append('label')
+            .text(col)
+            .on('click', function (d) {
+                checkbox.attr('checked', function () {
+                    if (checkbox.attr('checked')) {
+                        return null;
+                    }
+                    return 'checked';
+                })
+            });
     });
 
-    d3.selectAll('.' + id_data_col_div_class).style('border','6px solid ' + d3.select('#' + group_information.id).style('background-color'));
+
+    d3.select('#' + id_submit_group_selection_button).on('click', function (d) {
+
+        let checked = [];
+        let boxes = d3.select('.' + id_variable_list_class).selectAll("input:checked");
+
+        boxes.each(function() {
+            checked.push(this.value)
+        });
+
+        for (let i = 0; i< checked.length; i++) {
+            console.log(checked[i].split(id_group_selection_)[1])
+            d3.select('#' + id_beginning_columns_div + checked[i].split(id_group_selection_)[1]).style('border','6px solid ' + d3.select('#' + group_information.id).style('background-color'));
+        }
+
+        hide_add_group_view();
+    });
 }

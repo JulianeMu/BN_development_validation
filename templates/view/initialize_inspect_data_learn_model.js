@@ -1,12 +1,12 @@
-function initialize_inspect_data_learn_model_view(data) {
+function initialize_inspect_data_learn_model_view() {
 
     let content_div = d3.select('#' + id_main_content).select('.' + id_content);
 
-    initialize_data_inspection_view(content_div, data);
+    initialize_data_inspection_view(content_div);
     initialize_model_learning_view(content_div);
 }
 
-function initialize_data_inspection_view (content_div, data) {
+function initialize_data_inspection_view (content_div) {
     let data_inspection_div = content_div.append('div')
         .attr('id', id_data_inspection_div);
 

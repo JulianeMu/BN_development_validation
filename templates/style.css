@@ -168,6 +168,7 @@ body{
     overflow-y:scroll;
 }
 
+/*to always show the scrollbar*/
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
@@ -256,7 +257,7 @@ body{
     top:10px;
 }
 
-.user_input{
+.add_clinical_workflow_group_form{
     position: absolute;
     width: 400px;
     height: 215px;
@@ -269,4 +270,26 @@ body{
     padding-right: 15px;
     visibility: hidden;
     border-radius: 12px;
+}
+
+.select_group_variables{
+    position: absolute;
+    width: 400px;
+    height: 415px;
+    background-color: white;
+    left: calc(50% - 200px);
+    top: 50px;
+    z-index: 10;
+    padding-left: 15px;
+    padding-right: 15px;
+    visibility: hidden;
+    border-radius: 12px;
+    border: 6px solid var(--main-font-color);
+}
+
+.variable_list {
+    width: 100%;
+    max-height: 180px;
+    overflow-y:scroll;
+    margin-bottom: 15px;
 }

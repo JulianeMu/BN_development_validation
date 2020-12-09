@@ -37,6 +37,17 @@ const id_beginning_columns_div = "id_col_";
 
 const id_data_col_div_class = "data_col_div";
 
+const id_class_add_clinical_workflow_group_form = "add_clinical_workflow_group_form";
+const id_add_group_button = "add_group_button";
+const id_group_label_name = "label_name";
+
+const id_class_select_group_variables = "select_group_variables";
+const id_select_variable_group_name = "select_variable_group_name";
+const id_submit_group_selection_button = "submit_group_selection_button";
+const id_variable_list_class = "variable_list";
+
 const id_clinical_workflow_group = "clinical_workflow_group";
 const id_class_clinical_workflow_group = "clinical_workflow_group_class";
 const id_class_add_button = "add_button";
+
+const id_group_selection_ = "id_group_selection_";

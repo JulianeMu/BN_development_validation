@@ -28,7 +28,8 @@ function query_data_from_FLASK (callback) {
         contentType: "application/json",
         dataType: 'json',
         success: function (response) {
-            callback(JSON.parse(response));
+            data = JSON.parse(response);
+            callback(true);
         }
     });
 }

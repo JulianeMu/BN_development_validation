@@ -52,7 +52,7 @@ function append_horizontal_bar_chart (div_id, data, data_length) {
         .each(function (d) {
             // add tooltip value
             tippy(this, {
-                content: d[1],
+                content: d[0]+': '+d[1],
             });
         });
 }
