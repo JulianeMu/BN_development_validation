@@ -53,7 +53,8 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
     })
         .on('mouseover', function () {
 
-            //d3.selectAll('.' + id_data_col_div_class).style('opacity', '0');
+
+            //d3.selectAll('.' + id_data_col_div_class).style('opacity', 'opacity_when_hidden');
             d3.selectAll('.' + id_data_col_div_class).attr('hidden', true);
 
             initial_groups.filter(x => x.id === group_information.id)[0].variables.forEach(function (d) {
@@ -64,7 +65,7 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
             });
         })
         .on('mouseout', function () {
-            //d3.selectAll('.' + id_data_col_div_class).style('opacity', '0');
+            //d3.selectAll('.' + id_data_col_div_class).style('opacity', 'opacity_when_hidden');
             d3.selectAll('.' + id_data_col_div_class).attr('hidden', null);
         });
 
@@ -247,7 +248,7 @@ function select_variables_for_group(group_information) {
     initial_groups.filter(x => x.id !== group_information.id).forEach(function (group) {
         group.variables.forEach(function (d) {
             d3.select('#' + id_group_selection_ + d).attr('disabled', true);
-            d3.select(d3.select('#' + id_group_selection_ + d).node().nextElementSibling).style('opacity', 0.5);
+            d3.select(d3.select('#' + id_group_selection_ + d).node().nextElementSibling).style('opacity', opacity_when_hidden);
         });
     });
 

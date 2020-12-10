@@ -1,3 +1,7 @@
+
+const opacity_when_hidden = 0.6;
+
+
 function initialize_inspect_data_learn_model_view() {
 
     let content_div = d3.select('#' + id_main_content).select('.' + id_content);
@@ -42,7 +46,7 @@ function initialize_data_inspection_view(content_div) {
             if (subset_selection.find(x => x.id === col).included_in_structural_learning) {
                 this.style.opacity = 1;
             } else {
-                this.style.opacity = 0.6;
+                this.style.opacity = opacity_when_hidden;
             }
         })
 
@@ -59,6 +63,15 @@ function initialize_data_inspection_view(content_div) {
         append_horizontal_bar_chart(id_beginning_columns_div + col, [...map.entries()], data.length);
         append_missing_values_chart(id_beginning_columns_div + col, extracted_data);
 
+        if (subset_selection.find(x => x.id === col).included_in_structural_learning) {
+            div.style('opacity', 1);
+        } else {
+            div.style('opacity', opacity_when_hidden);
+        }
+
+        tippy(div.node(), {
+            content: get_language__label_by_id(lang_id_tooltip_click_to_select),
+        });
     })
 }
 

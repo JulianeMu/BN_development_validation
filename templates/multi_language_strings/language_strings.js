@@ -47,6 +47,8 @@ const lang_id_tooltip_header_backwards = "lang_id_tooltip_header_backwards";
 const lang_id_tooltip_header_save = "lang_id_tooltip_header_save";
 
 const lang_id_tooltip_add_clinical_workflow_group = "lang_id_tooltip_add_clinical_workflow_group";
+const lang_id_tooltip_click_to_select = "lang_id_tooltip_click_to_select";
+
 const lang_id_context_menu_remove_group = "lang_id_context_menu_remove_group";
 const lang_id_context_menu_rename_group = "lang_id_context_menu_rename_group";
 const lang_id_context_menu_move_left_group = "lang_id_context_menu_move_left_group";
@@ -96,6 +98,7 @@ var language_string = [
 
     {id: lang_id_learn_structure, eng: "learn structure", de: "Lerne die Struktur"},
     {id: lang_id_include_preknowledge, eng: "integrate preknowledge", de: "integriere Vorwissen"},
+    {id: lang_id_tooltip_click_to_select, eng: "click to include/exclude from structural learning", de: "Klicken um Variable in Strukturerlernung mit einzubeziehen/auszuschließen"},
 
     {id: lang_id_heading_data_driven_structure, eng:"Data-Driven Bayesian Network Structure", de:"Datenbasierte Struktur des Bayes'schen Netzwerkes"},
 ];
