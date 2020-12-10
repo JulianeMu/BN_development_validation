@@ -4,6 +4,7 @@ import jsonpickle
 from flask import Flask, request, jsonify, render_template
 import time
 import pandas as pd
+import numpy as np
 
 import global_variables as gv
 
@@ -62,8 +63,8 @@ def set_initial_data():
     start_time_deviations = time.time()
 
     gv.dataset = pd.DataFrame.from_dict(request.get_json())
+    gv.dataset = gv.dataset.replace("", np.nan)
     gv.dataset_categorical = pd.DataFrame()
-
     # discretize data
     for (columnName, columnData) in gv.dataset.iteritems():
 

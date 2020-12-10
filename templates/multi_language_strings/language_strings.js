@@ -52,6 +52,8 @@ const lang_id_context_menu_rename_group = "lang_id_context_menu_rename_group";
 const lang_id_context_menu_move_left_group = "lang_id_context_menu_move_left_group";
 const lang_id_context_menu_move_right_group = "lang_id_context_menu_move_right_group";
 
+const lang_id_number_of_patients = "lang_id_number_of_patients";
+const lang_id_available_data = "lang_id_available_data";
 
 // global variable of all used strings
 var language_string = [
@@ -66,6 +68,8 @@ var language_string = [
 
     {id: lang_id_inspect_data_learn_structure, eng: 'Inspect Data and Learn Structure', de:'Untersuche die Daten und lerne die Struktur'},
     {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'},
+    {id: lang_id_number_of_patients, eng: 'Number of Patients:', de:'Anzahl der Patienten:'},
+
     {id: lang_id_data_groups_workflow, eng: 'Clinical Workflow/Groups', de:'Klinische Arbeitsweise/Gruppierungen'},
 
     {id: lang_id_preoperative_group, eng: 'preoperative', de:'präoperativ'},
@@ -78,5 +82,5 @@ var language_string = [
     {id: lang_id_context_menu_rename_group, eng: 'rename', de:'umbenennen'},
     {id: lang_id_context_menu_move_left_group, eng: 'move left', de:'nach links'},
     {id: lang_id_context_menu_move_right_group, eng: 'move right', de:'nach rechts'},
-
+    {id: lang_id_available_data, eng: "available data: ", de: "vorhandene Daten: "}
 ];

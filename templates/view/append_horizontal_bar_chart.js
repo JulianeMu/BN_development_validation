@@ -1,15 +1,18 @@
 
 function append_horizontal_bar_chart (div_id, data, data_length) {
 
+    // to do not display null values
+    data = data.filter(x => x[0] !== null);
+
     //set up svg using margin conventions - we'll need plenty of room on the left for labels
     const margin = {
         top: 5,
-        right: 25,
+        right: 15,
         bottom: 5,
         left: 80
     };
 
-    let width = parseFloat(d3.select('#' + div_id).style('width')) - margin.left - margin.right,
+    let width = parseFloat(d3.select('#' + div_id).style('width')) - margin.left - margin.right - 20,
         height = parseFloat(d3.select('#' + div_id).style('height')) - margin.top - margin.bottom - 25;
 
     let svg = d3.select("#" + div_id).append("svg")

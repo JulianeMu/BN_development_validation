@@ -189,6 +189,10 @@ body{
     width: 100%;
 }
 
+#id_data_inspection_all{
+    width: 100%;
+}
+
 .clinical_workflow_group_class {
     margin-left: 12px;
     margin-bottom: 10px;
