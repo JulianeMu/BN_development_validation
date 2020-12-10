@@ -3,6 +3,8 @@ function append_horizontal_bar_chart (div_id, data, data_length) {
 
     // to do not display null values
     data = data.filter(x => x[0] !== null);
+    // sort categories alphabetically
+    data = data.sort((a,b) => (a[0] < b[0]) ? 1 : ((b[0] < a[0]) ? -1 : 0));
 
     //set up svg using margin conventions - we'll need plenty of room on the left for labels
     const margin = {

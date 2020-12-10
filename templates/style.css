@@ -126,10 +126,11 @@ body{
     color: var(--main-font-color);
     border: 2px solid var(--main-font-color); /* Green */
     font-size: 28px;
+    text-align: center;
 }
 
 .button:hover {
-    background-color: var(--main-background-color); /* Green */
+    background-color: #e9eef6; /* Green */
 }
 
 .button:disabled,
@@ -149,6 +150,7 @@ body{
     margin-right: 20px;
     background-color: white;
     border: 6px solid white;
+    border-radius: 4px;
 }
 
 .text_no_margin {

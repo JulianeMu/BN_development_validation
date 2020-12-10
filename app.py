@@ -35,9 +35,11 @@ def get_initial_data():
 
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
-    result = gv.dataset_categorical.to_json(orient="records")
+    dataset_categorical = gv.dataset_categorical.to_json(orient="records")
 
-    return jsonify(result)
+    # subset_selection_included_in_learning = json.dumps(gv.subset_selection_included_in_learning)
+
+    return jsonify([dataset_categorical, gv.subset_selection_included_in_learning])
 
 
 @app.route('/discretize_data/', methods=["GET"])
@@ -62,7 +64,10 @@ def discretize_variable(variable_for_discretization):
 def set_initial_data():
     start_time_deviations = time.time()
 
-    gv.dataset = pd.DataFrame.from_dict(request.get_json())
+    gv.dataset = pd.DataFrame.from_dict(request.get_json()[0])
+
+    gv.subset_selection_included_in_learning = request.get_json()[1]
+
     gv.dataset = gv.dataset.replace("", np.nan)
     gv.dataset_categorical = pd.DataFrame()
     # discretize data
@@ -76,6 +81,16 @@ def set_initial_data():
             gv.dataset_categorical.insert(loc=len(gv.dataset_categorical.columns), column=columnName,
                                           value=columnData.values)
 
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
+
+    return jsonify(transform(True))
+
+
+@app.route('/learn_structure_from_data/', methods=["POST"])
+def learn_structure_from_data():
+    start_time_deviations = time.time()
+
+    # print(request.get_json())
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
     return jsonify(transform(True))

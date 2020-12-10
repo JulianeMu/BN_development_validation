@@ -55,6 +55,14 @@ const lang_id_context_menu_move_right_group = "lang_id_context_menu_move_right_g
 const lang_id_number_of_patients = "lang_id_number_of_patients";
 const lang_id_available_data = "lang_id_available_data";
 
+const lang_id_show_variables_in_group_only = "lang_id_show_variables_in_group_only";
+const lang_id_clicking_on_workflow_step_glyph_to_select = "lang_id_clicking_on_workflow_step_glyph_to_select";
+
+const lang_id_learn_structure = "lang_id_learn_structure";
+const lang_id_include_preknowledge = "lang_id_include_preknowledge";
+const lang_id_heading_data_driven_structure = "lang_id_heading_data_driven_structure";
+
+
 // global variable of all used strings
 var language_string = [
     {id: lang_id_heading_BN_development_validation, eng: 'Bayesian Network Development and Validation', de: "Erstellung und Validierung Bayes\'scher Netzwerke"},
@@ -82,5 +90,12 @@ var language_string = [
     {id: lang_id_context_menu_rename_group, eng: 'rename', de:'umbenennen'},
     {id: lang_id_context_menu_move_left_group, eng: 'move left', de:'nach links'},
     {id: lang_id_context_menu_move_right_group, eng: 'move right', de:'nach rechts'},
-    {id: lang_id_available_data, eng: "available data: ", de: "vorhandene Daten: "}
+    {id: lang_id_available_data, eng: "available data: ", de: "vorhandene Daten: "},
+    {id: lang_id_show_variables_in_group_only, eng: "show variables contained in clinical workflow step/group only", de:"zeige nur Variablen, welche in dem klinischen Arbeitsschritt/Gruppe enthalten sind"},
+    {id: lang_id_clicking_on_workflow_step_glyph_to_select, eng: "click on clinical workflow step/group to select variables", de:"Klicke auf klinischen Arbeitsschritt/Gruppe um Variablen zu selektieren"},
+
+    {id: lang_id_learn_structure, eng: "learn structure", de: "Lerne die Struktur"},
+    {id: lang_id_include_preknowledge, eng: "integrate preknowledge", de: "integriere Vorwissen"},
+
+    {id: lang_id_heading_data_driven_structure, eng:"Data-Driven Bayesian Network Structure", de:"Datenbasierte Struktur des Bayes'schen Netzwerkes"},
 ];

@@ -36,6 +36,16 @@ function initialize_data_inspection_view(content_div) {
             .attr('class', 'data_col_div')
             .attr('id', id_beginning_columns_div + col);
 
+        div.on('click', function (d) {
+            subset_selection.find(x => x.id === col).included_in_structural_learning = !subset_selection.find(x => x.id === col).included_in_structural_learning;
+
+            if (subset_selection.find(x => x.id === col).included_in_structural_learning) {
+                this.style.opacity = 1;
+            } else {
+                this.style.opacity = 0.6;
+            }
+        })
+
         div.append('p').text(col).attr('class', 'text_no_margin');//.style('background-color', 'red');
 
         let extracted_data = extractColumn(data, col);
@@ -56,19 +66,19 @@ function append_missing_values_chart(div_id, col) {
 
     let svg = d3.select('#' + div_id).append("svg")
         .style('position', 'absolute')
-        .attr("width", 20)
-        .attr("height", 100 + '%')
-        .style('x', 0 + 'px')
+        .attr("width", 'calc(20px - 5px)')
+        .attr("height", 'calc(100% - 10px)')
+        .style('margin', 5+'px')
         .style('top', 0 );
 
     svg.append('rect')
         .style('width', 100 + '%')
         .style('height', 100 + '%')
-        .attr("x", 0)
-        .attr("y", 0)
         .attr('fill', 'white')
         .style('stroke', 'var(--main-font-color)')
-        .style('stroke-width', '3px');
+        .style('stroke-width', '3px')
+        .attr("rx", 16)
+        .attr("ry", 16)
 
     let number_missing = col.filter(x => x !== "" && x !== undefined && x !== null).length;
 
@@ -77,9 +87,10 @@ function append_missing_values_chart(div_id, col) {
     svg.append('rect')
         .style('width', 100 + '%')
         .style('height', percentage_available + '%')
-        .attr("x", 0)
         .attr("y", (100 - percentage_available) + '%')
         .attr('fill', 'var(--main-font-color)')
+        .attr("rx", 16)
+        .attr("ry", 16)
 
     tippy(svg.selectAll('rect').nodes(), {
         content: get_language__label_by_id(lang_id_available_data) + percentage_available.toFixed(1)  + '%',
@@ -87,6 +98,28 @@ function append_missing_values_chart(div_id, col) {
 }
 
 function initialize_model_learning_view(content_div) {
+
+    let structure_learning_div = content_div.append('div')
+        .attr('id', id_learnt_model_div)
+        .style('padding-top', 20 + 'px')
+        .style('padding-bottom', 20 + 'px');
+
+    structure_learning_div.append('input').attr('class', 'button')
+        .attr('value', get_language__label_by_id(lang_id_include_preknowledge))
+        .style('position', 'relative')
+        .on('click');
+
+    structure_learning_div.append('input').attr('class', 'button')
+        .style('right', 10 + 'px')
+        .attr('value', get_language__label_by_id(lang_id_learn_structure))
+        .on('click', function (d) {
+            learn_structure_from_data(function (response) {
+                console.log(response);
+            })
+        });
+
+    structure_learning_div.append('p').attr('class', 'h2')
+        .text(get_language__label_by_id(lang_id_heading_data_driven_structure));
 
 }
 

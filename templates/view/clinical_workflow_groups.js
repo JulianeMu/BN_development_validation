@@ -17,8 +17,8 @@ let initial_groups = [{
 }];
 
 let color_clinical_workflow_groups = //d3.scaleOrdinal(d3.schemeCategory10)
-d3.scaleSequential().domain([1,10])
-.interpolator(d3.interpolatePuRd);
+    d3.scaleSequential().domain([1, 10])
+        .interpolator(d3.interpolatePuRd);
 
 
 function initialize_clinical_workflow_groups(data_inspection_div) {
@@ -67,6 +67,12 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
             //d3.selectAll('.' + id_data_col_div_class).style('opacity', '0');
             d3.selectAll('.' + id_data_col_div_class).attr('hidden', null);
         });
+
+    tippy(group_div.node(), {
+        content: '<p>' + get_language__label_by_id(lang_id_show_variables_in_group_only) + '</p>' +
+            '<p>' + get_language__label_by_id(lang_id_clicking_on_workflow_step_glyph_to_select) + '</p>',
+        allowHTML: true,
+    });
 
     // add right click
     let rightClickableArea = group_div.node();
@@ -132,7 +138,7 @@ function add_group(original_id) {
     d3.select('#' + id_add_group_button).on('click', function (d) {
         let group_name = d3.select('#' + id_group_label_name).node().value;
 
-        if (typeof original_id === 'string' ) {
+        if (typeof original_id === 'string') {
             initial_groups.filter(x => x.id === original_id)[0].label = group_name;
         } else {
 
@@ -155,7 +161,7 @@ function add_group(original_id) {
     });
 }
 
-function hide_add_group_view () {
+function hide_add_group_view() {
     d3.select('#' + id_group_label_name).node().value = "";
     d3.select('.' + id_variable_list_class).selectAll("input").each(function (d) {
         this.checked = null;
@@ -229,7 +235,7 @@ function generate_id_from_text(str) {
     return 'id_' + newString;
 }
 
-function select_variables_for_group (group_information) {
+function select_variables_for_group(group_information) {
     hide_add_group_view();
 
     // check all predefined checkboxes
@@ -253,7 +259,7 @@ function select_variables_for_group (group_information) {
 
     if (d3.select('.' + id_variable_list_class).selectAll("input").size() === 0) {
         columns.forEach(function (col) {
-            let checkbox_div = d3.select('.' + id_variable_list_class).append('div');
+            let checkbox_div = d3.select('.' + id_variable_list_class).append('div').style('margin', 5 + 'px');
             let checkbox = checkbox_div
                 .append('input').attr('type', 'checkbox')
                 .attr('id', id_group_selection_ + col)
@@ -284,15 +290,15 @@ function select_variables_for_group (group_information) {
         let checked = [];
         let boxes = d3.select('.' + id_variable_list_class).selectAll("input:checked");
 
-        boxes.each(function() {
+        boxes.each(function () {
             checked.push(this.value)
         });
 
         initial_groups.filter(x => x.id === group_information.id)[0].variables = [];
 
-        for (let i = 0; i< checked.length; i++) {
+        for (let i = 0; i < checked.length; i++) {
             initial_groups.filter(x => x.id === group_information.id)[0].variables.push(checked[i].split(id_group_selection_)[1]);
-            d3.select('#' + id_beginning_columns_div + checked[i].split(id_group_selection_)[1]).style('border','6px solid ' + d3.select('#' + group_information.id).style('background-color'));
+            d3.select('#' + id_beginning_columns_div + checked[i].split(id_group_selection_)[1]).style('border', '6px solid ' + d3.select('#' + group_information.id).style('background-color'));
         }
 
         update_all_colors_and_text();
@@ -301,16 +307,16 @@ function select_variables_for_group (group_information) {
     });
 }
 
-function update_all_colors_and_text () {
+function update_all_colors_and_text() {
 
     update_group_color_and_text();
 
-    d3.selectAll('.' + id_data_col_div_class).style('border','6px solid white');// + d3.select('#' + group_information.id).style('background-color'));
+    d3.selectAll('.' + id_data_col_div_class).style('border', '6px solid white');// + d3.select('#' + group_information.id).style('background-color'));
 
     // disable checkboxes which are selected within other groups
     initial_groups.forEach(function (group) {
         group.variables.forEach(function (d) {
-            d3.select('#' + id_beginning_columns_div + d).style('border','6px solid ' + d3.select('#' + group.id).style('background-color'));
+            d3.select('#' + id_beginning_columns_div + d).style('border', '6px solid ' + d3.select('#' + group.id).style('background-color'));
         });
     });
 }

@@ -10,7 +10,7 @@ const header_buttons = [{
     function: header_save_button
 }];
 
-const background_color = '#BADCCA';
+const background_color = color_clinical_workflow_groups(1); //'#BADCCA';
 
 function initialize_header() {
 
