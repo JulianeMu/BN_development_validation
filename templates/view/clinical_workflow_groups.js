@@ -41,7 +41,7 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
         add_clinical_workflow_step__group(clinical_workflow_group_div, initial_groups[i]);
     }
 
-    update_group_color_and_text();
+    update_all_colors_and_text();
 }
 
 
@@ -150,7 +150,7 @@ function add_group(original_id) {
             }
         }
 
-        update_group_color_and_text();
+        update_all_colors_and_text();
         hide_add_group_view();
     });
 }
@@ -183,7 +183,7 @@ function remove_group(group_id) {
     d3.select('#' + group_id).remove();
     tippy.hideAll();
 
-    update_group_color_and_text();
+    update_all_colors_and_text();
 }
 
 function rename_group(group_id) {
@@ -220,27 +220,8 @@ function reorder_groups(group_id, direction) {
         }
     }
 
-    update_group_color_and_text();
+    update_all_colors_and_text();
     tippy.hideAll();
-}
-
-
-function update_group_color_and_text() {
-    //set color domain again
-    color_clinical_workflow_groups.domain([0, initial_groups.length]);
-
-    for (let i = 0; i < initial_groups.length; i++) {
-        let group_div = d3.select('#' + initial_groups[i].id);
-
-        group_div.html('<span class="arrow_left"></span>' + initial_groups[i].label + '<span class="arrow_right"></span>')
-
-        // fill with correct color
-        group_div.style('background-color', color_clinical_workflow_groups(i + 1))
-        group_div.select('.arrow_left').style('background-color', color_clinical_workflow_groups(i + 1));
-        group_div.select('.arrow_right').style('border-left-color', color_clinical_workflow_groups(i + 1));
-
-        group_div.style('color', get_font_color(color_clinical_workflow_groups(i + 1)));
-    }
 }
 
 function generate_id_from_text(str) {
@@ -314,15 +295,40 @@ function select_variables_for_group (group_information) {
             d3.select('#' + id_beginning_columns_div + checked[i].split(id_group_selection_)[1]).style('border','6px solid ' + d3.select('#' + group_information.id).style('background-color'));
         }
 
-        d3.selectAll('.' + id_data_col_div_class).style('border','6px solid white');// + d3.select('#' + group_information.id).style('background-color'));
-
-        // disable checkboxes which are selected within other groups
-        initial_groups.forEach(function (group) {
-            group.variables.forEach(function (d) {
-                d3.select('#' + id_beginning_columns_div + d).style('border','6px solid ' + d3.select('#' + group.id).style('background-color'));
-            });
-        });
+        update_all_colors_and_text();
 
         hide_add_group_view();
     });
+}
+
+function update_all_colors_and_text () {
+
+    update_group_color_and_text();
+
+    d3.selectAll('.' + id_data_col_div_class).style('border','6px solid white');// + d3.select('#' + group_information.id).style('background-color'));
+
+    // disable checkboxes which are selected within other groups
+    initial_groups.forEach(function (group) {
+        group.variables.forEach(function (d) {
+            d3.select('#' + id_beginning_columns_div + d).style('border','6px solid ' + d3.select('#' + group.id).style('background-color'));
+        });
+    });
+}
+
+function update_group_color_and_text() {
+    //set color domain again
+    color_clinical_workflow_groups.domain([0, initial_groups.length]);
+
+    for (let i = 0; i < initial_groups.length; i++) {
+        let group_div = d3.select('#' + initial_groups[i].id);
+
+        group_div.html('<span class="arrow_left"></span>' + initial_groups[i].label + '<span class="arrow_right"></span>')
+
+        // fill with correct color
+        group_div.style('background-color', color_clinical_workflow_groups(i + 1))
+        group_div.select('.arrow_left').style('background-color', color_clinical_workflow_groups(i + 1));
+        group_div.select('.arrow_right').style('border-left-color', color_clinical_workflow_groups(i + 1));
+
+        group_div.style('color', get_font_color(color_clinical_workflow_groups(i + 1)));
+    }
 }
