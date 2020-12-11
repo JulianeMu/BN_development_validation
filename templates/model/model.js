@@ -15,8 +15,9 @@ function export_data_to_FLASK (callback, data) {
         })
     })
 
-    let values = JSON.stringify([data, subset_selection]);
+    let values = JSON.stringify([data, subset_selection, whitelist, blacklist]);
 
+    console.log(values)
     $.ajax({
         url: sURL,
         type: 'POST',
@@ -42,6 +43,8 @@ function query_data_from_FLASK (callback) {
         success: function (response) {
             data = JSON.parse(response[0]);
             subset_selection = response[1];
+            whitelist = response[2];
+            blacklist = response[3];
             callback(true);
         }
     });

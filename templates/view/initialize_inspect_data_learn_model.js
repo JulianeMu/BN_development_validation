@@ -120,7 +120,37 @@ function initialize_model_learning_view(content_div) {
     structure_learning_div.append('input').attr('class', 'button')
         .attr('value', get_language__label_by_id(lang_id_include_preknowledge))
         .style('position', 'relative')
-        .on('click');
+        .style('width', 320 + 'px')
+        .on('click', function (d) {
+
+            d3.select('#' + id_whitelist_button).on('click', function (d) {
+                d3.select('#' + id_whitelist_button).style('border-width', 6 + 'px');
+                d3.select('#' + id_blacklist_button).style('border-width', 2 + 'px');
+                console.log('abc')
+            })
+
+            d3.select('#' + id_blacklist_button).on('click', function (d) {
+                d3.select('#' + id_blacklist_button).style('border-width', 6 + 'px');
+                d3.select('#' + id_whitelist_button).style('border-width', 2 + 'px');
+            })
+
+            // d3.select('#' + id_whitelist_blacklist_divs).append('div')
+            //     .attr('class', id_whitelist_list_divs)
+            //     .append('p')
+            //     .style('margin', 0)
+            //     .text('from ' + ' to ' );
+            //
+            // d3.select('#' + id_whitelist_blacklist_divs).append('div')
+            //     .attr('class', id_blacklist_list_divs)
+            //     .append('p')
+            //     .style('margin', 0)
+            //     .text('from ' + ' to ' );
+
+            d3.select('#select_blacklist_whitelist')
+                .style('width', 570 + 'px')
+                .style('left', 'calc(50% - 285px)')
+                .style('visibility', 'visible');
+        });
 
     structure_learning_div.append('input').attr('class', 'button')
         .style('right', 10 + 'px')

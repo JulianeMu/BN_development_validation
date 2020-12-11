@@ -30,7 +30,7 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
     d3.select('.' + id_class_add_button).on('click', add_group);
 
     tippy('.' + id_class_add_button, {
-        content: get_language__label_by_id(lang_id_tooltip_add_clinical_workflow_group),
+        content: get_language__label_by_id(lang_id_tooltip_add_clinical_workflow_group)
     });
 
     //set color domain again
@@ -171,8 +171,8 @@ function hide_add_group_view() {
         d3.select(this.nextElementSibling).style('opacity', 1);
 
     });
-    d3.select('.' + id_class_add_clinical_workflow_group_form).style('visibility', 'hidden');
-    d3.select('.' + id_class_select_group_variables).style('visibility', 'hidden');
+    d3.selectAll('.' + id_class_add_clinical_workflow_group_form).style('visibility', 'hidden');
+    d3.selectAll('.' + id_class_select_group_variables).style('visibility', 'hidden');
 
 
 }

@@ -12,6 +12,7 @@
     --navbar-font-color: white;
     --navbar-highlight-font-color: #7da7ca;
     --main-font-weight: 300;
+    --main-font-size: 22px;
     --highlight-font-weight: 700;
     --legend_height: 40px;
     --heading_height:80px;
@@ -26,7 +27,7 @@ body{
     background-color: var(--main-background-color);
     font-family: 'Fira Sans', sans-serif;
     font-weight: var(--main-font-weight);
-    font-size: 22px;
+    font-size: var(--main-font-size);
     opacity: 0;
     transition: opacity .5s;
 }
@@ -281,7 +282,6 @@ body{
 .select_group_variables{
     position: absolute;
     width: 400px;
-    height: 415px;
     background-color: white;
     left: calc(50% - 200px);
     top: 50px;
@@ -295,7 +295,34 @@ body{
 
 .variable_list {
     width: 100%;
-    max-height: 180px;
+    max-height: 480px;
     overflow-y:scroll;
     margin-bottom: 15px;
+}
+
+.tippy-content{
+    font-size: var(--main-font-size);
+}
+
+.id_whitelist_list_divs {
+    position: relative;
+    margin-right: 12px;
+    padding: 10px;
+    font-weight: 400;
+    display:inline-block;
+    border-radius: 6px;
+    background-color: white;
+    border: 6px solid var(--main-font-color);
+}
+
+.id_blacklist_list_divs {
+    position: relative;
+    margin-right: 12px;
+    padding: 10px;
+    font-weight: 400;
+    display:inline-block;
+    border-radius: 6px;
+    color: white;
+    background-color: var(--main-font-color);
+    border: 6px solid var(--main-font-color);
 }

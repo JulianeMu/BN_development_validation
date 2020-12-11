@@ -39,7 +39,7 @@ def get_initial_data():
 
     # subset_selection_included_in_learning = json.dumps(gv.subset_selection_included_in_learning)
 
-    return jsonify([dataset_categorical, gv.subset_selection_included_in_learning])
+    return jsonify([dataset_categorical, gv.subset_selection_included_in_learning, gv.whitelist, gv.blacklist])
 
 
 @app.route('/discretize_data/', methods=["GET"])
@@ -67,6 +67,8 @@ def set_initial_data():
     gv.dataset = pd.DataFrame.from_dict(request.get_json()[0])
 
     gv.subset_selection_included_in_learning = request.get_json()[1]
+    gv.whitelist = request.get_json()[2]
+    gv.blacklist = request.get_json()[3]
 
     gv.dataset = gv.dataset.replace("", np.nan)
     gv.dataset_categorical = pd.DataFrame()

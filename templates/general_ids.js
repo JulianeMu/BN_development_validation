@@ -51,3 +51,9 @@ const id_class_clinical_workflow_group = "clinical_workflow_group_class";
 const id_class_add_button = "add_button";
 
 const id_group_selection_ = "id_group_selection_";
+
+const id_blacklist_button = "blacklist_button";
+const id_whitelist_button = "whitelist_button";
+const id_whitelist_blacklist_divs = "whitelist_blacklist_divs";
+const id_whitelist_list_divs = "id_whitelist_list_divs";
+const id_blacklist_list_divs = "id_blacklist_list_divs";
