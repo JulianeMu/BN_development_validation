@@ -54,6 +54,13 @@ const id_group_selection_ = "id_group_selection_";
 
 const id_blacklist_button = "blacklist_button";
 const id_whitelist_button = "whitelist_button";
+
+const whitelist_blacklist_buttons = [id_whitelist_button, id_blacklist_button];
 const id_whitelist_blacklist_divs = "whitelist_blacklist_divs";
 const id_whitelist_list_divs = "id_whitelist_list_divs";
 const id_blacklist_list_divs = "id_blacklist_list_divs";
+
+const id_whitelist_blacklist_from = "whitelist_blacklist_from";
+const id_whitelist_blacklist_to = "whitelist_blacklist_to";
+
+const id_whitelist_blacklist_from_to = [id_whitelist_blacklist_from, id_whitelist_blacklist_to];
