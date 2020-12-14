@@ -17,7 +17,6 @@ function export_data_to_FLASK (callback, data) {
 
     let values = JSON.stringify([data, subset_selection, whitelist, blacklist]);
 
-    console.log(values)
     $.ajax({
         url: sURL,
         type: 'POST',
@@ -53,7 +52,8 @@ function query_data_from_FLASK (callback) {
 function learn_structure_from_data (callback) {
     const sURL = hostURL + "/learn_structure_from_data/";
 
-    let values = JSON.stringify(data);
+    let values = JSON.stringify([subset_selection, whitelist, blacklist]);
+    //let values = JSON.stringify(data);
 
     $.ajax({
         url: sURL,
@@ -62,7 +62,8 @@ function learn_structure_from_data (callback) {
         contentType: "application/json",
         dataType: 'json',
         success: function (response) {
-            data = JSON.parse(response);
+            //data = JSON.parse(response);
+            console.log(JSON.parse(response))
             callback(true);
         }
     });

@@ -40,7 +40,7 @@ function initialize_data_inspection_view(content_div) {
             .attr('class', 'data_col_div')
             .attr('id', id_beginning_columns_div + col);
 
-        div.on('click', function (d) {
+        div.on('click', function () {
             subset_selection.find(x => x.id === col).included_in_structural_learning = !subset_selection.find(x => x.id === col).included_in_structural_learning;
 
             if (subset_selection.find(x => x.id === col).included_in_structural_learning) {
@@ -120,9 +120,7 @@ function initialize_model_learning_view(content_div) {
 
     initialize_prior_knowledge_view(structure_learning_div);
 
-
-    structure_learning_div.append('p').attr('class', 'h2')
-        .text(get_language__label_by_id(lang_id_heading_data_driven_structure));
+    initialize_structural_learning_view (structure_learning_div);
 
 }
 

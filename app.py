@@ -5,6 +5,8 @@ from flask import Flask, request, jsonify, render_template
 import time
 import pandas as pd
 import numpy as np
+import os
+import subprocess
 
 import global_variables as gv
 
@@ -92,7 +94,27 @@ def set_initial_data():
 def learn_structure_from_data():
     start_time_deviations = time.time()
 
-    # print(request.get_json())
+    gv.subset_selection_included_in_learning = request.get_json()[0]
+    gv.whitelist = request.get_json()[1]
+    gv.blacklist = request.get_json()[2]
+
+    command = 'Rscript'
+    path2script = 'learn_structure.R'
+    csv_file_name = 'whole_data.csv'
+
+    gv.dataset_categorical.to_csv(csv_file_name, index=False)
+
+    # print(gv.dataset.to_json(orient="records"))
+    cmd = [command, path2script] + [os.getcwd() + os.path.sep + csv_file_name]
+    # check_output will run the command and store to result
+    x = subprocess.check_output(cmd, universal_newlines=True)
+
+    print(x)
+    x_json = json.loads(x)
+
+    print(x_json)
+
+
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
     return jsonify(transform(True))
