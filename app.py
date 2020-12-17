@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import os
 import subprocess
+import simplejson
 
 import global_variables as gv
 
@@ -131,7 +132,7 @@ def add_headers(response):
 def index():
     """ Displays the index page accessible at '/'
     """
-    return render_template("../templates/index.html")
+    return render_template("/templates/index.html")
 
 
 if __name__ == '__main__':
