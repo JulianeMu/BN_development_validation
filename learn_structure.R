@@ -70,10 +70,10 @@ for(algorithm in selected_algotithms) for(name in "test") try({
 
 #for(j in rownames(M_score)) M_score <- M_score[,order(M_score[j,])]
 for(j in colnames(M_score)) M_score <- M_score[order(M_score[,j]),]
-M_score
+#M_score
 
 which(M_score == max(M_score))
-graphviz.plot(list_test[[4]])
+#graphviz.plot(list_test[[4]])
 
 best_score <- which(M_score == max(M_score))
 
@@ -82,7 +82,7 @@ fit <- bn.fit(list_test[[best_score]], used_dataset)
 write.dsc('bayesianNetworkStructure2.dsc', fit)
 
 # bn.net(fit) to go back to net for later refitting
-print("test passed!")
+#print("test passed!")
 
 # cat(jsonlite::toJSON(list_final_contributing, pretty=TRUE))
 cat(jsonlite::toJSON(TRUE, pretty=TRUE))
