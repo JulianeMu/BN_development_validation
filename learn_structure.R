@@ -12,7 +12,7 @@ used_dataset <- read.csv(myArgs)
 
 used_dataset[] <- lapply(used_dataset, factor) # convert all columns to factors
 
-# sapply(used_dataset, class)
+sapply(used_dataset, class)
 
 #pdag <- pc.stable(used_dataset)
 #
@@ -79,7 +79,7 @@ best_score <- which(M_score == max(M_score))
 
 fit <- bn.fit(list_test[[best_score]], used_dataset)
 
-write.dsc('bayesianNetworkStructure2.dsc', fit)
+write.dsc('bayesianNetworkStructure.dsc', fit)
 
 # bn.net(fit) to go back to net for later refitting
 #print("test passed!")
