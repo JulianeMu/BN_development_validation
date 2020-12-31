@@ -25,13 +25,12 @@ sapply(used_dataset, class)
 #
 #fit <- bn.fit(pdag, used_dataset)
 
-
+# list of the algorithms to check
 selected_algotithms <- c(
-
   "pc.stable", "gs", "hc", "tabu", "mmhc", "h2pc"
 )
 
-
+# list of all the models
 list_test <- list()
 
 for(algorithm in selected_algotithms) try({
@@ -39,7 +38,7 @@ for(algorithm in selected_algotithms) try({
     what = algorithm,
     args = list(x  = used_dataset)
   )
-
+  # find all undirected edges
   list_of_undirected <- undirected.arcs(list_test[[algorithm]])
 
   # remove undirected edges
@@ -51,16 +50,16 @@ for(algorithm in selected_algotithms) try({
 # list_test[[1]]
 # graphviz.plot(list_test[[6]])
 
+# a list of scores for each algorithm
 M_score <- matrix(
   data = NA,
   nrow = length(selected_algotithms),
   ncol = 1,
 )
 rownames(M_score) <- selected_algotithms
-# colnames(M_score) <- names(list_M)
-colnames(M_score) <- "test"
+colnames(M_score) <- "score"
 
-for(algorithm in selected_algotithms) for(name in "test") try({
+for(algorithm in selected_algotithms) for(name in "score") try({
   M_score[algorithm,name] <- score(
     x = list_test[[algorithm]],
     data = used_dataset,
@@ -68,13 +67,10 @@ for(algorithm in selected_algotithms) for(name in "test") try({
   )
 })
 
-#for(j in rownames(M_score)) M_score <- M_score[,order(M_score[j,])]
+# sort the score array
 for(j in colnames(M_score)) M_score <- M_score[order(M_score[,j]),]
-#M_score
 
-which(M_score == max(M_score))
-#graphviz.plot(list_test[[4]])
-
+# find the highest score(indicating the best algorithm)
 best_score <- which(M_score == max(M_score))
 
 fit <- bn.fit(list_test[[best_score]], used_dataset)
