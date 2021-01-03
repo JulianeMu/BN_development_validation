@@ -14,6 +14,7 @@ used_dataset[] <- lapply(used_dataset, factor) # convert all columns to factors
 
 sapply(used_dataset, class)
 
+#write.csv(used_dataset,'used_dataset.csv')
 #pdag <- pc.stable(used_dataset)
 #
 #list_of_undirected <- undirected.arcs(pdag)
