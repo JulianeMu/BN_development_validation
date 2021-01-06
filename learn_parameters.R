@@ -6,9 +6,17 @@
 library(bnlearn)
 library(jsonlite)
 
+# both dataset and the bayesian network structure need to be loaded:
 myArgs <- commandArgs(trailingOnly = TRUE)
 
-bayesian_network_structure <- bn.net(read.dsc(myArgs))
+bayesian_network_structure <- bn.net(read.dsc(myArgs[1]))
+
+used_dataset <- read.csv(myArgs[2])
+
+
+
+
+
 
 
 fit <- bn.fit(bayesian_network_structure, used_dataset)
