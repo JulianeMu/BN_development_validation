@@ -48,6 +48,8 @@ add_random_column <- function(data_df, bayesian_network_structure, added_column_
 
 }
 
+#output <- add_random_column(used_dataset, bayesian_network_structure, "new_category", c("a", "b", "c", "d", "e"))
+
 # add function to add new category/row and fill the rest of the values with impute function
 add_new_row <- function(data_df, bayesian_network_structure, column_name, added_value) {
 
@@ -72,6 +74,7 @@ add_new_row <- function(data_df, bayesian_network_structure, column_name, added_
 
 }
 
+#output2 <- add_new_row(used_dataset, bayesian_network_structure, "health", "yes")
 
 fit <- bn.fit(bayesian_network_structure, used_dataset)
 
