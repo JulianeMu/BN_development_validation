@@ -19,7 +19,7 @@ sapply(used_dataset, class)
 used_dataset <- as.data.frame(used_dataset)
 #typeof(used_dataset)
 
-
+#function to add a randomized column with predefined categries as a list
 add_random_column <- function(data_df, bayesian_network_structure, added_column_name, categories_of_added_column) {
 
   # categories1 <- letters[1:n_cat]
