@@ -48,6 +48,7 @@ add_random_column <- function(data_df, bayesian_network_structure, added_column_
 
 }
 
+# add function to add new category/row and fill the rest of the values with impute function
 add_new_row <- function(data_df, bayesian_network_structure, column_name, added_value) {
 
   # tail(data_added_node)
