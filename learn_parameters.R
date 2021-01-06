@@ -48,7 +48,25 @@ add_random_column <- function(data_df, bayesian_network_structure, added_column_
 
 }
 
+add_new_row <- function(data_df, bayesian_network_structure, column_name, added_value) {
 
+  # tail(data_added_node)
+  # nrow(data_added_node)
+  # add a row witht the given values
+  data_added_node <- data_added_node %>% add_row(column_name = added_value)
+  # factorize the data and create a new dataframe
+  data_added_node <- lapply(data_added_node, factor)
+  sapply(data_added_node, class)
+  data_added_node <- as.data.frame(data_added_node)
+
+  # fit the new dataset to the network structure
+  fitted = bn.fit(bayesian_network_structure, data_added_node)
+  # impute the dataset in order to replace the <NA> values
+  imputed = impute(fitted, data_added_node)
+
+  # graphviz.plot(fitted3)
+  # tail(imputed3)
+}
 
 
 fit <- bn.fit(bayesian_network_structure, used_dataset)
