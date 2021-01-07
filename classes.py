@@ -6,6 +6,24 @@ class LayerObject(object):
         self.layer = layer
         self.outcomes = outcomes
 
+
+class NodeIdNameOutcomes(object):
+    def __init__(self, id, label, outcomes):
+        self.id = id
+        self.label = label
+        self.outcomes = outcomes
+
+
+class Edges(object):
+    def __init__(self, edge_from, edge_to):
+        self.edge_from = edge_from
+        self.edge_to = edge_to
+
+
+class NetworkStructure(object):
+    def __init__(self, nodes, edges):
+        self.nodes = nodes
+        self.edges = edges
 ########################################################################
 
 

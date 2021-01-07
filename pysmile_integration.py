@@ -3,9 +3,18 @@ import pysmile_license
 import global_variables as gv
 import classes
 
+
 def readin_network_structure():
     gv.network = pysmile.Network()
     gv.network.read_file("bayesianNetworkStructure.dsc")
+
+
+def get_network_structure():
+    nodes = [classes.NodeIdNameOutcomes(id=node_id, label=gv.network.get_node_name(node_id), outcomes=gv.network.get_outcome_ids(node_id))
+             for node_id in gv.network.get_all_node_ids()]
+    edges = [classes.Edges(edge_from=node_id, edge_to=gv.network.get_child_ids(node_id)) for node_id in gv.network.get_all_node_ids()]
+
+    return classes.NetworkStructure(nodes=nodes, edges=edges)
 
 
 def get_node_layers():

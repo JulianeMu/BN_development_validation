@@ -117,7 +117,7 @@ def learn_structure_from_data():
 
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
-    return jsonify(transform(pysmile_integration.get_node_layers()))
+    return jsonify(transform(pysmile_integration.get_network_structure()))
 
 
 @app.after_request
