@@ -9,6 +9,8 @@ import os
 import subprocess
 import simplejson
 
+import pysmile_integration
+
 import global_variables as gv
 
 start_time = time.time()
@@ -109,16 +111,13 @@ def learn_structure_from_data():
     cmd = [command, path2script] + [os.getcwd() + os.path.sep + csv_file_name]
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
+    # x_json = json.loads(x)
 
-    print(x)
-    x_json = json.loads(x)
-
-    print(x_json)
-
+    pysmile_integration.readin_network_structure()
 
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
-    return jsonify(transform(True))
+    return jsonify(transform(pysmile_integration.get_node_layers()))
 
 
 @app.after_request

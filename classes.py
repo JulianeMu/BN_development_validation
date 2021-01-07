@@ -1,4 +1,14 @@
 
+class LayerObject(object):
+    def __init__(self, id, name, layer, outcomes):
+        self.id = id
+        self.name = name
+        self.layer = layer
+        self.outcomes = outcomes
+
+########################################################################
+
+
 class StateObject(object):
     def __init__(self, name, probability):
         self.name = name

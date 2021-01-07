@@ -81,7 +81,7 @@ var language_string = [
     {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'},
     {id: lang_id_number_of_patients, eng: 'Number of Patients:', de:'Anzahl der Patienten:'},
 
-    {id: lang_id_data_groups_workflow, eng: 'Clinical Workflow/Groups', de:'Klinische Arbeitsweise/Gruppierungen'},
+    {id: lang_id_data_groups_workflow, eng: 'Clinical Workflow Steps/Groups', de:'Klinische Arbeitsweise/Gruppierungen'},
 
     {id: lang_id_preoperative_group, eng: 'preoperative', de:'präoperativ'},
     {id: lang_id_biomarkers_group, eng: 'biomarkers', de:'Biomarker'},

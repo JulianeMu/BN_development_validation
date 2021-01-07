@@ -12,7 +12,7 @@ used_dataset <- read.csv(myArgs)
 
 used_dataset[] <- lapply(used_dataset, factor) # convert all columns to factors
 
-sapply(used_dataset, class)
+# sapply(used_dataset, class)
 
 #write.csv(used_dataset,'used_dataset.csv')
 #pdag <- pc.stable(used_dataset)
@@ -79,7 +79,6 @@ fit <- bn.fit(list_test[[best_score]], used_dataset)
 write.dsc('bayesianNetworkStructure.dsc', fit)
 
 # bn.net(fit) to go back to net for later refitting
-#print("test passed!")
 
 # cat(jsonlite::toJSON(list_final_contributing, pretty=TRUE))
 cat(jsonlite::toJSON(TRUE, pretty=TRUE))
