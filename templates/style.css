@@ -192,6 +192,10 @@ body{
     width: 100%;
 }
 
+#clinical_workflow_group_sortable{
+    width: 100%;
+}
+
 #id_data_inspection_all{
     width: 100%;
 }

@@ -33,13 +33,21 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
         content: get_language__label_by_id(lang_id_tooltip_add_clinical_workflow_group)
     });
 
+    let clinical_workflow_group_div_sortable = clinical_workflow_group_div.append('div').attr('id', id_clinical_workflow_group_sortable)
+        .attr('class', 'js-grid sortable');
+
     //set color domain again
     color_clinical_workflow_groups.domain([0, initial_groups.length]);
 
     for (let i = 0; i < initial_groups.length; i++) {
 
-        add_clinical_workflow_step__group(clinical_workflow_group_div, initial_groups[i]);
+        add_clinical_workflow_step__group(clinical_workflow_group_div_sortable, initial_groups[i]);
     }
+
+    sortable('.js-grid', {
+        forcePlaceholderSize: true,
+        placeholderClass: id_class_clinical_workflow_group
+    });
 
     update_all_colors_and_text();
 }
@@ -70,7 +78,7 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
         });
 
     tippy(group_div.node(), {
-        content: '<p>' + get_language__label_by_id(lang_id_show_variables_in_group_only) + '</p>' +
+        content: //'<p>' + get_language__label_by_id(lang_id_show_variables_in_group_only) + '</p>' +
             '<p>' + get_language__label_by_id(lang_id_clicking_on_workflow_step_glyph_to_select) + '</p>',
         allowHTML: true,
     });
@@ -79,9 +87,10 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
     let rightClickableArea = group_div.node();
 
     const instance = tippy(rightClickableArea, {
-        content: '<p onclick="reorder_groups(' + [group_information.id, -1] + ')">' + get_language__label_by_id(lang_id_context_menu_move_left_group) + '</p>' +
-            '<p onclick="reorder_groups(' + [group_information.id, 1] + ')">' + get_language__label_by_id(lang_id_context_menu_move_right_group) + '</p>' +
-            '<p onclick="remove_group(' + group_information.id + ')">' + get_language__label_by_id(lang_id_context_menu_remove_group) + '</p>' +
+        content:
+        // '<p onclick="reorder_groups(' + [group_information.id, -1] + ')">' + get_language__label_by_id(lang_id_context_menu_move_left_group) + '</p>' +
+        //     '<p onclick="reorder_groups(' + [group_information.id, 1] + ')">' + get_language__label_by_id(lang_id_context_menu_move_right_group) + '</p>' +
+             '<p onclick="remove_group(' + group_information.id + ')">' + get_language__label_by_id(lang_id_context_menu_remove_group) + '</p>' +
             '<p onclick="rename_group(' + group_information.id + ')">' + get_language__label_by_id(lang_id_context_menu_rename_group) + '</p>',
         placement: 'right-start',
         trigger: 'manual',
@@ -153,7 +162,7 @@ function add_group(original_id) {
             if (!initial_groups.find(x => x.id === group_obj.id || x.label === group_obj.label)) {
 
                 initial_groups.push(group_obj)
-                add_clinical_workflow_step__group(d3.select('#' + id_clinical_workflow_group), group_obj);
+                add_clinical_workflow_step__group(d3.select('#' + id_clinical_workflow_group_sortable), group_obj);
             }
         }
 

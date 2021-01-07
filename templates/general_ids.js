@@ -47,6 +47,8 @@ const id_submit_group_selection_button = "submit_group_selection_button";
 const id_variable_list_class = "variable_list";
 
 const id_clinical_workflow_group = "clinical_workflow_group";
+const id_clinical_workflow_group_sortable = "clinical_workflow_group_sortable";
+
 const id_class_clinical_workflow_group = "clinical_workflow_group_class";
 const id_class_add_button = "add_button";
 
