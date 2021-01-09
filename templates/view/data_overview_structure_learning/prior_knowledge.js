@@ -141,8 +141,6 @@ function initialize_prior_knowledge_view (structure_learning_div) {
         .on('click', function (d) {
             learn_structure_from_data(function (response) {
                 initialize_network_view(response);
-                //initialize_network_view__DAGRED3(response);
-
             })
         });
 
