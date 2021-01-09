@@ -66,3 +66,12 @@ const id_whitelist_blacklist_from = "whitelist_blacklist_from";
 const id_whitelist_blacklist_to = "whitelist_blacklist_to";
 
 const id_whitelist_blacklist_from_to = [id_whitelist_blacklist_from, id_whitelist_blacklist_to];
+
+const id_class_groups_in_network_view = "id_class_groups_in_network_view";
+const id_network_view = "id_network_view";
+
+const circle_id = "circle";
+const path_id = "path";
+const splitter = "____";
+
+const transition_duration = 200;

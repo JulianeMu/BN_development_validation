@@ -1,18 +1,34 @@
 let initial_groups = [{
-    id: lang_id_demographic_group,
-    label: get_language__label_by_id(lang_id_demographic_group),
-    variables: []
-}, {
-    id: lang_id_biomarkers_group,
-    label: get_language__label_by_id(lang_id_biomarkers_group),
+    id: lang_id_baseline_characteristics_group,
+    label: get_language__label_by_id(lang_id_baseline_characteristics_group),
     variables: []
 }, {
     id: lang_id_preoperative_group,
     label: get_language__label_by_id(lang_id_preoperative_group),
     variables: []
 }, {
-    id: lang_id_postoperative_group,
-    label: get_language__label_by_id(lang_id_postoperative_group),
+    id: lang_id_biomarkers_group,
+    label: get_language__label_by_id(lang_id_biomarkers_group),
+    variables: []
+}, {
+    id: lang_id_imaging_group,
+    label: get_language__label_by_id(lang_id_imaging_group),
+    variables: []
+}, {
+    id: lang_id_primary_surgical_treatment_group,
+    label: get_language__label_by_id(lang_id_primary_surgical_treatment_group),
+    variables: []
+}, {
+    id: lang_id_final_histology_group,
+    label: get_language__label_by_id(lang_id_final_histology_group),
+    variables: []
+}, {
+    id: lang_id_adjuvant_therapy_group,
+    label: get_language__label_by_id(lang_id_adjuvant_therapy_group),
+    variables: []
+}, {
+    id: lang_id_follow_up_group,
+    label: get_language__label_by_id(lang_id_follow_up_group),
     variables: []
 }];
 

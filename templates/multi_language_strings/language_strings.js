@@ -40,8 +40,12 @@ const lang_id_data_groups_workflow = "lang_id_data_groups_workflow";
 
 const lang_id_preoperative_group = "lang_id_preoperative_group";
 const lang_id_biomarkers_group = "lang_id_biomarkers_group";
-const lang_id_demographic_group = "lang_id_demographic_group";
-const lang_id_postoperative_group = "lang_id_postoperative_group";
+const lang_id_imaging_group = "lang_id_imaging_group";
+const lang_id_follow_up_group = "lang_id_follow_up_group";
+const lang_id_baseline_characteristics_group = "lang_id_baseline_characteristics_group";
+const lang_id_primary_surgical_treatment_group = "lang_id_primary_surgical_treatment_group";
+const lang_id_final_histology_group = "lang_id_final_histology_group";
+const lang_id_adjuvant_therapy_group = "lang_id_adjuvant_therapy_group";
 
 const lang_id_tooltip_header_backwards = "lang_id_tooltip_header_backwards";
 const lang_id_tooltip_header_save = "lang_id_tooltip_header_save";
@@ -83,10 +87,14 @@ var language_string = [
 
     {id: lang_id_data_groups_workflow, eng: 'Clinical Workflow Steps/Groups', de:'Klinische Arbeitsweise/Gruppierungen'},
 
-    {id: lang_id_preoperative_group, eng: 'preoperative', de:'präoperativ'},
-    {id: lang_id_biomarkers_group, eng: 'biomarkers', de:'Biomarker'},
-    {id: lang_id_demographic_group, eng: 'demographic', de:'demografische Daten'},
-    {id: lang_id_postoperative_group, eng: 'postoperativ', de:'postoperativ'},
+    {id: lang_id_preoperative_group, eng: 'preoperative diagnostics', de:'präoperativ'},
+    {id: lang_id_biomarkers_group, eng: 'Biomarkers', de:'Biomarker'},
+    {id: lang_id_imaging_group, eng: 'Imaging', de:'Bildinformationen'},
+    {id: lang_id_follow_up_group, eng: 'Follow-up', de:'Nachsorge'},
+    {id: lang_id_baseline_characteristics_group, eng: 'Baseline characteristics', de:'Grundcharackteristika'},
+    {id: lang_id_primary_surgical_treatment_group, eng:'Primary surgical treatment', de:'Erste chirurgische Behandlung'},
+    {id: lang_id_final_histology_group, eng:'Final histology', de:'Finale Histologie'},
+    {id: lang_id_adjuvant_therapy_group, eng: 'Adjuvant therapy', de:'Adjuvante Therapie'},
 
     {id: lang_id_tooltip_add_clinical_workflow_group, eng: 'add clinical workflow step/group', de:'füge klinischen Arbeitsschritt/Gruppierung hinzu'},
     {id: lang_id_context_menu_remove_group, eng: 'remove', de:'entfernen'},

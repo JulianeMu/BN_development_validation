@@ -1,4 +1,4 @@
-const splitter= '__to__';
+const splitter_prior_knowledge= '__to__';
 
 function initialize_prior_knowledge_view (structure_learning_div) {
     whitelist_blacklist_buttons.forEach(function (button_div, index) {
@@ -80,7 +80,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
 
                 blacklist_or_whitelist.push(array_selection);
                 let black_whitelist_divs_in_view = d3.select('#' + id_whitelist_blacklist_divs).append('div')
-                    .attr('id', array_selection[from_to[0]] + splitter +  array_selection[from_to[1]])
+                    .attr('id', array_selection[from_to[0]] + splitter_prior_knowledge +  array_selection[from_to[1]])
                     .attr('class', blacklist_or_whitelist_class)
                     .style('margin-top', 5 + 'px');
                 black_whitelist_divs_in_view.append('p')
@@ -140,8 +140,9 @@ function initialize_prior_knowledge_view (structure_learning_div) {
         .attr('value', get_language__label_by_id(lang_id_learn_structure))
         .on('click', function (d) {
             learn_structure_from_data(function (response) {
-                console.log(response);
                 initialize_network_view(response);
+                //initialize_network_view__DAGRED3(response);
+
             })
         });
 
@@ -150,7 +151,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
 }
 
 function remove_blacklist_or_whitelist (group_id) {
-    [from_blackwhite, to_blackwhite] = group_id.id.split(splitter);
+    [from_blackwhite, to_blackwhite] = group_id.id.split(splitter_prior_knowledge);
 
     blacklist = blacklist.filter(x => x.from !== from_blackwhite && x.to !== to_blackwhite);
     whitelist = whitelist.filter(x => x.from !== from_blackwhite && x.to !== to_blackwhite);
