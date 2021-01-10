@@ -52,17 +52,26 @@ add_random_column <- function(data_df, bayesian_network_structure, added_column_
 #output <- add_random_column(used_dataset, bayesian_network_structure, "new_category", c("a", "b", "c", "d", "e"))
 
 # add function to add new category/row and fill the rest of the values with impute function
-add_new_row <- function(data_df, bayesian_network_structure, column_name, added_value) {
+add_new_row <- function(data_df, bayesian_network_structure, column_names, added_values) {
 
   data_added_row <- data_df
   # tail(data_added_row)
   # nrow(data_added_row)
-  # add a row witht the given values
-  data_added_row <- data_added_row %>% add_row(!!column_name := added_value)
+  # add a row with the given values
+  data_added_row <- data_added_row %>% add_row(!!column_names[1] := added_values[1])
+  if(length(column_names) > 1){
+    for (nc in c(2:length(column_names))){
+      print(nc)
+      data_added_row[nrow(data_added_row),][column_names[nc]] <- added_values[nc]
+    }
+  }
+
+  # print(tail(data_added_row))
   # factorize the data and create a new dataframe
   data_added_row <- lapply(data_added_row, factor)
-  sapply(data_added_row, class)
+  #sapply(data_added_row, class)
   data_added_row <- as.data.frame(data_added_row)
+  # print(tail(data_added_row))
 
   # fit the new dataset to the network structure
   fitted = bn.fit(bayesian_network_structure, data_added_row)
