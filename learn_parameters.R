@@ -5,6 +5,7 @@
 
 library(bnlearn)
 library(jsonlite)
+library(tidyverse)
 
 # both dataset and the bayesian network structure need to be loaded:
 myArgs <- commandArgs(trailingOnly = TRUE)
