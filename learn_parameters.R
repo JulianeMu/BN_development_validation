@@ -84,7 +84,8 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
 
 }
 
-#output2 <- add_new_row(used_dataset, bayesian_network_structure, "health", "yes")
+#output2 <- add_new_row(used_dataset, bayesian_network_structure, 
+#                       c("family", "limit", "health", "gender"), c("(2.0, 3.0]", "no", "no", "female"))
 
 fit <- bn.fit(bayesian_network_structure, used_dataset)
 
