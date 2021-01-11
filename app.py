@@ -60,7 +60,9 @@ def discretize_data():
 
 
 def discretize_variable(variable_for_discretization):
-    discretized_data = pd.qcut(variable_for_discretization, 4)
+    data_frame = pd.DataFrame()
+    data_frame['test'] = variable_for_discretization.tolist()
+    discretized_data = pd.qcut(data_frame['test'].rank(method='first'), 4)
 
     return discretized_data
 

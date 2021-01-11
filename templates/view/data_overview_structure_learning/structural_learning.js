@@ -38,8 +38,6 @@ function initialize_structural_learning_view(structure_learning_div) {
         .style('left', 0)
         .style('top', 0);
     //initialize_network_dagred3(structure_learning_div);
-
-    console.log(initial_groups);
 }
 
 
