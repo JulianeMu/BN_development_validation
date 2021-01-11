@@ -41,17 +41,7 @@ function initialize_structural_learning_view(structure_learning_div) {
 }
 
 
-function get_y_diff(id_group_div) {
-    let y_pos = document.getElementById(id_group_div).getBoundingClientRect().y - document.getElementById(id_network_view).getBoundingClientRect().y;
-    let y_pos_plus_height = y_pos + document.getElementById(id_group_div).getBoundingClientRect().height;
-    let y_height = document.getElementById(id_group_div).getBoundingClientRect().height;
-
-    console.log(y_height)
-    return [y_pos, y_pos_plus_height, y_height];
-}
-
-
-function check_if_variable_is_grouped(variable_id) {
+function get_workflow_step_group(variable_id) {
     let group = initial_groups.filter(x => x.variables.includes(variable_id));
     if(group.length > 0) {
         return(group[0].id);
