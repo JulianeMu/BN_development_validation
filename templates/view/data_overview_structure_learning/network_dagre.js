@@ -5,7 +5,7 @@ function initialize_network_view(data) {
     for (let i = 0; i < initial_groups.length; i++) {
 
         let found = false;
-        for (let j = 0; j< initial_groups[i].variables.length; j++) {
+        for (let j = 0; j < initial_groups[i].variables.length; j++) {
             if (subset_selection.filter(x => x.id === initial_groups[i].variables[j])[0].included_in_structural_learning) {
                 found = true;
             }
@@ -42,7 +42,13 @@ function initialize_network_view(data) {
         .style("stroke", "white")
         .style('stroke-width', 4 + 'px')
         .style("fill", "var(--main-font-color)")
-        .attr("r", circle_radius)
+        .attr("r", circle_radius);
+
+
+    svg_g.selectAll('circle')
+        .attr('id', function (d) {
+            return circle_id + d;
+        })
         .on('mouseover', function (d, i) {
             let this_circle = this;
 
@@ -82,12 +88,7 @@ function initialize_network_view(data) {
         tippy(this, {
             content: d
         });
-    });
-
-    svg_g.selectAll('circle')
-        .attr('id', function (d) {
-            return circle_id + d;
-        })
+    })
         .transition()
         .duration(transition_duration)
         .attr("cx", function (d) {

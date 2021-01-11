@@ -198,14 +198,14 @@ function add_group(original_id) {
                 add_clinical_workflow_step__group(d3.select('#' + id_clinical_workflow_group_sortable), group_obj);
             }
         }
-
-        update_group_divs_in_network_view();
         update_all_colors_and_text();
-        hide_add_group_view();
+        update_group_divs_in_network_view();
 
         if (learned_structure_data !== null) {
             initialize_network_view(learned_structure_data);
         }
+        hide_add_group_view();
+
     });
 }
 
@@ -238,6 +238,11 @@ function remove_group(group_id) {
     tippy.hideAll();
 
     update_all_colors_and_text();
+    update_group_divs_in_network_view();
+
+    if (learned_structure_data !== null) {
+        initialize_network_view(learned_structure_data);
+    }
 }
 
 function rename_group(group_id) {

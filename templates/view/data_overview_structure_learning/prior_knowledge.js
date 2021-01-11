@@ -125,6 +125,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
     });
 
     structure_learning_div.append('input').attr('class', 'button')
+        .attr('readonly',"readonly")
         .attr('value', get_language__label_by_id(lang_id_include_preknowledge))
         .style('position', 'relative')
         .style('width', 320 + 'px')
@@ -137,6 +138,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
 
     structure_learning_div.append('input').attr('class', 'button')
         .style('right', 10 + 'px')
+        .attr('readonly',"readonly")
         .attr('value', get_language__label_by_id(lang_id_learn_structure))
         .on('click', function (d) {
             learn_structure_from_data(function (response) {
