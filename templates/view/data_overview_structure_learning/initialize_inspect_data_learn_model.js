@@ -32,7 +32,6 @@ function initialize_data_inspection_view(content_div) {
 
     let data_variables_div = data_inspection_div_all.append('div').attr('class', id_data_variables_view_class)
 
-
     let columns = Object.keys(data[0]);
 
     columns.forEach(function (col) {

@@ -60,11 +60,23 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
         add_clinical_workflow_step__group(clinical_workflow_group_div_sortable, initial_groups[i]);
     }
 
-    sortable('.js-grid', {
-        forcePlaceholderSize: true,
-        placeholderClass: id_class_clinical_workflow_group
-    });
 
+    sortable('.sortable')[0].addEventListener('sortupdate', function(e) {
+
+        let groups_updated = [];
+        e.detail.destination.items.forEach(function (d) {
+            groups_updated.push(initial_groups.filter(x => x.id === d.id)[0]);
+        })
+
+        initial_groups = groups_updated;
+
+        update_all_colors_and_text();
+
+        update_group_divs_in_network_view();
+        if (learned_structure_data !== null) {
+            initialize_network_view(learned_structure_data);
+        }
+    });
     update_all_colors_and_text();
 }
 
@@ -132,6 +144,11 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
 
         instance.show();
     });
+
+    sortable('.js-grid', {
+        forcePlaceholderSize: true,
+        placeholderClass: id_class_clinical_workflow_group
+    });
 }
 
 function get_font_color(color) {
@@ -182,8 +199,13 @@ function add_group(original_id) {
             }
         }
 
+        update_group_divs_in_network_view();
         update_all_colors_and_text();
         hide_add_group_view();
+
+        if (learned_structure_data !== null) {
+            initialize_network_view(learned_structure_data);
+        }
     });
 }
 
@@ -328,6 +350,10 @@ function select_variables_for_group(group_information) {
         }
 
         update_all_colors_and_text();
+
+        if (learned_structure_data !== null) {
+            initialize_network_view(learned_structure_data);
+        }
 
         hide_add_group_view();
     });

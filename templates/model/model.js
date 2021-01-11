@@ -64,6 +64,7 @@ function learn_structure_from_data (callback) {
         dataType: 'json',
         success: function (response) {
             //data = JSON.parse(response);
+            learned_structure_data = JSON.parse(response);
             callback(JSON.parse(response));
         }
     });
