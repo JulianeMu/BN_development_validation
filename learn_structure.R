@@ -72,7 +72,7 @@ for(algorithm in selected_algotithms) for(name in "score") try({
 for(j in colnames(M_score)) M_score <- M_score[order(M_score[,j]),]
 
 # find the highest score(indicating the best algorithm)
-best_score <- which(M_score == max(M_score))[1]
+best_score <- which(M_score == max(M_score))[1] # use first one because it could be that there are multiple best ones
 
 fit <- bn.fit(list_test[[best_score]], used_dataset)
 
