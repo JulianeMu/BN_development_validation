@@ -2,11 +2,12 @@ function initialize_structural_learning_view(structure_learning_div) {
     structure_learning_div.append('p').attr('class', 'h2')
         .text(get_language__label_by_id(lang_id_heading_data_driven_structure));
 
+    const network_view_height = 700;
     // Set up an SVG group so that we can translate the final graph.
     structure_learning_div
         .append('div').attr('id', id_network_view)
         .style('width', '100%')
-        .style('height', 700 + 'px')
+        .style('height', network_view_height + 'px')
         .style('background-color', 'white')
         .style('border-radius', 6 + 'px');
     //.style('margin', 10+'px');
@@ -28,16 +29,16 @@ function initialize_structural_learning_view(structure_learning_div) {
     }
 
     d3.select('#' + id_network_view)
-        .append("svg").style('width', '100%').style('height', 100 + '%')
+        .append("svg")
+        .style('width', (parseFloat(d3.select('#' + id_network_view).node().getBoundingClientRect().width) - 2* 15) + 'px')
+        .style('height', (d3.select('#' + id_network_view).node().getBoundingClientRect().height - 2 * 15) + 'px')
         .style('padding', 15 + 'px')
-        //.style('background-color', 'white')
         .style('left', '0')
         .style('y', '0')
         .style('position', 'absolute')
         .append("g")
         .style('left', 0)
         .style('top', 0);
-    //initialize_network_dagred3(structure_learning_div);
 }
 
 

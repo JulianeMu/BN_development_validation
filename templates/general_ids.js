@@ -70,9 +70,11 @@ const id_whitelist_blacklist_from_to = [id_whitelist_blacklist_from, id_whitelis
 const id_class_groups_in_network_view = "id_class_groups_in_network_view";
 const id_network_view = "id_network_view";
 
-const circle_id = "circle";
+const circle_id = "circle_id_";
 const circle_label_id = "label_";
 const path_id = "path";
 const splitter = "____";
+const class_network_label_text = 'network_label_text';
+const class_network_edges = 'network_edges';
 
 const transition_duration = 200;

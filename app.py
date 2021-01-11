@@ -107,13 +107,20 @@ def learn_structure_from_data():
     path2script = 'learn_structure.R'
     csv_file_name = 'whole_data.csv'
 
-    gv.dataset_categorical.to_csv(csv_file_name, index=False)
+    copied_df = gv.dataset_categorical.copy(deep=True)
 
+    for abc in gv.subset_selection_included_in_learning:
+        if not abc['included_in_structural_learning']:
+            copied_df = copied_df.drop(abc['id'], axis=1)
+    copied_df.to_csv(csv_file_name, index=False)
+
+    # print(copied_df)
     # print(gv.dataset.to_json(orient="records"))
     cmd = [command, path2script] + [os.getcwd() + os.path.sep + csv_file_name]
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
     # x_json = json.loads(x)
+    print(x)
 
     pysmile_integration.readin_network_structure()
 

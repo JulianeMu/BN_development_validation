@@ -1,5 +1,5 @@
 .network_label_text{
     font-size: var(--network_label-font-size);
     text-anchor: middle;
-    fill: black;
+    fill: var(--main-font-color);
 }

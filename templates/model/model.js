@@ -52,6 +52,7 @@ function query_data_from_FLASK (callback) {
 function learn_structure_from_data (callback) {
     const sURL = hostURL + "/learn_structure_from_data/";
 
+    console.log(subset_selection)
     let values = JSON.stringify([subset_selection, whitelist, blacklist]);
     //let values = JSON.stringify(data);
 
