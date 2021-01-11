@@ -1,20 +1,5 @@
-.node rect {
-    stroke: #999;
-    fill: #fff;
-    stroke-width: 1.5px;
-}
-
-.edgePath path {
-    stroke: #333;
-    stroke-width: 1.5px;
-}
-
-.id_class_groups_in_network_view{
-    width: 100%;
-    background-color: green;
-    border-radius: 6px;
-}
-
-.cluster{
-    width: 100%;
+.network_label_text{
+    font-size: var(--network_label-font-size);
+    text-anchor: middle;
+    fill: black;
 }

@@ -4,7 +4,7 @@ function initialize_network_view(data) {
 
     for (let i = 0; i < initial_groups.length; i++) {
         if (initial_groups[i].variables.length > 0) {
-            d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 60 + 'px')
+            d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 70 + 'px')
                 .style('margin-top', 10 + 'px')
                 .style('margin-left', 10 + 'px')
 
@@ -61,12 +61,11 @@ function initialize_network_view(data) {
                 let y_diff = get_y_diff(id_class_groups_in_network_view + group);
 
                 //svg_g.selectAll("circle")
-                return y_diff[0] + y_diff[2]/2 - 15;
+                return y_diff[0] + y_diff[2]/2 - 22;
             }
             return g.node(d).y + highest_y_pos;
         })
         .on('mouseover', function (d, i) {
-            console.log(i)
             let this_circle = this;
 
             svg_g.selectAll('*').filter(function () {
@@ -77,15 +76,20 @@ function initialize_network_view(data) {
                 return this.id.split(splitter).includes(i);
             }).transition().duration(transition_duration).style('opacity', 1);
 
+
             related_paths.each(function () {
                 let related_nodes = this.id.split(splitter);
 
                 for (let i=1; i< related_nodes.length; i++) {
                     d3.select('#' + circle_id + related_nodes[i]).transition().duration(transition_duration).style('opacity', 1);
+                    d3.select('#' + circle_label_id + related_nodes[i]).transition().duration(transition_duration).style('opacity', 1);
+
                 }
             })
 
             d3.select(this).style('opacity', 1);
+            d3.select('#' + circle_label_id + i).transition().duration(transition_duration).style('opacity', 1);
+
         })
         .on('mouseout', function (d, i) {
 
@@ -102,6 +106,9 @@ function initialize_network_view(data) {
             });
         });
 
+    //-------------------------------------------------
+    // reposition circles in case of variable grouping
+
     // sort circles by y position and x position
     circles = circles.sort((a,b) => (parseFloat(d3.select('#' + circle_id + a).attr('cy')) > parseFloat(d3.select('#' + circle_id + b).attr('cy'))) ?
         1 : ((parseFloat(d3.select('#' + circle_id + b).attr('cy')) > parseFloat(d3.select('#' + circle_id + a).attr('cy'))) ?
@@ -112,13 +119,14 @@ function initialize_network_view(data) {
     let last_circles = [];
     let space_to_add_related_to_same_group = 0;
 
-    const largest_space_between_circles = 70;
+    const largest_space_between_circles = 90;
+    let last_group = null;
 
     // reposition circles in case of grouped, too much y-space between circles, and multiple nodes at the same position
     circles.each(function (d,i) {
         if (i !== 0) {
 
-            d3.select(this).attr('cy', parseFloat(d3.select(this).attr('cy')) + space_to_add_related_to_same_group);
+            d3.select(this).attr('cy', parseFloat(d3.select(this).attr('cy')) + space_to_add_related_to_same_group + 0);
 
             if (d3.select(this).attr('cy') - d3.select(last_circles[last_circles.length-1]).attr('cy') > largest_space_between_circles) {
                 minus_to_save_space = d3.select(this).attr('cy') - d3.select(last_circles[last_circles.length-1]).attr('cy') - largest_space_between_circles;
@@ -131,12 +139,13 @@ function initialize_network_view(data) {
 
                     if (d3.select(current_elem).attr('cy') === d3.select(last_circles[circles_index]).attr('cy') && d3.select(current_elem).attr('cx') === d3.select(last_circles[circles_index]).attr('cx')) {
 
-                        d3.select(current_elem).attr('cy', parseFloat(d3.select(current_elem).attr('cy')) + 3 * circle_radius);
+                        d3.select(current_elem).attr('cy', parseFloat(d3.select(current_elem).attr('cy')) + 3.5 * circle_radius + 20);
 
                         d3.select('#' + id_class_groups_in_network_view + get_workflow_step_group(d))
-                            .style('height', parseFloat(d3.select('#' + id_class_groups_in_network_view + get_workflow_step_group(d)).style('height')) + 3 * circle_radius + 'px');
+                            .style('height', parseFloat(d3.select('#' + id_class_groups_in_network_view + get_workflow_step_group(d)).style('height')) + 3.5 * circle_radius + 20 + 'px');
 
-                        space_to_add_related_to_same_group += 3 * circle_radius;
+
+                        space_to_add_related_to_same_group += 3.5 * circle_radius + 20;
                         occupied = true;
                     }
                 }
@@ -150,8 +159,37 @@ function initialize_network_view(data) {
 
             check_if__pos_is_already_occupied(this);
         }
+
+        last_group = get_workflow_step_group(d);
+
         last_circles.push(this);
-    })
+    });
+
+
+    //-------------------------------------------------
+    // add circle label
+    circles.each(function (d) {
+
+        let related_circle = this;
+        svg_g.append('text')
+            .attr('id', function () {
+                return circle_label_id + d;
+            })
+            .attr('class', 'network_label_text')
+            .attr("x", function(){
+                return parseFloat(d3.select(related_circle).attr('cx'));
+            })
+            .attr('y', function () {
+                return parseFloat(d3.select(related_circle).attr('cy')) + 2 * circle_radius;
+            })
+            .attr('dy', -5 + 'px')
+            .text(function () {
+                if (d.length > 5) {
+                    return d.substring(0,5) + '...';
+                }
+                return d;
+            });
+    });
 
 
     let line = d3.line()
