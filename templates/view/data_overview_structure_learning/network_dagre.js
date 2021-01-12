@@ -84,11 +84,7 @@ function initialize_network_view(data) {
                 svg_g.selectAll('*').filter(function () {
                     return d3.select(this).style('opacity') == 0.2;
                 }).transition().duration(transition_duration / 2).style('opacity', 1);
-            }).each(function (d) {
-            tippy(this, {
-                content: d,
-            });
-        })
+            })
             .transition()
             .duration(transition_duration)
             .attr("cx", function (d) {
@@ -103,6 +99,10 @@ function initialize_network_view(data) {
                     y_pos = y_diff[0] + y_diff[2] / 2 - 22;
                 }
                 return y_pos;
+            }).each(function (d) {
+                tippy(this, {
+                    content: d,
+                });
             }).on('end', function (d) {
             reposition_labels_edges();
         })
@@ -201,14 +201,14 @@ function initialize_network_view(data) {
                 labels.exit().remove();//remove unneeded circles
                 labels.enter()
                     .append("text")
-                    .attr('id', function (d) {
-                        return circle_label_id + d;
-                    })
                     .attr('class', class_network_label_text)
                     .attr('dy', -5 + 'px');
 
 
                 svg_g.selectAll('.' + class_network_label_text).transition().duration(transition_duration)
+                    .attr('id', function (d) {
+                        return circle_label_id + d;
+                    })
                     .attr("x", function (d) {
                         return parseFloat(d3.select('#' + circle_id + d).attr('cx'));
                     })
