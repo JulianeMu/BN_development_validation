@@ -75,7 +75,8 @@ function update_group_divs_in_network_view () {
 
         tippy(group_div.node(), {
             content: initial_groups[i].label,
-            placement: "top-start"
+            placement: "top-start",
+            appendTo: 'parent',
         });
     }
 }

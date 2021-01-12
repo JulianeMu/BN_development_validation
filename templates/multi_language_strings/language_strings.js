@@ -34,6 +34,7 @@ const lang_id_startScratch = "lang_id_startScratch";
 const lang_id_openSession = "lang_id_openSession";
 
 const lang_id_inspect_data_learn_structure = "lang_id_inspect_data_learn_structure";
+const lang_id_structure_validation = "lang_id_structure_validation";
 
 const lang_id_data_overview = "lang_id_data_overview";
 const lang_id_data_groups_workflow = "lang_id_data_groups_workflow";
@@ -82,6 +83,7 @@ var language_string = [
     {id: lang_id_tooltip_header_save, eng: 'save current work', de:'speichere aktuelle Version'},
 
     {id: lang_id_inspect_data_learn_structure, eng: 'Inspect Data and Learn Structure', de:'Untersuche die Daten und lerne die Struktur'},
+    {id: lang_id_structure_validation, eng: 'Structure Validation', de: 'Strukturvalidierung'},
     {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'},
     {id: lang_id_number_of_patients, eng: 'Number of Patients:', de:'Anzahl der Patienten:'},
 

@@ -97,6 +97,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
                     arrow: true,
                     offset: [0, 0],
                     allowHTML: true,
+                    appendTo: 'parent',
                 });
 
                 rightClickableArea.addEventListener('contextmenu', (event) => {
@@ -122,6 +123,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
 
     let tippy_selectionlist_to = tippy(d3.select('#' + id_whitelist_blacklist_to + '_div').node(), {
         content: "Please select the from and to variables for blacklist/whitelist.",
+        appendTo: 'parent',
     });
 
     structure_learning_div.append('input').attr('class', 'button')

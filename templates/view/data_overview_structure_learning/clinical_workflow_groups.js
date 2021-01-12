@@ -46,7 +46,8 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
     d3.select('.' + id_class_add_button).on('click', add_group);
 
     tippy('.' + id_class_add_button, {
-        content: get_language__label_by_id(lang_id_tooltip_add_clinical_workflow_group)
+        content: get_language__label_by_id(lang_id_tooltip_add_clinical_workflow_group),
+        appendTo: 'parent',
     });
 
     let clinical_workflow_group_div_sortable = clinical_workflow_group_div.append('div').attr('id', id_clinical_workflow_group_sortable)
@@ -109,6 +110,7 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
         content: //'<p>' + get_language__label_by_id(lang_id_show_variables_in_group_only) + '</p>' +
             '<p>' + get_language__label_by_id(lang_id_clicking_on_workflow_step_glyph_to_select) + '</p>',
         allowHTML: true,
+        appendTo: 'parent'
     });
 
     // add right click
@@ -126,6 +128,7 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
         arrow: true,
         offset: [0, 0],
         allowHTML: true,
+        appendTo: 'parent'
     });
 
     rightClickableArea.addEventListener('contextmenu', (event) => {
@@ -265,18 +268,6 @@ function generate_id_from_text(str) {
 function select_variables_for_group(group_information) {
     hide_add_group_view();
 
-    // check all predefined checkboxes
-    group_information.variables.forEach(function (d) {
-        d3.select('#' + id_group_selection_ + d).property('checked', true);
-    });
-
-    // disable checkboxes which are selected within other groups
-    initial_groups.filter(x => x.id !== group_information.id).forEach(function (group) {
-        group.variables.forEach(function (d) {
-            d3.select('#' + id_group_selection_ + d).attr('disabled', true);
-            d3.select(d3.select('#' + id_group_selection_ + d).node().nextElementSibling).style('opacity', opacity_when_hidden);
-        });
-    });
 
     d3.select('.' + id_class_select_group_variables).style('visibility', 'visible').style('border-color', color_clinical_workflow_groups(initial_groups.findIndex(x => x.id === group_information.id) + 1));
 
@@ -312,6 +303,19 @@ function select_variables_for_group(group_information) {
     }
 
 
+    // check all predefined checkboxes
+    group_information.variables.forEach(function (d) {
+        d3.select('#' + id_group_selection_ + d).property('checked', true);
+    });
+
+    // disable checkboxes which are selected within other groups
+    initial_groups.filter(x => x.id !== group_information.id).forEach(function (group) {
+        group.variables.forEach(function (d) {
+            d3.select('#' + id_group_selection_ + d).attr('disabled', true);
+            d3.select(d3.select('#' + id_group_selection_ + d).node().nextElementSibling).style('opacity', opacity_when_hidden);
+        });
+    });
+
     d3.select('#' + id_submit_group_selection_button).on('click', function (d) {
 
         let checked = [];
@@ -336,25 +340,30 @@ function select_variables_for_group(group_information) {
 
         hide_add_group_view();
 
-        columns = columns.sort();
-
-        for (let index_cols = columns.length-1; index_cols > -1; index_cols --) {
-                let content = document.getElementById(id_beginning_columns_div + columns[index_cols]);
-                let parent = content.parentNode;
-                parent.insertBefore(content, parent.firstChild);
-        }
-        // update order of variable divs
-        for (let index_groups = initial_groups.length-1; index_groups > -1; index_groups --) {
-
-            let variables = initial_groups[index_groups].variables.sort().reverse();
-            variables.forEach(function (variable) {
-
-                let content = document.getElementById(id_beginning_columns_div + variable);
-                let parent = content.parentNode;
-                parent.insertBefore(content, parent.firstChild);
-            })
-        }
+        update_variables_order();
     });
+}
+
+function update_variables_order () {
+    let columns = Object.keys(data[0]);
+    columns = columns.sort();
+
+    for (let index_cols = columns.length-1; index_cols > -1; index_cols --) {
+        let content = document.getElementById(id_beginning_columns_div + columns[index_cols]);
+        let parent = content.parentNode;
+        parent.insertBefore(content, parent.firstChild);
+    }
+    // update order of variable divs
+    for (let index_groups = initial_groups.length-1; index_groups > -1; index_groups --) {
+
+        let variables = initial_groups[index_groups].variables.sort().reverse();
+        variables.forEach(function (variable) {
+
+            let content = document.getElementById(id_beginning_columns_div + variable);
+            let parent = content.parentNode;
+            parent.insertBefore(content, parent.firstChild);
+        })
+    }
 }
 
 function update_all_colors_and_text() {

@@ -95,6 +95,33 @@ def set_initial_data():
     return jsonify(transform(True))
 
 
+@app.route('/save_data_on_backend/', methods=["POST"])
+def save_data_on_backend():
+    start_time_deviations = time.time()
+
+    gv.dataset_categorical = pd.DataFrame.from_dict(request.get_json()[0])
+    gv.initial_groups = request.get_json()[1]
+    gv.subset_selection_included_in_learning = request.get_json()[2]
+    gv.whitelist = request.get_json()[3]
+    gv.blacklist = request.get_json()[4]
+    gv.learned_structure_data = request.get_json()[5]
+
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
+
+    return jsonify(transform(pysmile_integration.get_network_structure()))
+
+
+@app.route('/load_data_from_backend/', methods=["GET"])
+def load_data_from_backend():
+    start_time_deviations = time.time()
+
+    dataset_categorical = gv.dataset_categorical.to_json(orient="records")
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
+
+    return jsonify([dataset_categorical, gv.initial_groups, gv.subset_selection_included_in_learning, gv.whitelist,
+                    gv.blacklist, gv.learned_structure_data])
+
+
 @app.route('/learn_structure_from_data/', methods=["POST"])
 def learn_structure_from_data():
     start_time_deviations = time.time()

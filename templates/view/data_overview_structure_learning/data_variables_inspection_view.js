@@ -49,6 +49,7 @@ function initialize_data_inspection_view(content_div) {
         }
 
         append_horizontal_bar_chart(id_beginning_columns_div + col, [...map.entries()], data.length);
+
         append_missing_values_chart(id_beginning_columns_div + col, extracted_data);
 
         if (subset_selection.find(x => x.id === col).included_in_structural_learning) {
@@ -59,6 +60,7 @@ function initialize_data_inspection_view(content_div) {
 
         tippy(div.node(), {
             content: get_language__label_by_id(lang_id_tooltip_click_to_select),
+            appendTo: 'parent',
         });
     })
 }

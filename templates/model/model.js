@@ -67,3 +67,60 @@ function learn_structure_from_data (callback) {
         }
     });
 }
+
+function save_data_on_backend (callback) {
+    const sURL = hostURL + "/save_data_on_backend/";
+
+
+    let save_data = [data, initial_groups, subset_selection, whitelist, blacklist, learned_structure_data]
+    let values = JSON.stringify(save_data);
+
+    $.ajax({
+        url: sURL,
+        type: 'POST',
+        data: values,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (response) {
+            //data = JSON.parse(response);
+            callback(JSON.parse(response));
+        }
+    });
+}
+
+function load_data_from_backend (callback) {
+    const sURL = hostURL + "/load_data_from_backend/";
+
+    $.ajax({
+        url: sURL,
+        type: 'GET',
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (response) {
+            data = JSON.parse(response[0]);
+
+            if (response[1].length > 0) {
+                initial_groups = response[1];
+            }
+
+            if (response[2].length > 0) {
+                subset_selection = response[2];
+            }
+
+            if (response[3].length > 0) {
+                whitelist = response[3];
+            }
+
+            if (response[4].length > 0) {
+                blacklist = response[4];
+            }
+
+            if (response[5].length !== null) {
+                learned_structure_data = response[5];
+            }
+
+
+            callback(true);
+        }
+    });
+}

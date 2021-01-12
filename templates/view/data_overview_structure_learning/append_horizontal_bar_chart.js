@@ -44,7 +44,7 @@ function append_horizontal_bar_chart (div_id, data, data_length) {
         .append("g")
 
     //append rects
-    bars.append("rect")
+    let rects = bars.append("rect")
         .attr("class", "bar")
         .attr("y", function (d) {
             return y(d[0]);
@@ -56,7 +56,7 @@ function append_horizontal_bar_chart (div_id, data, data_length) {
         })
         .each(function (d) {
             // add tooltip value
-            tippy(this, {
+            tippy(this.parentNode, {
                 content: d[0]+': '+d[1],
             });
         });
