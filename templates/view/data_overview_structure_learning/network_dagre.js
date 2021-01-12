@@ -87,7 +87,6 @@ function initialize_network_view(data) {
             }).each(function (d) {
             tippy(this, {
                 content: d,
-                appendTo: 'parent',
             });
         })
             .transition()

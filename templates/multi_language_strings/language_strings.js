@@ -80,7 +80,7 @@ var language_string = [
     {id: lang_id_openSession, eng: 'open session', de:'Öffne Session'},
 
     {id: lang_id_tooltip_header_backwards, eng: 'go back', de:'gehe zurück'},
-    {id: lang_id_tooltip_header_save, eng: 'save current work', de:'speichere aktuelle Version'},
+    {id: lang_id_tooltip_header_save, eng: 'save current progress', de:'speichere aktuelle Version'},
 
     {id: lang_id_inspect_data_learn_structure, eng: 'Inspect Data and Learn Structure', de:'Untersuche die Daten und lerne die Struktur'},
     {id: lang_id_structure_validation, eng: 'Structure Validation', de: 'Strukturvalidierung'},
@@ -107,8 +107,8 @@ var language_string = [
     {id: lang_id_show_variables_in_group_only, eng: "show variables contained in clinical workflow step/group only", de:"zeige nur Variablen, welche in dem klinischen Arbeitsschritt/Gruppe enthalten sind"},
     {id: lang_id_clicking_on_workflow_step_glyph_to_select, eng: "click on clinical workflow step/group to select variables", de:"Klicke auf klinischen Arbeitsschritt/Gruppe um Variablen zu selektieren"},
 
-    {id: lang_id_learn_structure, eng: "learn structure", de: "Lerne die Struktur"},
-    {id: lang_id_include_preknowledge, eng: "integrate prior knowledge", de: "integriere Vorwissen"},
+    {id: lang_id_learn_structure, eng: "Learn Structure", de: "Lerne die Struktur"},
+    {id: lang_id_include_preknowledge, eng: "Integrate Prior Knowledge", de: "integriere Vorwissen"},
     {id: lang_id_tooltip_click_to_select, eng: "click to include/exclude from structural learning", de: "Klicken um Variable in Strukturerlernung mit einzubeziehen/auszuschließen"},
     {id: lang_id_heading_data_driven_structure, eng:"Data-Driven Bayesian Network Structure", de:"Datenbasierte Struktur des Bayes'schen Netzwerkes"},
 ];

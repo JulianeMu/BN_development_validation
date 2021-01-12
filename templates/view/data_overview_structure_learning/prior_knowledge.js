@@ -130,7 +130,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
         .attr('readonly',"readonly")
         .attr('value', get_language__label_by_id(lang_id_include_preknowledge))
         .style('position', 'relative')
-        .style('width', 320 + 'px')
+        .style('width', 330 + 'px')
         .on('click', function (d) {
             d3.select('#select_blacklist_whitelist')
                 .style('width', 570 + 'px')
