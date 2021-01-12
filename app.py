@@ -100,13 +100,13 @@ def learn_structure_from_data():
     start_time_deviations = time.time()
 
     gv.subset_selection_included_in_learning = request.get_json()[0]
-    gv.whitelist = pd.json_normalize(request.get_json()[1])
-    gv.blacklist = pd.json_normalize(request.get_json()[2])
+    gv.whitelist = request.get_json()[1]
+    gv.blacklist = request.get_json()[2]
 
     csv_whitelist_file_name = 'whitelist.csv'
     csv_blacklist_file_name = 'blacklist.csv'
-    gv.whitelist.to_csv(csv_whitelist_file_name, index=False)
-    gv.blacklist.to_csv(csv_blacklist_file_name, index=False)
+    pd.json_normalize(gv.whitelist).to_csv(csv_whitelist_file_name, index=False)
+    pd.json_normalize(gv.blacklist).to_csv(csv_blacklist_file_name, index=False)
 
     command = 'Rscript'
     path2script = 'learn_structure.R'

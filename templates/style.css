@@ -17,7 +17,7 @@
     --highlight-font-weight: 700;
     --legend_height: 40px;
     --heading_height:80px;
-    --footer_height:20px;
+    --footer_height:100px;
     --highlight_color: #d96ce4;
     --header_images_width: 120px;
 }
@@ -57,6 +57,14 @@ body{
     background-position: center ;
 }
 
+#forward_button{
+    background-image: url(../templates/resources/forward.svg), none;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: -45px;
+}
+
 .save_button {
     float: left;
     width: var(--header_images_width);
@@ -78,18 +86,20 @@ body{
 .main_content {
     position: relative;
     width: calc(100%);
-    height: calc(100% - var(--heading_height) - var(--footer_height)); /* 55vh for pictures */
+    /*height: calc(100% - var(--heading_height) - var(--footer_height)); !*/
 }
 
 .footer {
     position: relative;
+    float: bottom;
     width: calc(100%);
     height: var(--footer_height); /* 55vh for pictures */
+    padding-bottom: 20px;
 }
 
 .content {
     width: calc(100% - 2*var(--main-margin));
-    height: calc(100%);
+    /*height: calc(100%);*/
     position: absolute;
     margin-left: var(--main-margin);
     margin-right: var(--main-margin);

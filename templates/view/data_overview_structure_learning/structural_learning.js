@@ -14,18 +14,27 @@ function initialize_structural_learning_view(structure_learning_div) {
 
     update_group_divs_in_network_view();
 
+    const padding_left = 100;
+    const padding = 15;
 
     d3.select('#' + id_network_view)
+        .style('overflow-y', 'scroll')
         .append("svg")
-        .style('width', (parseFloat(d3.select('#' + id_network_view).node().getBoundingClientRect().width) - 2* 15) + 'px')
-        .style('height', (d3.select('#' + id_network_view).node().getBoundingClientRect().height - 2 * 15) + 'px')
-        .style('padding', 15 + 'px')
-        .style('left', '0')
+        .style('width', (parseFloat(d3.select('#' + id_network_view).node().getBoundingClientRect().width) - padding_left - 2*padding) + 'px')
+        .style('height', (d3.select('#' + id_network_view).node().getBoundingClientRect().height - 2 * padding) + 'px')
+        //.style('height', 1000 + 'px')
+        .style('padding', padding + 'px')
+        //.style('padding-left', padding_left + 'px')
+        .style('left', padding_left)
         .style('y', '0')
+        .style('fill', 'none')
         .style('position', 'absolute')
+        .style('overflow-y', 'scroll')
         .append("g")
+        .style('fill', 'none')
         .style('left', 0)
-        .style('top', 0);
+        .style('top', 0)
+        .style('overflow-y', 'scroll')
 }
 
 
@@ -42,7 +51,7 @@ function update_group_divs_in_network_view () {
 
     for (let i = initial_groups.length-1; i >-1; i--) {
 
-        d3.select('#' + id_network_view)//.select('svg')
+        let group_div = d3.select('#' + id_network_view)//.select('svg')
             .append('div')
             .lower()
             .attr('class', id_class_groups_in_network_view)
@@ -53,7 +62,21 @@ function update_group_divs_in_network_view () {
             .style('float', 'left')
             .style('opacity', 0.5)
             .style('background-color', color_clinical_workflow_groups(initial_groups.findIndex(x => x.id === initial_groups[i].id) + 1))
-            .style('border-radius', 6 + 'px');
+            .style('border-radius', 6 + 'px')
+            .append('p').attr('class', 'network_group_label')
+            .text(function () {
+                if (initial_groups[i].label.length > 5) {
+                    return initial_groups[i].label.substr(0, 5) + '...'
+                }
+                return initial_groups[i].label
+            })
+            .style('padding-left', 5+'px')
+            .style('opacity', 0);
+
+        tippy(group_div.node(), {
+            content: initial_groups[i].label,
+            placement: "top-start"
+        });
     }
 }
 

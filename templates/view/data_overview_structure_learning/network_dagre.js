@@ -14,12 +14,14 @@ function initialize_network_view(data) {
             d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 70 + 'px')
                 .style('margin-top', 10 + 'px')
                 .style('margin-left', 10 + 'px')
+                .select('p').style('opacity', 1);
 
             highest_y_pos = get_y_diff(id_class_groups_in_network_view + initial_groups[i].id)[1];
         } else {
             d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 0 + 'px')
                 .style('margin-top', 0 + 'px')
                 .style('margin-left', 0 + 'px')
+                .select('p').style('opacity', 0)
         }
     }
 
@@ -43,7 +45,6 @@ function initialize_network_view(data) {
         .style('stroke-width', 4 + 'px')
         .style("fill", "var(--main-font-color)")
         .attr("r", circle_radius);
-
 
     svg_g.selectAll('circle')
         .attr('id', function (d) {
@@ -280,6 +281,7 @@ function initialize_network_view(data) {
 
         }, 10);
     }
+
 }
 
 function get_y_diff(id_group_div) {
