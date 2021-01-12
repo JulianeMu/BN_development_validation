@@ -53,7 +53,6 @@ function learn_structure_from_data (callback) {
     const sURL = hostURL + "/learn_structure_from_data/";
 
     let values = JSON.stringify([subset_selection, whitelist, blacklist]);
-    //let values = JSON.stringify(data);
 
     $.ajax({
         url: sURL,

@@ -13,14 +13,12 @@ function initialize_network_view(data) {
         if (initial_groups[i].variables.length > 0 && found) {
             d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 70 + 'px')
                 .style('margin-top', 10 + 'px')
-                .style('margin-left', 10 + 'px')
                 .select('p').style('opacity', 1);
 
             highest_y_pos = get_y_diff(id_class_groups_in_network_view + initial_groups[i].id)[1];
         } else {
             d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 0 + 'px')
                 .style('margin-top', 0 + 'px')
-                .style('margin-left', 0 + 'px')
                 .select('p').style('opacity', 0)
         }
     }
@@ -56,24 +54,24 @@ function initialize_network_view(data) {
             let variable_label = i;
             svg_g.selectAll('*').filter(function () {
                 return this !== this_circle && d3.select(this).style('opacity') === '1';
-            }).transition().duration(transition_duration).style('opacity', 0.2);
+            }).transition().duration(transition_duration/2).style('opacity', 0.2);
 
             let related_paths = svg_g.selectAll('path').filter(function () {
 
                 return this.id.split(splitter).includes(variable_label);
-            }).transition().duration(transition_duration).style('opacity', 1);
+            }).transition().duration(transition_duration/2).style('opacity', 1);
 
             related_paths.each(function () {
                 let related_nodes = this.id.split(splitter);
 
                 for (let i = 1; i < related_nodes.length; i++) {
-                    d3.select('#' + circle_id + related_nodes[i]).transition().duration(transition_duration).style('opacity', 1);
-                    d3.select('#' + circle_label_id + related_nodes[i]).transition().duration(transition_duration).style('opacity', 1);
+                    d3.select('#' + circle_id + related_nodes[i]).transition().duration(transition_duration/2).style('opacity', 1);
+                    d3.select('#' + circle_label_id + related_nodes[i]).transition().duration(transition_duration/2).style('opacity', 1);
                 }
             })
 
             d3.select(this).style('opacity', 1);
-            d3.select('#' + circle_label_id + i).transition().duration(transition_duration).style('opacity', 1);
+            d3.select('#' + circle_label_id + i).transition().duration(transition_duration/2).style('opacity', 1);
 
         })
         .on('mouseout', function (d, i) {

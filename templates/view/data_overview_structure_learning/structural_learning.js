@@ -49,16 +49,12 @@ function update_group_divs_in_network_view () {
 
     for (let i = initial_groups.length-1; i >-1; i--) {
 
-
-
         let group_div = d3.select('#' + id_network_view_child)
             .append('div')
             .lower()
             .attr('class', id_class_groups_in_network_view)
             .attr('id', id_class_groups_in_network_view + initial_groups[i].id)
-            //.style('width', (document.getElementById(id_network_view).getBoundingClientRect().width - 20) + 'px')
             .style('width', 100+'%')
-
             .style('height', 0 + 'px')
             .style('position', 'relative')
             .style('float', 'left')

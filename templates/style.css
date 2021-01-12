@@ -195,7 +195,7 @@ body{
 
 .data_variables_view{
     width: 100%;
-    max-height: 430px;
+    height: 430px;
     overflow-y:scroll;
 }
 
