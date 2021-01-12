@@ -255,32 +255,6 @@ function rename_group(group_id) {
 
     d3.select('#' + id_group_label_name).node().value = initial_groups.filter(x => x.id === group_id)[0].label;
     add_group(initial_groups.filter(x => x.id === group_id)[0].id);
-
-}
-
-function reorder_groups(group_id, direction) {
-
-    if (group_id.id !== undefined) {
-        group_id = group_id.id;
-    }
-
-    let current_pos = initial_groups.findIndex(x => x.id === group_id);
-
-    if ((current_pos > 0 && direction < 0) || (current_pos < initial_groups.length - 1 && direction > 0)) {
-        let a = initial_groups[current_pos], b = initial_groups[current_pos + direction];
-        initial_groups[current_pos + direction] = a;
-        initial_groups[current_pos] = b;
-
-        if (direction > 0) {
-            d3.select('#' + group_id).node().parentNode.insertBefore(d3.select('#' + initial_groups[current_pos].id).node(), d3.select('#' + initial_groups[current_pos + direction].id).node());
-
-        } else {
-            d3.select('#' + group_id).node().parentNode.insertBefore(d3.select('#' + initial_groups[current_pos + direction].id).node(), d3.select('#' + initial_groups[current_pos].id).node());
-        }
-    }
-
-    update_all_colors_and_text();
-    tippy.hideAll();
 }
 
 function generate_id_from_text(str) {
@@ -361,6 +335,25 @@ function select_variables_for_group(group_information) {
         }
 
         hide_add_group_view();
+
+        columns = columns.sort();
+
+        for (let index_cols = columns.length-1; index_cols > -1; index_cols --) {
+                let content = document.getElementById(id_beginning_columns_div + columns[index_cols]);
+                let parent = content.parentNode;
+                parent.insertBefore(content, parent.firstChild);
+        }
+        // update order of variable divs
+        for (let index_groups = initial_groups.length-1; index_groups > -1; index_groups --) {
+
+            let variables = initial_groups[index_groups].variables.sort().reverse();
+            variables.forEach(function (variable) {
+
+                let content = document.getElementById(id_beginning_columns_div + variable);
+                let parent = content.parentNode;
+                parent.insertBefore(content, parent.firstChild);
+            })
+        }
     });
 }
 

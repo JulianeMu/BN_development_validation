@@ -119,14 +119,10 @@ def learn_structure_from_data():
             copied_df = copied_df.drop(column['id'], axis=1)
     copied_df.to_csv(csv_data_file_name, index=False)
 
-    # print(copied_df)
-    # print(gv.dataset.to_json(orient="records"))
-    print(os.getcwd() + os.path.sep)
     cmd = [command, path2script] + [os.getcwd() + os.path.sep]
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
     # x_json = json.loads(x)
-    print(x)
 
     pysmile_integration.readin_network_structure()
 

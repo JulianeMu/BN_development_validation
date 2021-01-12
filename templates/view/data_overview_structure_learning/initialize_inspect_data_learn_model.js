@@ -34,6 +34,7 @@ function initialize_data_inspection_view(content_div) {
 
     let columns = Object.keys(data[0]);
 
+    columns = columns.sort();
     columns.forEach(function (col) {
         let div = data_variables_div.append('div')
             .attr('class', 'data_col_div')
