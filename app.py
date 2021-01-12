@@ -100,23 +100,29 @@ def learn_structure_from_data():
     start_time_deviations = time.time()
 
     gv.subset_selection_included_in_learning = request.get_json()[0]
-    gv.whitelist = request.get_json()[1]
-    gv.blacklist = request.get_json()[2]
+    gv.whitelist = pd.json_normalize(request.get_json()[1])
+    gv.blacklist = pd.json_normalize(request.get_json()[2])
+
+    csv_whitelist_file_name = 'whitelist.csv'
+    csv_blacklist_file_name = 'blacklist.csv'
+    gv.whitelist.to_csv(csv_whitelist_file_name, index=False)
+    gv.blacklist.to_csv(csv_blacklist_file_name, index=False)
 
     command = 'Rscript'
     path2script = 'learn_structure.R'
-    csv_file_name = 'whole_data.csv'
+    csv_data_file_name = 'whole_data.csv'
 
     copied_df = gv.dataset_categorical.copy(deep=True)
 
-    for abc in gv.subset_selection_included_in_learning:
-        if not abc['included_in_structural_learning']:
-            copied_df = copied_df.drop(abc['id'], axis=1)
-    copied_df.to_csv(csv_file_name, index=False)
+    for column in gv.subset_selection_included_in_learning:
+        if not column['included_in_structural_learning']:
+            copied_df = copied_df.drop(column['id'], axis=1)
+    copied_df.to_csv(csv_data_file_name, index=False)
 
     # print(copied_df)
     # print(gv.dataset.to_json(orient="records"))
-    cmd = [command, path2script] + [os.getcwd() + os.path.sep + csv_file_name]
+    print(os.getcwd() + os.path.sep)
+    cmd = [command, path2script] + [os.getcwd() + os.path.sep]
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
     # x_json = json.loads(x)

@@ -6,3 +6,5 @@
 /.idea/
 /whole_data.csv
 /bayesianNetworkStructure.dsc
+/blacklist.csv
+/whitelist.csv

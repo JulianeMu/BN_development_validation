@@ -8,7 +8,22 @@ library(jsonlite)
 
 myArgs <- commandArgs(trailingOnly = TRUE)
 
-used_dataset <- read.csv(myArgs)
+data_file_name <- 'whole_data.csv'
+whitelist_file_name <- 'whitelist.csv'
+blacklist_file_name <- 'blacklist.csv'
+
+used_dataset <- read.csv(paste0(myArgs, data_file_name))
+
+whitelist <- NULL
+blacklist <- NULL
+
+if (file.size(paste0(myArgs, whitelist_file_name)) > 1) {
+  whitelist <- read.csv(paste0(myArgs, whitelist_file_name))
+}
+
+if (file.size(paste0(myArgs, blacklist_file_name)) > 1) {
+  blacklist <- read.csv(paste0(myArgs, blacklist_file_name))
+}
 
 used_dataset[] <- lapply(used_dataset, factor) # convert all columns to factors
 
@@ -37,7 +52,7 @@ list_test <- list()
 for(algorithm in selected_algotithms) try({
   list_test[[algorithm]] <- do.call(
     what = algorithm,
-    args = list(x  = used_dataset)
+    args = list(x  = used_dataset, whitelist = whitelist, blacklist = blacklist)
   )
   # find all undirected edges
   list_of_undirected <- undirected.arcs(list_test[[algorithm]])
