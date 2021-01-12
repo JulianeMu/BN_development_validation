@@ -10,31 +10,29 @@ function initialize_structural_learning_view(structure_learning_div) {
         .style('height', network_view_height + 'px')
         .style('background-color', 'white')
         .style('border-radius', 6 + 'px');
-    //.style('margin', 10+'px');
 
-    update_group_divs_in_network_view();
 
-    const padding_left = 100;
+    const space_left = 100;
     const padding = 15;
 
     d3.select('#' + id_network_view)
-        .style('overflow-y', 'scroll')
-        .append("svg")
-        .style('width', (parseFloat(d3.select('#' + id_network_view).node().getBoundingClientRect().width) - padding_left - 2*padding) + 'px')
-        .style('height', (d3.select('#' + id_network_view).node().getBoundingClientRect().height - 2 * padding) + 'px')
-        //.style('height', 1000 + 'px')
-        .style('padding', padding + 'px')
-        //.style('padding-left', padding_left + 'px')
-        .style('left', padding_left)
-        .style('y', '0')
-        .style('fill', 'none')
+        .append('div')
+        .attr('id', id_network_view_child)
         .style('position', 'absolute')
+        .style('width', 'calc(100% - 2*' + padding + 'px)')
+        .style('height', (parseFloat(d3.select('#' + id_network_view).style('height')) - 2* padding) + 'px')
+        .style('padding', padding + 'px')
         .style('overflow-y', 'scroll')
-        .append("g")
-        .style('fill', 'none')
-        .style('left', 0)
-        .style('top', 0)
-        .style('overflow-y', 'scroll')
+        .style('overflow-x', 'scroll')
+        .append("svg")
+        .style('width', 'calc(100%-' + space_left + 'px)')
+        .style('height', '90%')
+        .style('left', space_left + 'px')
+        .style('position', 'absolute')
+        .style('fill', 'none');
+
+    update_group_divs_in_network_view();
+
 }
 
 
@@ -47,23 +45,29 @@ function get_workflow_step_group(variable_id) {
 }
 
 function update_group_divs_in_network_view () {
-    d3.select('#' + id_network_view).selectAll('.' + id_class_groups_in_network_view).remove();
+    d3.select('#' + id_network_view_child).selectAll('.' + id_class_groups_in_network_view).remove();
 
     for (let i = initial_groups.length-1; i >-1; i--) {
 
-        let group_div = d3.select('#' + id_network_view)//.select('svg')
+
+
+        let group_div = d3.select('#' + id_network_view_child)
             .append('div')
             .lower()
             .attr('class', id_class_groups_in_network_view)
             .attr('id', id_class_groups_in_network_view + initial_groups[i].id)
-            .style('width', (document.getElementById(id_network_view).getBoundingClientRect().width - 20) + 'px')
+            //.style('width', (document.getElementById(id_network_view).getBoundingClientRect().width - 20) + 'px')
+            .style('width', 100+'%')
+
             .style('height', 0 + 'px')
             .style('position', 'relative')
             .style('float', 'left')
             .style('opacity', 0.5)
             .style('background-color', color_clinical_workflow_groups(initial_groups.findIndex(x => x.id === initial_groups[i].id) + 1))
             .style('border-radius', 6 + 'px')
-            .append('p').attr('class', 'network_group_label')
+            .append('p')
+            .attr('id', 'network_group_label_' + initial_groups[i].id)
+            .attr('class', 'network_group_label')
             .text(function () {
                 if (initial_groups[i].label.length > 5) {
                     return initial_groups[i].label.substr(0, 5) + '...'

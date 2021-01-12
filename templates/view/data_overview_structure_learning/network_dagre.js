@@ -27,7 +27,7 @@ function initialize_network_view(data) {
 
     let g = compute_dagre_layout(data);
 
-    let svg_g = d3.select('#' + id_learnt_model_div).select('svg').select('g');
+    let svg_g = d3.select('#' + id_learnt_model_div).select('svg')//.select('g');
 
     const circle_radius = 20;
 
@@ -97,12 +97,13 @@ function initialize_network_view(data) {
         })
         .attr("cy", function (d) {
             let group = get_workflow_step_group(d);
+            let y_pos = g.node(d).y + highest_y_pos;
             if (group !== null) {
                 let y_diff = get_y_diff(id_class_groups_in_network_view + group);
                 //svg_g.selectAll("circle")
-                return y_diff[0] + y_diff[2] / 2 - 22;
+                y_pos = y_diff[0] + y_diff[2] / 2 - 22;
             }
-            return g.node(d).y + highest_y_pos;
+            return y_pos;
         }).on('end', function (d) {
         reposition_labels_edges();
     })
@@ -160,6 +161,7 @@ function initialize_network_view(data) {
                     if (d3.select('#' + d.id).attr('cy') - d3.select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') > largest_space_between_circles) {
                         minus_to_save_space = d3.select('#' + d.id).attr('cy') - d3.select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') - largest_space_between_circles;
                         d3.select('#' + d.id).attr('cy', parseFloat(d3.select('#' + d.id).attr('cy')) - minus_to_save_space);
+
                     }
 
                     function check_if__pos_is_already_occupied(current_elem) {
@@ -279,13 +281,23 @@ function initialize_network_view(data) {
                     return 1;
                 });
 
+            svg_g.selectAll('circle').each(function (circle, i) {
+                if (parseFloat(svg_g.style('height')) < parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius) {
+                    svg_g.style('height', parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius);
+                }
+                if (parseFloat(svg_g.style('width')) < parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius) {
+                    svg_g.style('width', parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius);
+                }
+            });
         }, 10);
     }
-
 }
 
 function get_y_diff(id_group_div) {
-    let y_pos = document.getElementById(id_group_div).getBoundingClientRect().y - document.getElementById(id_network_view).getBoundingClientRect().y;
+
+    let y_pos = document.getElementById(id_group_div).getBoundingClientRect().y -
+            document.getElementById(id_network_view_child).getBoundingClientRect().y;
+
     let y_pos_plus_height = y_pos + document.getElementById(id_group_div).getBoundingClientRect().height;
     let y_height = document.getElementById(id_group_div).getBoundingClientRect().height;
 

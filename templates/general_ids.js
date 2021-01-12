@@ -2,8 +2,9 @@
 let current_html_page = 0;
 const html_page_begin = "index.html";
 const html_page_inspect_data_learn_model = "inspect_data_learn_model.html";
+const html_page_structure_validation = "structure_validation.html";
 
-const html_pages = [html_page_begin, html_page_inspect_data_learn_model];
+const html_pages = [html_page_begin, html_page_inspect_data_learn_model, html_page_structure_validation];
 
 
 //------------------------general ids
@@ -69,6 +70,8 @@ const id_whitelist_blacklist_from_to = [id_whitelist_blacklist_from, id_whitelis
 
 const id_class_groups_in_network_view = "id_class_groups_in_network_view";
 const id_network_view = "id_network_view";
+const id_network_view_child = "id_network_view_child";
+
 
 const circle_id = "circle_id_";
 const circle_label_id = "label_";
