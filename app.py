@@ -90,6 +90,9 @@ def set_initial_data():
             gv.dataset_categorical.insert(loc=len(gv.dataset_categorical.columns), column=columnName,
                                           value=columnData.values)
 
+    gv.initial_groups = []
+    gv.learned_structure_data = None
+
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
     return jsonify(transform(True))

@@ -30,7 +30,8 @@ function initialize_startPage() {
         d3.select('#' + id_main_content).select('.' + id_content).append('div')
             .attr('id', upload_start_open[i].id)
             .style('width', div_width + '%')
-            .style('height', 100 + '%').style('position', 'absolute')
+            .style('height', 100 + '%')
+            .style('position', 'absolute')
             .style('left', 'calc(' + i +' * ' + div_width + '%)')
             .append('svg').style('width', 100 + '%').style('height', 100 + '%');
 
@@ -44,9 +45,12 @@ function initialize_startPage() {
                 .on('change', select_file);
         }
 
-        d3.select('#' + id_main_content).select('#' + upload_start_open[i].id).append('button')
+        d3.select('#' + id_main_content)
+            .select('#' + upload_start_open[i].id)
+            .append('button')
             .attr('class', id_class_button)
-            .text(get_language__label_by_id(upload_start_open[i].button_text)).style('left', 50 + '%')
+            .text(get_language__label_by_id(upload_start_open[i].button_text))
+            .style('left', 50 + '%')
             .style('transform', 'translate(-50%, 0)')
             .on('click', upload_start_open[i].function);
 

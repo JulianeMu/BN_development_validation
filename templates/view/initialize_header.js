@@ -38,4 +38,5 @@ function header_backwards_button() {
 
 function header_save_button() {
     console.log('save');
+    export_progress();
 }

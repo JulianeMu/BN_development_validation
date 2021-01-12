@@ -115,12 +115,49 @@ function load_data_from_backend (callback) {
                 blacklist = response[4];
             }
 
-            if (response[5].length !== null) {
+            if (response[5] !== null) {
                 learned_structure_data = response[5];
             }
-
 
             callback(true);
         }
     });
+}
+
+function export_progress() {
+    let save_data = [data, initial_groups, subset_selection, whitelist, blacklist, learned_structure_data]
+    let values = JSON.stringify(save_data);
+
+    let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(values);
+
+    let exportFileDefaultName = 'BN_generation_and_validation_progress.json';
+
+    let linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+}
+
+function import_progress() {
+    data = JSON.parse(response[0]);
+
+    if (response[1].length > 0) {
+        initial_groups = response[1];
+    }
+
+    if (response[2].length > 0) {
+        subset_selection = response[2];
+    }
+
+    if (response[3].length > 0) {
+        whitelist = response[3];
+    }
+
+    if (response[4].length > 0) {
+        blacklist = response[4];
+    }
+
+    if (response[5].length !== null) {
+        learned_structure_data = response[5];
+    }
 }

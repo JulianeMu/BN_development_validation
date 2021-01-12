@@ -144,7 +144,10 @@
             update_all_colors_and_text();
             update_group_divs_in_network_view();
             initialize_network_view(learned_structure_data);
-            update_variables_order();
+
+            setTimeout(() => {
+                update_variables_order();
+            }, 5);
 
 
         }

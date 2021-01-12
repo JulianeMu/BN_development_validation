@@ -15,7 +15,9 @@
     --highlight-font-weight: 700;
     --legend_height: 40px;
     --heading_height:80px;
+    --footer_height:20px;
 }
+
 
 body{
     margin: 0;
@@ -42,14 +44,13 @@ body{
 }
 
 .main_content {
-    fill: yellow;
     position: relative;
     width: calc(100%);
-    height: calc(100% - var(--heading_height) - var(--footer_height)); /* 55vh for pictures */
+    height: calc(100% - var(--heading_height) - var(--footer_height));
+/*calc(100% - var(--heading_height) - var(--footer_height)); !* 55vh for pictures *!*/
 }
 
 .footer {
-    fill: green;
     position: relative;
     width: calc(100%);
     height: var(--footer_height); /* 55vh for pictures */
