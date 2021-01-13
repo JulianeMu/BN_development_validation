@@ -9,6 +9,7 @@ function initialize_steps (node_under_investigation) {
 
     append_text_input(lang_id_variable_identifier, node_under_investigation.label, 'label');
 
+
     function append_text_input (lang_id, label, node_prop) {
 
         let selection_div = d3.select('#' + steps_structure_validation_div).append('div')

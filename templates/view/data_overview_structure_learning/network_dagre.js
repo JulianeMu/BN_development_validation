@@ -205,8 +205,8 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 if (d3.select(current_elem).attr('cy') === svg_g.select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') && d3.select(current_elem).attr('cx') === svg_g.select('#' + (last_circles[last_circles.length - 1].id)).attr('cx')) {
 
                                     d3.select(current_elem).attr('cy', parseFloat(d3.select(current_elem).attr('cy')) + 3.5 * circle_radius + 20);
-                                    svg_g.select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1]))
-                                        .style('height', parseFloat(svg_g.select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1])).style('height')) + 3.5 * circle_radius + 20 + 'px');
+                                    d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1]))
+                                        .style('height', parseFloat(d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1])).style('height')) + 3.5 * circle_radius + 20 + 'px');
 
                                     space_to_add_related_to_same_group += 3.5 * circle_radius + 20;
                                     occupied = true;
