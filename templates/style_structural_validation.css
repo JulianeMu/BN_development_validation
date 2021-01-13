@@ -4,9 +4,9 @@
     --structure_validation_div_height: 500px;
 }
 
-.top_divs_intro_overview{
-    height:250px;
-    width: calc(50% - 4* var(--main-margin));
+.top_divs_intro_overview {
+    height: 250px;
+    width: calc(50% - 4 * var(--main-margin));
     position: relative;
     float: left;
     margin: var(--main-margin);
@@ -32,10 +32,10 @@
     width: var(--notes_comments_structure_validation_div_width);
 }
 
-.structure_validation_div{
+.structure_validation_div {
     border-radius: var(--div-border-radius);
     background-color: white;
-    width: calc(100% - 8*var(--main-margin) - var(--steps_structure_validation_div_width) - var(--notes_comments_structure_validation_div_width));
+    width: calc(100% - 8 * var(--main-margin) - var(--steps_structure_validation_div_width) - var(--notes_comments_structure_validation_div_width));
     height: var(--structure_validation_div_height);
     position: relative;
     float: left;
@@ -53,10 +53,10 @@
     color: var(--main-font-color);
 }
 
-.notes_comments_input{
+.notes_comments_input {
     margin-top: var(--padding);
     width: calc(100% - var(--padding));
-    height: calc(100% - 30px - 2*var(--padding));
+    height: calc(100% - 30px - 2 * var(--padding) - 80px);
     resize: none;
     border-radius: var(--div-border-radius);
     border: 2px solid var(--main-font-color);
@@ -64,6 +64,25 @@
     background-color: #F5F5F5;
     font-family: var(--main_font);
     font-size: var(--network_label-font-size);
+}
+
+#pubmed_button{
+    float: bottom;
+    position: relative;
+    background-image: url(../templates/resources/img.png), none;
+    background-size: 101% 104%;
+    background-repeat: no-repeat;
+    background-position: left;
+    margin-top: 10px;
+    width: calc(var(--notes_comments_structure_validation_div_width) - 60px);
+}
+
+.structure_validation_content_div {
+    position: relative;
+    float: left;
+    height: calc(100% - 30px - 2* var(--padding));
+    width: calc(50% - 2* var(--padding));
+    margin: var(--padding);
 }
 
 #myProgress {

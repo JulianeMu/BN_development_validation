@@ -73,7 +73,10 @@ const lang_id_heading_data_driven_structure = "lang_id_heading_data_driven_struc
 const lang_id_legend_reason = "lang_id_legend_reason";
 const lang_id_legend_effect = "lang_id_legend_effect";
 
-
+const lang_id_variable_type= "lang_id_variable_type";
+const lang_id_variable_identifier= "lang_id_variable_identifier";
+const lang_id_variable_states = "lang_id_variable_states";
+const lang_id_variable_parents = "lang_id_variable_parents";
 
 // global variable of all used strings
 var language_string = [
@@ -118,4 +121,10 @@ var language_string = [
 
     {id: lang_id_legend_reason, eng:"reason", de:"Ursache"},
     {id: lang_id_legend_effect, eng:"effect", de:"Effekt"},
+
+    {id: lang_id_variable_type, eng:"variable type", de:"Variablentyp"},
+    {id: lang_id_variable_identifier, eng:"variable identifier", de:"Variablen-ID"},
+    {id: lang_id_variable_states, eng:"variable states", de:"Variablenstates"},
+    {id: lang_id_variable_parents, eng:"parent relations", de:"Elternrelationen"},
+
 ];

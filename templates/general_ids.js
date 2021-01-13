@@ -85,4 +85,4 @@ const transition_duration = 200;
 
 
 //-----------------------structure validation
-const class_top_divs_intro_overview = "top_divs_intro_overview";
+const steps_structure_validation_div = "steps_structure_validation_div";
