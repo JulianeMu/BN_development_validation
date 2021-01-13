@@ -7,16 +7,17 @@
 
 .top_divs_intro_overview {
     height: 250px;
-    width: calc(50% - 4 * var(--main-margin));
+    width: calc(50% - 2 * var(--main-margin));
     position: relative;
     float: left;
     margin: var(--main-margin);
-    padding: var(--main-margin);
+    padding: 0;
 }
 
 .top_div_overview {
     border-radius: var(--div-border-radius);
     background-color: white;
+    padding: 0;
 }
 
 .steps_structure_validation_div {

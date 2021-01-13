@@ -19,7 +19,7 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
         .style('position', 'absolute')
         .style('width', 'calc(100% - 2*' + padding + 'px)')
         .style('height', function () {
-            return 100 + '%';
+            return 'calc('+100 + '% - 1*' + padding+'px)';
         })
         .style('padding', padding + 'px')
         .style('overflow-y', 'scroll')
@@ -185,11 +185,11 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                     if (i !== 0) {
 
-                        d3.select('#' + d.id).attr('cy', parseFloat(d3.select('#' + d.id).attr('cy')) + space_to_add_related_to_same_group);
+                        d3.select('#' + parent_div_id).select('#' + d.id).attr('cy', parseFloat(d3.select('#' + parent_div_id).select('#' + d.id).attr('cy')) + space_to_add_related_to_same_group);
 
-                        if (d3.select('#' + d.id).attr('cy') - d3.select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') > largest_space_between_circles) {
-                            minus_to_save_space = d3.select('#' + d.id).attr('cy') - d3.select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') - largest_space_between_circles;
-                            d3.select('#' + d.id).attr('cy', parseFloat(d3.select('#' + d.id).attr('cy')) - minus_to_save_space);
+                        if (d3.select('#' + parent_div_id).select('#' + d.id).attr('cy') - d3.select('#' + parent_div_id).select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') > largest_space_between_circles) {
+                            minus_to_save_space = d3.select('#' + parent_div_id).select('#' + d.id).attr('cy') - d3.select('#' + parent_div_id).select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') - largest_space_between_circles;
+                            d3.select('#' + parent_div_id).select('#' + d.id).attr('cy', parseFloat(d3.select('#' + parent_div_id).select('#' + d.id).attr('cy')) - minus_to_save_space);
 
                         }
 
@@ -197,11 +197,11 @@ function update_network_view(data, parent_div_id, child_div_id) {
                             let occupied = false;
                             for (let circles_index = 0; circles_index < last_circles.length; circles_index++) {
 
-                                if (d3.select(current_elem).attr('cy') === d3.select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') && d3.select(current_elem).attr('cx') === d3.select('#' + (last_circles[last_circles.length - 1].id)).attr('cx')) {
+                                if (d3.select(current_elem).attr('cy') === d3.select('#' + parent_div_id).select('#' + (last_circles[last_circles.length - 1].id)).attr('cy') && d3.select(current_elem).attr('cx') === d3.select('#' + parent_div_id).select('#' + (last_circles[last_circles.length - 1].id)).attr('cx')) {
 
                                     d3.select(current_elem).attr('cy', parseFloat(d3.select(current_elem).attr('cy')) + 3.5 * circle_radius + 20);
-                                    d3.select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1]))
-                                        .style('height', parseFloat(d3.select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1])).style('height')) + 3.5 * circle_radius + 20 + 'px');
+                                    d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1]))
+                                        .style('height', parseFloat(d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + get_workflow_step_group(d.id.split(circle_id)[1])).style('height')) + 3.5 * circle_radius + 20 + 'px');
 
                                     space_to_add_related_to_same_group += 3.5 * circle_radius + 20;
                                     occupied = true;
@@ -215,7 +215,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                             }
                         }
 
-                        check_if__pos_is_already_occupied(d3.select('#' + d.id).node());
+                        check_if__pos_is_already_occupied(d3.select('#' + parent_div_id).select('#' + d.id).node());
                     }
 
                     last_group = get_workflow_step_group(d);
@@ -240,10 +240,10 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         return circle_label_id + d;
                     })
                     .attr("x", function (d) {
-                        return parseFloat(d3.select('#' + circle_id + d).attr('cx'));
+                        return parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d).attr('cx'));
                     })
                     .attr('y', function (d) {
-                        return parseFloat(d3.select('#' + circle_id + d).attr('cy')) + 2 * circle_radius;
+                        return parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d).attr('cy')) + 2 * circle_radius;
                     })
                     .attr('dy', -5 + 'px')
                     .text(function (d) {
@@ -274,32 +274,32 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         let points = [];
 
                         //let center = parseFloat(d3.select('#' + circle_id + g.edges()[i].v).attr("cx")) + ((parseFloat(d3.select('#' + circle_id + g.edges()[i].w).attr("cx")) - parseFloat(d3.select('#' + circle_id + g.edges()[i].v).attr("cx"))) / 2)
-                        let center = parseFloat(d3.select('#' + circle_id + d.v).attr("cx")) + circle_radius + 1.4 * space_edges_corner;
+                        let center = parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.v).attr("cx")) + circle_radius + 1.4 * space_edges_corner;
 
                         points.push({
-                            x: parseFloat(d3.select('#' + circle_id + d.v).attr("cx")) + circle_radius,
-                            y: parseFloat(d3.select('#' + circle_id + d.v).attr("cy"))
+                            x: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.v).attr("cx")) + circle_radius,
+                            y: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.v).attr("cy"))
                         })
                         points.push({
-                            x: parseFloat(d3.select('#' + circle_id + d.v).attr("cx")) + circle_radius + space_edges_corner,
-                            y: parseFloat(d3.select('#' + circle_id + d.v).attr("cy"))
+                            x: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.v).attr("cx")) + circle_radius + space_edges_corner,
+                            y: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.v).attr("cy"))
                         })
-                        points.push({x: center, y: parseFloat(d3.select('#' + circle_id + d.w).attr("cy"))})
+                        points.push({x: center, y: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.w).attr("cy"))})
                         points.push({
-                            x: parseFloat(d3.select('#' + circle_id + d.w).attr("cx")) - circle_radius - space_edges_corner,
-                            y: parseFloat(d3.select('#' + circle_id + d.w).attr("cy"))
+                            x: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.w).attr("cx")) - circle_radius - space_edges_corner,
+                            y: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.w).attr("cy"))
                         })
                         points.push({
-                            x: parseFloat(d3.select('#' + circle_id + d.w).attr("cx")) - circle_radius,
-                            y: parseFloat(d3.select('#' + circle_id + d.w).attr("cy"))
+                            x: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.w).attr("cx")) - circle_radius,
+                            y: parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.w).attr("cy"))
                         })
 
                         return line(points); //line(g.edge(g.edges()[i]).points)
                     })
                     .style('opacity', function (d) {
 
-                        let x1 = parseFloat(d3.select('#' + circle_id + d.v).attr("cx")) + circle_radius;
-                        let x2 = parseFloat(d3.select('#' + circle_id + d.w).attr("cx")) + circle_radius;
+                        let x1 = parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.v).attr("cx")) + circle_radius;
+                        let x2 = parseFloat(d3.select('#' + parent_div_id).select('#' + circle_id + d.w).attr("cx")) + circle_radius;
 
                         if (x2 - x1 > 100) {
                             return 0;

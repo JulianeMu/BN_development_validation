@@ -65,7 +65,6 @@ function learn_structure_from_data (callback) {
             //data = JSON.parse(response);
             learned_structure_data = JSON.parse(response);
 
-            console.log(learned_structure_data)
             //model_validation
             callback(JSON.parse(response));
         }
