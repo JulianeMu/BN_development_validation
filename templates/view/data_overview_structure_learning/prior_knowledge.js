@@ -144,7 +144,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
         .attr('value', get_language__label_by_id(lang_id_learn_structure))
         .on('click', function (d) {
             learn_structure_from_data(function (response) {
-                update_network_view(response);
+                update_network_view(response, id_network_view, id_network_view_child);
             })
         });
 

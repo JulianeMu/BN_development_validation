@@ -75,7 +75,7 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
 
         update_group_divs_in_network_view();
         if (learned_structure_data !== null) {
-            update_network_view(learned_structure_data);
+            update_network_view(learned_structure_data, id_network_view, id_network_view_child);
         }
     });
     update_all_colors_and_text();
@@ -205,7 +205,7 @@ function add_group(original_id) {
         update_group_divs_in_network_view();
 
         if (learned_structure_data !== null) {
-            update_network_view(learned_structure_data);
+            update_network_view(learned_structure_data, id_network_view, id_network_view_child);
         }
         hide_add_group_view();
 
@@ -244,7 +244,7 @@ function remove_group(group_id) {
     update_group_divs_in_network_view();
 
     if (learned_structure_data !== null) {
-        update_network_view(learned_structure_data);
+        update_network_view(learned_structure_data, id_network_view, id_network_view_child);
     }
 }
 
@@ -335,7 +335,7 @@ function select_variables_for_group(group_information) {
         update_all_colors_and_text();
 
         if (learned_structure_data !== null) {
-            update_network_view(learned_structure_data);
+            update_network_view(learned_structure_data, id_network_view, id_network_view_child);
         }
 
         hide_add_group_view();

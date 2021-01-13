@@ -44,6 +44,7 @@ function query_data_from_FLASK (callback) {
             subset_selection = response[1];
             whitelist = response[2];
             blacklist = response[3];
+
             callback(true);
         }
     });
@@ -63,6 +64,9 @@ function learn_structure_from_data (callback) {
         success: function (response) {
             //data = JSON.parse(response);
             learned_structure_data = JSON.parse(response);
+
+            console.log(learned_structure_data)
+            //model_validation
             callback(JSON.parse(response));
         }
     });
@@ -70,6 +74,7 @@ function learn_structure_from_data (callback) {
 
 function save_data_on_backend (callback) {
     const sURL = hostURL + "/save_data_on_backend/";
+
 
 
     let save_data = [data, initial_groups, subset_selection, whitelist, blacklist, learned_structure_data]
@@ -118,6 +123,7 @@ function load_data_from_backend (callback) {
             if (response[5] !== null) {
                 learned_structure_data = response[5];
             }
+
 
             callback(true);
         }

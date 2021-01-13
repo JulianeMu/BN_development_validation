@@ -12,7 +12,7 @@ function initialize_structural_learning_view(structure_learning_div) {
         .style('border-radius', 'var(--div-border-radius)');
 
 
-    initialize_network_view(id_network_view, 100, true);
+    initialize_network_view(id_network_view, 100, true, learned_structure_data, id_network_view_child);
 
 
 }

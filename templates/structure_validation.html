@@ -66,9 +66,9 @@
             </div>
             <div class="top_divs_intro_overview top_div_overview" id ="id_network_view"></div>
             <p class="h2">Structure Validation</p>
-            <div class="steps_structure_validation_div" id ="steps_structure_validation_div">
-                <p class="h3">Steps</p>
-            </div>
+<!--            <div class="steps_structure_validation_div" id ="steps_structure_validation_div">-->
+<!--                <p class="h3">Steps</p>-->
+<!--            </div>-->
             <div class="structure_validation_div" id="structure_validation_div">
                 <p class="h3">Validation</p>
                 <div class="structure_validation_content_div" id="structure_validation_viewer_div"></div>
@@ -100,7 +100,7 @@
     current_html_page = 2;
 
     initialize_header(lang_id_structure_validation);
-    initialize_steps();
+    //initialize_steps();
 
     function go_to_pubmed() {
         const url = "https://pubmed.ncbi.nlm.nih.gov/";
@@ -111,7 +111,10 @@
     load_data_from_backend(function (response) {
         if (response) {
 
-            initialize_network_view(id_network_view, 50, false);
+            initialize_network_view(id_network_view, 50, false, learned_structure_data, id_network_view_child);
+            //model_validation;
+            initialize_network_view('structure_validation_viewer_div', 50, false, learned_structure_data, 'structure_validation_viewer_div_child');
+
         }
     })
 </script>

@@ -1,5 +1,6 @@
 :root {
-    --steps_structure_validation_div_width: 250px;
+    --steps_structure_validation_div_width: 0px;
+    /*--steps_structure_validation_div_width: 250px;*/
     --notes_comments_structure_validation_div_width: 200px;
     --structure_validation_div_height: 500px;
 }
@@ -35,12 +36,12 @@
 .structure_validation_div {
     border-radius: var(--div-border-radius);
     background-color: white;
-    width: calc(100% - 8 * var(--main-margin) - var(--steps_structure_validation_div_width) - var(--notes_comments_structure_validation_div_width));
+    width: calc(100% - 6 * var(--main-margin) - var(--steps_structure_validation_div_width) - var(--notes_comments_structure_validation_div_width));
     height: var(--structure_validation_div_height);
     position: relative;
     float: left;
     padding: var(--main-margin);
-    margin-left: var(--main-margin);
+    /*margin-left: var(--main-margin);*/
     margin-right: var(--main-margin);
 }
 

@@ -9,13 +9,13 @@ let line = d3.line()
     })
     .curve(d3.curveBasis);
 
-function initialize_network_view(parent_div_id, zoom, bool_show_legend) {
+function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, child_div_id) {
     const space_left = 100;
     const padding = 15;
 
     let network_child_div = d3.select('#' + parent_div_id)
         .append('div')
-        .attr('id', id_network_view_child)
+        .attr('id', child_div_id)
         .style('position', 'absolute')
         .style('width', 'calc(100% - 2*' + padding + 'px)')
         .style('height', function () {
@@ -35,13 +35,13 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend) {
 
 
     if (bool_show_legend) {
-        initialize_network_legend();
+        initialize_network_legend(parent_div_id);
     }
-    update_group_divs_in_network_view();
-    update_network_view(learned_structure_data);
+    update_group_divs_in_network_view(child_div_id);
+    update_network_view(data, parent_div_id, child_div_id);
 }
 
-function update_network_view(data) {
+function update_network_view(data, parent_div_id, child_div_id) {
 
     if (data !== null) {
         let highest_y_pos = 0;
@@ -55,13 +55,13 @@ function update_network_view(data) {
                 }
             }
             if (initial_groups[i].variables.length > 0 && found) {
-                d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 70 + 'px')
+                d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 70 + 'px')
                     .style('margin-top', 10 + 'px')
                     .select('p').style('opacity', 1);
 
-                highest_y_pos = get_y_diff(id_class_groups_in_network_view + initial_groups[i].id)[1];
+                highest_y_pos = get_y_diff(id_class_groups_in_network_view + initial_groups[i].id, parent_div_id, child_div_id)[1];
             } else {
-                d3.select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 0 + 'px')
+                d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 0 + 'px')
                     .style('margin-top', 0 + 'px')
                     .select('p').style('opacity', 0)
             }
@@ -69,7 +69,7 @@ function update_network_view(data) {
 
         let g = compute_dagre_layout(data);
 
-        let svg_g = d3.select('#' + id_network_view).select('svg')//.select('g');
+        let svg_g = d3.select('#' + parent_div_id).select('svg')//.select('g');
 
 
         let circles = svg_g.selectAll("circle")
@@ -133,7 +133,7 @@ function update_network_view(data) {
                 let group = get_workflow_step_group(d);
                 let y_pos = g.node(d).y + highest_y_pos;
                 if (group !== null) {
-                    let y_diff = get_y_diff(id_class_groups_in_network_view + group);
+                    let y_diff = get_y_diff(id_class_groups_in_network_view + group, parent_div_id, child_div_id);
                     //svg_g.selectAll("circle")
                     y_pos = y_diff[0] + y_diff[2] / 2 - 22;
                 }
@@ -320,13 +320,13 @@ function update_network_view(data) {
     }
 }
 
-function get_y_diff(id_group_div) {
+function get_y_diff(id_group_div, parent_div_id, child_div_id) {
 
-    let y_pos = document.getElementById(id_group_div).getBoundingClientRect().y -
-        document.getElementById(id_network_view_child).getBoundingClientRect().y;
+    let y_pos = d3.select('#' + parent_div_id).select('#' + id_group_div).node().getBoundingClientRect().y -
+        d3.select('#' + child_div_id).node().getBoundingClientRect().y;
 
-    let y_pos_plus_height = y_pos + document.getElementById(id_group_div).getBoundingClientRect().height;
-    let y_height = document.getElementById(id_group_div).getBoundingClientRect().height;
+    let y_pos_plus_height = y_pos + d3.select('#' + parent_div_id).select('#' + id_group_div).node().getBoundingClientRect().height;
+    let y_height = d3.select('#' + parent_div_id).select('#' + id_group_div).node().getBoundingClientRect().height;
 
     return [y_pos, y_pos_plus_height, y_height];
 }
@@ -361,11 +361,11 @@ function compute_dagre_layout(data) {
 }
 
 
-function initialize_network_legend() {
+function initialize_network_legend(parent_div_id) {
     let padding = 15;
     let legend_height = 60;
 
-    let legend_div = d3.select('#' + id_network_view)
+    let legend_div = d3.select('#' + parent_div_id)
         .append('div')
         .style('position', 'absolute')
         .style('bottom', '20px')
@@ -437,12 +437,12 @@ function get_workflow_step_group(variable_id) {
 }
 
 
-function update_group_divs_in_network_view() {
-    d3.select('#' + id_network_view_child).selectAll('.' + id_class_groups_in_network_view).remove();
+function update_group_divs_in_network_view(child_div_id) {
+    d3.select('#' + child_div_id).selectAll('.' + id_class_groups_in_network_view).remove();
 
     for (let i = initial_groups.length - 1; i > -1; i--) {
 
-        let group_div = d3.select('#' + id_network_view_child)
+        let group_div = d3.select('#' + child_div_id)
             .append('div')
             .lower()
             .attr('class', id_class_groups_in_network_view)

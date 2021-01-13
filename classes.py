@@ -8,10 +8,16 @@ class LayerObject(object):
 
 
 class NodeIdNameOutcomes(object):
-    def __init__(self, id, label, outcomes):
+    def __init__(self, id, label, outcomes, parents, children):
         self.id = id
         self.label = label
         self.outcomes = outcomes
+        self.parents = parents
+        self.children = children
+        self.structure_validated = False
+        self.cpt_validated = False
+        self.notes_comments = ""
+        self.data_type = ""
 
 
 class Edges(object):
