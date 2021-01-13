@@ -17,7 +17,7 @@
     margin-right: 20px;
     background-color: white;
     border: 6px solid white;
-    border-radius: 4px;
+    border-radius: var(--div-border-radius);
 }
 
 .text_no_margin {
@@ -136,7 +136,7 @@
     padding-left: 15px;
     padding-right: 15px;
     visibility: hidden;
-    border-radius: 12px;
+    border-radius: var(--div-border-radius);
 }
 
 .select_group_variables{
@@ -149,7 +149,7 @@
     padding-left: 15px;
     padding-right: 15px;
     visibility: hidden;
-    border-radius: 12px;
+    border-radius: var(--div-border-radius);
     border: 6px solid var(--main-font-color);
 }
 
@@ -165,7 +165,7 @@
     padding: 10px;
     font-weight: 400;
     display:inline-block;
-    border-radius: 6px;
+    border-radius: var(--div-border-radius);
     background-color: white;
     border: 6px solid var(--main-font-color);
 }
@@ -176,7 +176,7 @@
     padding: 10px;
     font-weight: 400;
     display:inline-block;
-    border-radius: 6px;
+    border-radius: var(--div-border-radius);
     color: white;
     background-color: var(--main-font-color);
     border: 6px solid var(--main-font-color);

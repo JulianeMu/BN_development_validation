@@ -20,13 +20,15 @@
     --footer_height: 100px;
     --highlight_color: #d96ce4;
     --header_images_width: 120px;
+    --div-border-radius: 6px;
+    --main_font: 'Fira Sans', sans-serif;
 }
 
 body{
     margin: 0;
     padding: 0;
     background-color: var(--main-background-color);
-    font-family: 'Fira Sans', sans-serif;
+    font-family: var(--main_font);
     font-weight: var(--main-font-weight);
     font-size: var(--main-font-size);
     opacity: 0;

@@ -46,7 +46,7 @@
     <!--------style------------------------>
     <link href="style_general.css" rel="stylesheet">
     <link href="style_structural_validation.css" rel="stylesheet">
-    <link href="network_style.css" rel="stylesheet">
+    <link href="style_network.css" rel="stylesheet">
 </head>
 
 
@@ -64,13 +64,23 @@
 
     <div class="main_content" id="main_content">
         <div class="content">
-            <div style="height:auto; width: calc(50% - 2* var(--main-margin)); position: relative; float: left; padding: var(--main-margin)">
-                <p>Some general information should be provided over here.</p>
+            <div class="top_divs_intro_overview" id="general_information">
+                <p>Since the parametrization is highly dependent on the Bayesian network structure, you firstly have to
+                    validate the learnt nodes and relations.</p>
             </div>
-            <div style="height:auto; width: calc(50% - 2* var(--main-margin)); position: relative; float: left; padding: var(--main-margin)">
-                <p>This div is used for network presentation</p>
+            <div class="top_divs_intro_overview top_div_overview" id ="id_network_view"></div>
+            <p class="h2">Structure Validation</p>
+            <div class="steps_structure_validation_div">
+                <p class="h3">Steps</p>
             </div>
-            <div style="height: 100px; width: 100%; position: relative; float: left; padding: var(--main-margin)"></div>
+            <div class="structure_validation_div">
+                <p class="h3">Validation</p>
+            </div>
+            <div class="steps_structure_validation_div notes_comments_structure_validation_div">
+                <p class="h3">Notes/Comments</p>
+<!--                <input class="notes_comments_input" type="text">-->
+                <textarea class="notes_comments_input" name="Text1" placeholder="Insert your notes/comments here ..."></textarea>
+            </div>
 
         </div>
     </div>
@@ -90,7 +100,13 @@
     current_html_page = 2;
 
     initialize_header(lang_id_structure_validation);
-    //initialize_inspect_data_learn_model();
+    load_data_from_backend(function (response) {
+        if (response) {
+
+            console.log(learned_structure_data)
+            initialize_network_view(id_network_view, 50, false);
+        }
+    })
 </script>
 </body>
 </html>

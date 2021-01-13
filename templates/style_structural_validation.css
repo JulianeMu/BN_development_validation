@@ -1,3 +1,71 @@
+:root {
+    --steps_structure_validation_div_width: 250px;
+    --notes_comments_structure_validation_div_width: 200px;
+    --structure_validation_div_height: 500px;
+}
+
+.top_divs_intro_overview{
+    height:250px;
+    width: calc(50% - 4* var(--main-margin));
+    position: relative;
+    float: left;
+    margin: var(--main-margin);
+    padding: var(--main-margin);
+}
+
+.top_div_overview {
+    border-radius: var(--div-border-radius);
+    background-color: white;
+}
+
+.steps_structure_validation_div {
+    border-radius: var(--div-border-radius);
+    background-color: white;
+    width: var(--steps_structure_validation_div_width);
+    height: var(--structure_validation_div_height);
+    position: relative;
+    float: left;
+    padding: var(--main-margin);
+}
+
+.notes_comments_structure_validation_div {
+    width: var(--notes_comments_structure_validation_div_width);
+}
+
+.structure_validation_div{
+    border-radius: var(--div-border-radius);
+    background-color: white;
+    width: calc(100% - 8*var(--main-margin) - var(--steps_structure_validation_div_width) - var(--notes_comments_structure_validation_div_width));
+    height: var(--structure_validation_div_height);
+    position: relative;
+    float: left;
+    padding: var(--main-margin);
+    margin-left: var(--main-margin);
+    margin-right: var(--main-margin);
+}
+
+.h3 {
+    font-size: 24px;
+    font-weight: 600;
+    width: calc(100%);
+    padding: 0 0 0 0;
+    margin: 0;
+    color: var(--main-font-color);
+}
+
+.notes_comments_input{
+    margin-top: var(--padding);
+    width: calc(100% - var(--padding));
+    height: calc(100% - 30px - 2*var(--padding));
+    resize: none;
+    border-radius: var(--div-border-radius);
+    border: 2px solid var(--main-font-color);
+    color: var(--main-font-color);
+    background-color: #F5F5F5;
+    font-family: var(--main_font);
+    font-size: var(--network_label-font-size);
+}
+
 #myProgress {
     position: relative;
     float: left;

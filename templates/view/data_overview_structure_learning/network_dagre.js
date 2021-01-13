@@ -1,4 +1,47 @@
-function initialize_network_view(data) {
+const circle_radius = 20;
+
+let line = d3.line()
+    .x(function (d) {
+        return d.x;
+    })
+    .y(function (d) {
+        return d.y;
+    })
+    .curve(d3.curveBasis);
+
+function initialize_network_view(parent_div_id, zoom, bool_show_legend) {
+    const space_left = 100;
+    const padding = 15;
+
+    let network_child_div = d3.select('#' + parent_div_id)
+        .append('div')
+        .attr('id', id_network_view_child)
+        .style('position', 'absolute')
+        .style('width', 'calc(100% - 2*' + padding + 'px)')
+        .style('height', function () {
+            return 100 + '%';
+        })
+        .style('padding', padding + 'px')
+        .style('overflow-y', 'scroll')
+        .style('overflow-x', 'scroll')
+        .style('zoom', zoom + '%');
+
+    network_child_div.append("svg")
+        .style('width', 'calc(100%-' + space_left + 'px)')
+        .style('height', '90%')
+        .style('left', space_left + 'px')
+        .style('position', 'absolute')
+        .style('fill', 'none')
+
+
+    if (bool_show_legend) {
+        initialize_network_legend();
+    }
+    update_group_divs_in_network_view();
+    update_network_view(learned_structure_data);
+}
+
+function update_network_view(data) {
 
     if (data !== null) {
         let highest_y_pos = 0;
@@ -26,9 +69,7 @@ function initialize_network_view(data) {
 
         let g = compute_dagre_layout(data);
 
-        let svg_g = d3.select('#' + id_learnt_model_div).select('svg')//.select('g');
-
-        const circle_radius = 20;
+        let svg_g = d3.select('#' + id_network_view).select('svg')//.select('g');
 
 
         let circles = svg_g.selectAll("circle")
@@ -40,9 +81,7 @@ function initialize_network_view(data) {
             .attr('id', function (d) {
                 return circle_id + d;
             })
-            .style("stroke", "white")
-            .style('stroke-width', 4 + 'px')
-            .style("fill", "var(--main-font-color)")
+            .attr('class', class_network_circle)
             .attr("r", circle_radius);
 
         svg_g.selectAll('circle')
@@ -100,24 +139,15 @@ function initialize_network_view(data) {
                 }
                 return y_pos;
             }).each(function (d) {
-                tippy(this, {
-                    content: d,
-                });
-            }).on('end', function (d) {
+            tippy(this, {
+                content: d,
+                followCursor: true,
+            });
+        }).on('end', function (d) {
             reposition_labels_edges();
         })
 
         function reposition_labels_edges() {
-
-
-            let line = d3.line()
-                .x(function (d) {
-                    return d.x;
-                })
-                .y(function (d) {
-                    return d.y;
-                })
-                .curve(d3.curveBasis);
 
             const space_edges_corner = 20;
 
@@ -234,9 +264,6 @@ function initialize_network_view(data) {
                     .append("path")
                     .attr('class', class_network_edges)
                     .lower()
-                    .style('stroke', 'var(--main-font-color)')
-                    .style('stroke-width', "2")
-                    .style('fill', 'none')
                     .style('opacity', 0);
 
                 svg_g.selectAll('.' + class_network_edges).attr('id', function (d) {
@@ -296,7 +323,7 @@ function initialize_network_view(data) {
 function get_y_diff(id_group_div) {
 
     let y_pos = document.getElementById(id_group_div).getBoundingClientRect().y -
-            document.getElementById(id_network_view_child).getBoundingClientRect().y;
+        document.getElementById(id_network_view_child).getBoundingClientRect().y;
 
     let y_pos_plus_height = y_pos + document.getElementById(id_group_div).getBoundingClientRect().height;
     let y_height = document.getElementById(id_group_div).getBoundingClientRect().height;
@@ -331,4 +358,118 @@ function compute_dagre_layout(data) {
     dagre.layout(g);
 
     return g;
+}
+
+
+function initialize_network_legend() {
+    let padding = 15;
+    let legend_height = 60;
+
+    let legend_div = d3.select('#' + id_network_view)
+        .append('div')
+        .style('position', 'absolute')
+        .style('bottom', '20px')
+        .style('width', 'calc(100% - ' + 10 + 'px)')
+        .style('height', legend_height + 'px')
+        .style('border-radius', 'var(--div-border-radius)')
+        .style('border', '6px solid var(--main-font-color)')
+
+    let legend_svg = legend_div.append('svg')
+        .style('width', '100%')
+        .style('height', '100%');
+
+    let x_pos = padding;
+    let first_text = legend_svg.append('text')
+        .attr('class', class_network_legend_text)
+        .attr('dy', 7 + 'px')
+        .attr('x', x_pos)
+        .attr('y', legend_height / 2)
+        .text(get_language__label_by_id(lang_id_legend_reason));
+
+    x_pos += first_text.node().getBoundingClientRect().width + circle_radius + 5;
+    let x_pos_circle_1 = x_pos;
+
+    legend_svg.append('circle')
+        .attr('class', class_network_circle)
+        .attr('r', circle_radius)
+        .attr('cx', x_pos)
+        .attr('cy', legend_height / 2)
+
+    x_pos += 100;
+    let x_pos_circle_2 = x_pos;
+    legend_svg.append('circle')
+        .attr('class', class_network_circle)
+        .attr('r', circle_radius)
+        .attr('cx', x_pos)
+        .attr('cy', legend_height / 2)
+
+    x_pos += circle_radius + 5;
+    legend_svg.append('text')
+        .attr('class', class_network_legend_text)
+        .attr('dy', 7 + 'px')
+        .attr('x', x_pos)
+        .attr('y', legend_height / 2)
+        .text(get_language__label_by_id(lang_id_legend_effect));
+
+    legend_svg.append("path")
+        .attr('class', class_network_edges)
+        .lower()
+        .attr('d', function () {
+            let points = [];
+            points.push({
+                x: x_pos_circle_1 + circle_radius,
+                y: legend_height / 2
+            })
+            points.push({
+                x: x_pos_circle_2 + circle_radius,
+                y: legend_height / 2
+            })
+            return line(points);
+        })
+}
+
+function get_workflow_step_group(variable_id) {
+    let group = initial_groups.filter(x => x.variables.includes(variable_id));
+    if (group.length > 0) {
+        return (group[0].id);
+    }
+    return null;
+}
+
+
+function update_group_divs_in_network_view() {
+    d3.select('#' + id_network_view_child).selectAll('.' + id_class_groups_in_network_view).remove();
+
+    for (let i = initial_groups.length - 1; i > -1; i--) {
+
+        let group_div = d3.select('#' + id_network_view_child)
+            .append('div')
+            .lower()
+            .attr('class', id_class_groups_in_network_view)
+            .attr('id', id_class_groups_in_network_view + initial_groups[i].id)
+            .style('width', 100 + '%')
+            .style('height', 0 + 'px')
+            .style('position', 'relative')
+            .style('float', 'left')
+            .style('opacity', 0.5)
+            .style('background-color', color_clinical_workflow_groups(initial_groups.findIndex(x => x.id === initial_groups[i].id) + 1))
+            .style('border-radius', 6 + 'px')
+            .append('p')
+            .attr('id', 'network_group_label_' + initial_groups[i].id)
+            .attr('class', 'network_group_label')
+            .text(function () {
+                if (initial_groups[i].label.length > 5) {
+                    return initial_groups[i].label.substr(0, 5) + '...'
+                }
+                return initial_groups[i].label
+            })
+            .style('padding-left', 5 + 'px')
+            .style('opacity', 0);
+
+        tippy(group_div.node(), {
+            content: initial_groups[i].label,
+            placement: "top-start",
+            appendTo: 'parent',
+        });
+    }
 }

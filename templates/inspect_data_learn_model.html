@@ -48,7 +48,7 @@
     <!--------style------------------------>
     <link href="style_general.css" rel="stylesheet">
     <link href="style_data_inspection_model_learning.css" rel="stylesheet">
-    <link href="network_style.css" rel="stylesheet">
+    <link href="style_network.css" rel="stylesheet">
 </head>
 
 
@@ -67,7 +67,11 @@
     <div class="main_content" id="main_content">
         <div class="content">
             <p>On this page, you can investigate your data, group your variables and learn the structure of the
-                network.</p>
+                network. The grouping is inspired by the workflow within clinical routine. With this, you can
+                investigate the causal flow within the model in comparison to the common process within clinical
+                routine, simultaneously. Furthermore, you can include/exclude variables from Bayesian network (BN)
+                learning by selecting them, integrate prior knowledge in the form of a whitelist (relations that are
+                present in clinical knowledge) and a blacklist (forbidden relations).</p>
         </div>
         <div class="add_clinical_workflow_group_form">
             <p class="h2">Clinical Workflow Step/Group</p>
@@ -144,7 +148,7 @@
 
             update_all_colors_and_text();
             update_group_divs_in_network_view();
-            initialize_network_view(learned_structure_data);
+            update_network_view(learned_structure_data);
 
             setTimeout(() => {
                 update_variables_order();

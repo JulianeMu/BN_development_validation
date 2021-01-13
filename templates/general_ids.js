@@ -78,6 +78,11 @@ const circle_label_id = "label_";
 const path_id = "path";
 const splitter = "____";
 const class_network_label_text = 'network_label_text';
-const class_network_edges = 'network_edges';
-
+const class_network_legend_text = 'network_legend_text';
+const class_network_edges = 'network_path';
+const class_network_circle = 'network_circle';
 const transition_duration = 200;
+
+
+//-----------------------structure validation
+const class_top_divs_intro_overview = "top_divs_intro_overview";

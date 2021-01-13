@@ -70,6 +70,10 @@ const lang_id_include_preknowledge = "lang_id_include_preknowledge";
 const lang_id_heading_data_driven_structure = "lang_id_heading_data_driven_structure";
 
 
+const lang_id_legend_reason = "lang_id_legend_reason";
+const lang_id_legend_effect = "lang_id_legend_effect";
+
+
 
 // global variable of all used strings
 var language_string = [
@@ -111,4 +115,7 @@ var language_string = [
     {id: lang_id_include_preknowledge, eng: "Integrate Prior Knowledge", de: "integriere Vorwissen"},
     {id: lang_id_tooltip_click_to_select, eng: "click to include/exclude from structural learning", de: "Klicken um Variable in Strukturerlernung mit einzubeziehen/auszuschließen"},
     {id: lang_id_heading_data_driven_structure, eng:"Data-Driven Bayesian Network Structure", de:"Datenbasierte Struktur des Bayes'schen Netzwerkes"},
+
+    {id: lang_id_legend_reason, eng:"reason", de:"Ursache"},
+    {id: lang_id_legend_effect, eng:"effect", de:"Effekt"},
 ];
