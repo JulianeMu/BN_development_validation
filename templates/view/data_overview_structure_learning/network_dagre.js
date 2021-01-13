@@ -19,7 +19,7 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
         .style('position', 'absolute')
         .style('width', 'calc(100% - 2*' + padding + 'px)')
         .style('height', function () {
-            return 'calc('+100 + '% - 1*' + padding+'px)';
+            return 'calc(' + 100 + '% - 1*' + padding + 'px)';
         })
         .style('padding', padding + 'px')
         .style('overflow-y', 'scroll')
@@ -43,6 +43,7 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
 
 function update_network_view(data, parent_div_id, child_div_id) {
 
+    console.log('update ' + parent_div_id)
     if (data !== null) {
         let highest_y_pos = 0;
 
@@ -140,7 +141,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 return y_pos;
             }).each(function (d) {
             tippy(this, {
-                content: data.nodes.filter(x=> x.id === d)[0].label,
+                content: data.nodes.filter(x => x.id === d)[0].label,
                 followCursor: true,
             });
         }).on('end', function (d) {
@@ -247,20 +248,18 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     })
                     .attr('dy', -5 + 'px')
                     .text(function (d) {
-                        if (this.id.split(circle_label_id)[1]) {
-                            let label = this.id.split(circle_label_id)[1];
 
-                            if (label.length > 5) {
-                                return label.substring(0, 5) + '...';
-                            }
-                            return label;
-                        } else {
+                        // let l = data.nodes.filter(x => x.id === d)[0].label;
+                        //
+                        // if (l.length > 5) {
+                        //     return l.substring(0, 5) + '...';
+                        // }
+                        // return l;
 
-                            if (d.length > 5) {
-                                return d.substring(0, 5) + '...';
-                            }
-                            return d;
+                        if (d.length> 5) {
+                            return d.substring(0,5) + '...';
                         }
+                        return 'abc';
                     });
 
 
@@ -276,9 +275,10 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     .lower()
                     .style('opacity', 0);
 
-                svg_g.selectAll('.' + class_network_edges).attr('id', function (d) {
-                    return path_id + splitter + d.v + splitter + d.w
-                }).transition().duration(transition_duration)
+                svg_g.selectAll('.' + class_network_edges).transition().duration(transition_duration)
+                    .attr('id', function (d) {
+                        return path_id + splitter + d.v + splitter + d.w
+                    })
                     .attr("d", function (d) {
 
                         let points = [];

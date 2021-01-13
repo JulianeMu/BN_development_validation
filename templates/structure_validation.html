@@ -115,9 +115,14 @@
         if (response) {
 
             initialize_network_view(id_network_view, 50, false, learned_structure_data, id_network_view_child);
-            //model_validation;
-            [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
-            initialize_network_views_after_node_under_investigation_comp(node_validation_network_structure, node_under_investigation)
+
+            setTimeout(() => {
+                //model_validation;
+                [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
+                initialize_network_views_after_node_under_investigation_comp(node_validation_network_structure, node_under_investigation)
+
+            }, transition_duration + 10);
+
         }
     })
 </script>
