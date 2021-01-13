@@ -43,7 +43,6 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
 
 function update_network_view(data, parent_div_id, child_div_id) {
 
-    console.log('update ' + parent_div_id)
     if (data !== null) {
         let highest_y_pos = 0;
 
@@ -140,10 +139,15 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 }
                 return y_pos;
             }).each(function (d) {
+            const instance = this._tippy
+            if (instance) {
+                instance.destroy();
+            }
             tippy(this, {
                 content: data.nodes.filter(x => x.id === d)[0].label,
                 followCursor: true,
             });
+
         }).on('end', function (d) {
             reposition_labels_edges();
         })
@@ -249,17 +253,12 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     .attr('dy', -5 + 'px')
                     .text(function (d) {
 
-                        // let l = data.nodes.filter(x => x.id === d)[0].label;
-                        //
-                        // if (l.length > 5) {
-                        //     return l.substring(0, 5) + '...';
-                        // }
-                        // return l;
+                        let l = data.nodes.filter(x => x.id === d)[0].label;
 
-                        if (d.length> 5) {
-                            return d.substring(0,5) + '...';
+                        if (l.length > 5) {
+                            return l.substring(0, 5) + '...';
                         }
-                        return 'abc';
+                        return l;
                     });
 
 
@@ -475,6 +474,11 @@ function update_group_divs_in_network_view(child_div_id) {
             })
             .style('padding-left', 5 + 'px')
             .style('opacity', 0);
+
+        const instance = group_div.node()._tippy
+        if (instance) {
+            instance.destroy();
+        }
 
         tippy(group_div.node(), {
             content: initial_groups[i].label,
