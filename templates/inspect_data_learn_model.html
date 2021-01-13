@@ -141,18 +141,20 @@
     current_html_page = 1;
 
     initialize_header(lang_id_inspect_data_learn_structure);
-    initialize_inspect_data_learn_model();
 
     load_data_from_backend(function (response) {
         if (response) {
 
-            update_all_colors_and_text();
-            update_group_divs_in_network_view();
-            update_network_view(learned_structure_data, id_network_view, id_network_view_child);
+            initialize_inspect_data_learn_model();
+
 
             setTimeout(() => {
+                update_all_colors_and_text();
+                update_group_divs_in_network_view();
+                update_network_view(learned_structure_data, id_network_view, id_network_view_child);
+
                 update_variables_order();
-            }, 5);
+            }, 150);
 
 
         }

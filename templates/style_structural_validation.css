@@ -56,9 +56,9 @@
 }
 
 .notes_comments_input {
-    margin-top: var(--padding);
+    margin-top: calc(2*var(--padding));
     width: calc(100% - var(--padding));
-    height: calc(100% - 30px - 2 * var(--padding) - 80px);
+    height: calc(100% - 30px - 3 * var(--padding) - 80px);
     resize: none;
     border-radius: var(--div-border-radius);
     border: 2px solid var(--main-font-color);
@@ -85,6 +85,10 @@
     height: calc(100% - 30px - 2* var(--padding));
     width: calc(50% - 2* var(--padding));
     margin: var(--padding);
+}
+
+#structure_validation_modifications_div {
+    overflow-y: scroll;
 }
 
 #myProgress {
