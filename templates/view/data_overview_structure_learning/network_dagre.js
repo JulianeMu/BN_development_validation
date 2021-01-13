@@ -140,7 +140,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 return y_pos;
             }).each(function (d) {
             tippy(this, {
-                content: d,
+                content: data.nodes.filter(x=> x.id === d)[0].label,
                 followCursor: true,
             });
         }).on('end', function (d) {
@@ -247,10 +247,20 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     })
                     .attr('dy', -5 + 'px')
                     .text(function (d) {
-                        if (d.length > 5) {
-                            return d.substring(0, 5) + '...';
+                        if (this.id.split(circle_label_id)[1]) {
+                            let label = this.id.split(circle_label_id)[1];
+
+                            if (label.length > 5) {
+                                return label.substring(0, 5) + '...';
+                            }
+                            return label;
+                        } else {
+
+                            if (d.length > 5) {
+                                return d.substring(0, 5) + '...';
+                            }
+                            return d;
                         }
-                        return d;
                     });
 
 

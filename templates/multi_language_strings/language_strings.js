@@ -130,7 +130,7 @@ var language_string = [
     {id: lang_id_legend_effect, eng:"effect", de:"Effekt"},
 
     {id: lang_id_variable_type, eng:"data type:", de:"Variablentyp"},
-    {id: lang_id_variable_identifier, eng:"identifier:", de:"Variablen-ID"},
+    {id: lang_id_variable_identifier, eng:"label:", de:"Variablen-ID"},
     {id: lang_id_variable_states, eng:"node states:", de:"Variablenstates"},
     {id: lang_id_variable_parents, eng:"parent relations:", de:"Elternrelationen"},
 

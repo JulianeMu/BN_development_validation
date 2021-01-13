@@ -27,6 +27,11 @@ function select_variable_for_validation () {
         })
     })
 
+    return [node_validation_network_structure, node_under_investigation]
+
+}
+
+function initialize_network_views_after_node_under_investigation_comp(node_validation_network_structure, node_under_investigation) {
     initialize_network_view(structure_validation_viewer_div, 80, false, node_validation_network_structure, 'structure_validation_viewer_div_child');
 
     setTimeout(() => {

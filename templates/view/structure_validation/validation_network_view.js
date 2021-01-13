@@ -11,7 +11,6 @@ function update_network_views_node_for_validation (node_under_investigation) {
 }
 
 function update_network_overview_for_validated_nodes () {
-    console.log(learned_structure_data)
 
     learned_structure_data.nodes.forEach(function (node) {
         if (!node.structure_validated) {

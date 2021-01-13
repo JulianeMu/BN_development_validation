@@ -9,11 +9,8 @@ function initialize_steps (node_under_investigation) {
 
     append_text_input(lang_id_variable_identifier, node_under_investigation.label, 'label');
 
-
-
     function append_text_input (lang_id, label, node_prop) {
 
-        console.log(parseFloat(d3.select('.fstdropdown').style('width'))-10)
         let selection_div = d3.select('#' + steps_structure_validation_div).append('div')
             .style('width', 100 + '%')
             .style('position', 'relative')
@@ -23,14 +20,14 @@ function initialize_steps (node_under_investigation) {
             .text(get_language__label_by_id(lang_id))
             .append('input')
             .style('margin', 'var(--padding)')
-            //.style('margin-left', 10+'px')
-            //.style('width', 'calc(' + d3.select('.fstdropdown').style('width') + '- 2*var(--padding))')//'calc(' + 100+'% - 5*var(--padding))')
             .style('width', parseFloat(d3.select('.fstdiv').style('width'))-20 + 'px')//'calc(' + 100+'% - 5*var(--padding))')
             .attr('type', 'text')
             .attr('value',label);
 
         selection_div.on('change', function (d) {
+            node_under_investigation[node_prop] = this.value;
             learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0][node_prop] = this.value;
+            update_network_views_after_change();
         })
     }
 
@@ -64,6 +61,7 @@ function initialize_steps (node_under_investigation) {
 
         d3.select(select).on('change', function (d) {
             learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0][node_prop] = this.value
+            update_network_views_after_change();
         })
 
         d3.select('.fstselected').style('color', '#444168')
@@ -73,3 +71,10 @@ function initialize_steps (node_under_investigation) {
     }
 }
 
+
+function update_network_views_after_change () {
+    update_network_view(learned_structure_data, id_network_view, id_network_view_child);
+    [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
+
+    update_network_view(node_validation_network_structure, structure_validation_viewer_div, 'structure_validation_viewer_div_child');
+}
