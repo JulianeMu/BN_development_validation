@@ -85,4 +85,6 @@ const transition_duration = 200;
 
 
 //-----------------------structure validation
-const steps_structure_validation_div = "steps_structure_validation_div";
+const steps_structure_validation_div = "structure_validation_modifications_div";
+const structure_validation_viewer_div = "structure_validation_viewer_div";
+const structure_validation_viewer_div_child = "structure_validation_viewer_div_child";

@@ -38,6 +38,8 @@
     <script src="view/data_overview_structure_learning/network_dagre.js" type="text/javascript"></script>
 
     <script src="view/structure_validation/steps.js" type="text/javascript"></script>
+    <script src="view/structure_validation/validation_network_view.js" type="text/javascript"></script>
+    <script src="view/structure_validation/select_variable_under_validation.js" type="text/javascript"></script>
 
     <!--------style------------------------>
     <link href="style_general.css" rel="stylesheet">
@@ -73,7 +75,6 @@
                 <p class="h3">Validation</p>
                 <div class="structure_validation_content_div" id="structure_validation_viewer_div"></div>
                 <div class="structure_validation_content_div" id="structure_validation_modifications_div">
-                    <p>abcdsfkjdl</p>
                 </div>
 
             </div>
@@ -115,37 +116,7 @@
 
             initialize_network_view(id_network_view, 50, false, learned_structure_data, id_network_view_child);
             //model_validation;
-            console.log(learned_structure_data)
-            let unvalidated_nodes = learned_structure_data.nodes.filter(x => x.structure_validated === false);
-            let node_under_investigation = unvalidated_nodes[1];
-
-            let node_validation_network_structure = {
-                edges: [],
-                nodes: []
-            };
-
-            node_validation_network_structure.nodes = learned_structure_data.nodes.filter(x =>
-                node_under_investigation.parents.includes(x.id) ||
-                node_under_investigation.children.includes(x.id) ||
-                x.id === node_under_investigation.id
-            );
-
-
-            node_validation_network_structure.edges.push({
-                edge_from: node_under_investigation.id,
-                edge_to: node_under_investigation.children
-            })
-
-            node_under_investigation.parents.forEach(function (parent) {
-                node_validation_network_structure.edges.push({
-                    edge_from: parent,
-                    edge_to: [node_under_investigation.id]
-                })
-            })
-
-            console.log(node_validation_network_structure)
-            initialize_network_view('structure_validation_viewer_div', 80, false, node_validation_network_structure, 'structure_validation_viewer_div_child');
-
+            select_variable_for_validation();
         }
     })
 </script>

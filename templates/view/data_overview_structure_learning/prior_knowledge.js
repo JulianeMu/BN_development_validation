@@ -21,6 +21,7 @@ function initialize_prior_knowledge_view (structure_learning_div) {
     id_whitelist_blacklist_from_to.forEach(function (blacklist_whitelist_select_div_id) {
         let select = document.getElementById(blacklist_whitelist_select_div_id);
 
+        console.log(select)
         columns.forEach(function (col) {
             var opt = document.createElement("option");
             opt.text = opt.value = col;

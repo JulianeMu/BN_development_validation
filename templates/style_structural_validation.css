@@ -87,9 +87,14 @@
     margin: var(--padding);
 }
 
+.fstdiv{
+    padding: var(--padding);
+}
+
 #structure_validation_modifications_div {
     overflow-y: scroll;
 }
+
 
 #myProgress {
     position: relative;

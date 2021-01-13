@@ -78,6 +78,13 @@ const lang_id_variable_identifier= "lang_id_variable_identifier";
 const lang_id_variable_states = "lang_id_variable_states";
 const lang_id_variable_parents = "lang_id_variable_parents";
 
+
+const lang_id_structure_validation_data_type_personal_data = "lang_id_structure_validation_data_type_personal_data";
+const lang_id_structure_validation_data_type_anomalies = "lang_id_structure_validation_data_type_anomalies";
+const lang_id_structure_validation_data_type_examination_data = "lang_id_structure_validation_data_type_examination_data";
+const lang_id_structure_validation_data_type_deterministic_decisions = "lang_id_structure_validation_data_type_deterministic_decisions";
+
+
 // global variable of all used strings
 var language_string = [
     {id: lang_id_heading_BN_development_validation, eng: 'Bayesian Network Development and Validation', de: "Erstellung und Validierung Bayes\'scher Netzwerke"},
@@ -122,9 +129,14 @@ var language_string = [
     {id: lang_id_legend_reason, eng:"reason", de:"Ursache"},
     {id: lang_id_legend_effect, eng:"effect", de:"Effekt"},
 
-    {id: lang_id_variable_type, eng:"variable type", de:"Variablentyp"},
-    {id: lang_id_variable_identifier, eng:"variable identifier", de:"Variablen-ID"},
-    {id: lang_id_variable_states, eng:"variable states", de:"Variablenstates"},
-    {id: lang_id_variable_parents, eng:"parent relations", de:"Elternrelationen"},
+    {id: lang_id_variable_type, eng:"data type:", de:"Variablentyp"},
+    {id: lang_id_variable_identifier, eng:"identifier:", de:"Variablen-ID"},
+    {id: lang_id_variable_states, eng:"node states:", de:"Variablenstates"},
+    {id: lang_id_variable_parents, eng:"parent relations:", de:"Elternrelationen"},
+
+    {id: lang_id_structure_validation_data_type_personal_data, eng:"personal data", de:"patienten-spezifische Daten"},
+    {id: lang_id_structure_validation_data_type_anomalies, eng:"anomalies", de:"Anomalien"},
+    {id: lang_id_structure_validation_data_type_examination_data, eng:"examination data", de:"Untersuchungsdaten"},
+    {id: lang_id_structure_validation_data_type_deterministic_decisions, eng:"deterministic_decisions", de:"Entscheidungen"},
 
 ];
