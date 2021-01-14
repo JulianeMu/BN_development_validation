@@ -33,13 +33,18 @@ function initialize_steps (node_under_investigation) {
 
 
 
+    function append_editable_table() {
+
+    }
+
+
+    //------------------------append text input
     function append_text_input (lang_id, label, node_prop) {
 
         let selection_div = d3.select('#' + steps_structure_validation_div).append('div')
             .style('width', 100 + '%')
             .style('position', 'relative')
             .style('float', 'left')
-            .style('padding-top', 20+'px')
             .append('label')
             .text(get_language__label_by_id(lang_id))
             .append('input')
@@ -48,14 +53,14 @@ function initialize_steps (node_under_investigation) {
             .attr('type', 'text')
             .attr('value',label);
 
-        selection_div.on('change', function (d) {
+        selection_div.on('change', function () {
             node_under_investigation[node_prop] = this.value;
             learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0][node_prop] = this.value;
             update_network_views_after_change();
         })
     }
 
-
+    //------------------------append dropdown selection
     function append_selection(lang_id, data_types, labels, node_prop, preselection) {
         let selection_div = d3.select('#' + steps_structure_validation_div).append('div')
             .style('width', 100 + '%')

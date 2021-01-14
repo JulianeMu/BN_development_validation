@@ -301,10 +301,8 @@ function select_variables_for_group(group_information) {
     }
 
 
-    console.log(group_information)
     // check all predefined checkboxes
     group_information.variables.forEach(function (d) {
-        console.log(d)
         d3.select('#' + id_group_selection_ + d).node().checked = true; //.property('checked', true);
     });
 

@@ -19,7 +19,10 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
         .style('position', 'absolute')
         .style('width', 'calc(100% - 2*' + padding + 'px)')
         .style('height', function () {
-            return 'calc(' + 100 + '% - 1*' + padding + 'px)';
+            if (bool_show_legend) {
+                return (parseFloat(d3.select('#' + parent_div_id).style('height')) - padding - 80) +'px';
+            }
+            return 100+'%';
         })
         .style('padding', padding + 'px')
         .style('overflow-y', 'scroll')
