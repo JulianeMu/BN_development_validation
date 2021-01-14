@@ -31,9 +31,50 @@ function initialize_steps (node_under_investigation) {
 
     append_selection(lang_id_groups, groups, group_labels, lang_id_groups, preselection);
 
+    append_editable_table(lang_id_variable_states);
 
 
-    function append_editable_table() {
+    function append_editable_table(lang_id) {
+        let metadata = [];
+        console.log(node_under_investigation);
+
+        metadata.push({ name: "id", label: "id", datatype: "string", editable: false});
+        metadata.push({ name: "label", label:"label", datatype: "string", editable: true});
+
+        let data = [];
+
+        node_under_investigation.outcomes.forEach(function (d) {
+            data.push({id: d.id, values: {"id":d.id,"label":d.label}});
+        })
+
+        let div = d3.select('#' + steps_structure_validation_div).append('div')
+            .style('width', 100 + '%')
+            .style('position', 'relative')
+            .style('padding-top', 20+'px')
+            .style('float', 'left')
+        div.append('div').attr('class', "add_button");
+
+        div.append('label')
+            .text(get_language__label_by_id(lang_id))
+            .append('div')
+            .style('margin', 'var(--padding)')
+            .attr('id', lang_id)
+            .style('width', 'calc('+100+'% - var(padding))');
+
+
+
+        let editableGrid = new EditableGrid("DemoGridJsData", {
+            enableSort : false
+
+        });
+        editableGrid.load({"metadata": metadata, "data": data});
+        editableGrid.renderGrid(lang_id, "testgrid");
+        editableGrid.modelChanged = function(rowIndex, columnIndex, oldValue, newValue, row) {
+//            console.log("ajfldValue for '" + this.getColumnName(columnIndex) + "' in row " + this.getRowId(rowIndex) + " has changed from '" + oldValue + "' to '" + newValue + "'");
+            learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id === this.getRowId(rowIndex))[0].label = newValue;
+            node_under_investigation.outcomes = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes;
+
+        };
 
     }
 

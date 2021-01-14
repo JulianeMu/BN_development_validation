@@ -101,16 +101,7 @@
     z-index: 40;
 }
 
-.add_button {
-    position: absolute;
-    width: calc(0.4* var(--header_images_width));
-    height: calc(0.4* var(--header_images_width));
-    background-image: url(../templates/resources/add.svg), none;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center ;
-    right: 0;
-}
+
 
 .cancel_button {
     position: absolute;

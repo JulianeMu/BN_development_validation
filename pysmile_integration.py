@@ -10,8 +10,9 @@ def readin_network_structure():
 
 
 def get_network_structure():
+
     nodes = [classes.NodeIdNameOutcomes(id=node_id, label=gv.network.get_node_name(node_id),
-                                        outcomes=gv.network.get_outcome_ids(node_id),
+                                        outcomes=[classes.OutcomeIdLabel(outcome, outcome) for outcome in gv.network.get_outcome_ids(node_id)],
                                         parents=gv.network.get_parent_ids(node_id),
                                         children=gv.network.get_child_ids(node_id))
              for node_id in gv.network.get_all_node_ids()]

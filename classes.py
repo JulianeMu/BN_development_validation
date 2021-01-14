@@ -7,6 +7,13 @@ class LayerObject(object):
         self.outcomes = outcomes
 
 
+class OutcomeIdLabel(object):
+    def __init__(self, id, label):
+        self.id = id
+        self.label = label
+        self.original = True
+
+
 class NodeIdNameOutcomes(object):
     def __init__(self, id, label, outcomes, parents, children):
         self.id = id
