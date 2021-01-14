@@ -334,6 +334,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
 function get_y_diff(id_group_div, parent_div_id, child_div_id) {
 
+    console.log(d3.select('#' + parent_div_id).select('#' + id_group_div))
     let y_pos = d3.select('#' + parent_div_id).select('#' + id_group_div).node().getBoundingClientRect().y -
         d3.select('#' + child_div_id).node().getBoundingClientRect().y;
 

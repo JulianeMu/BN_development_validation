@@ -200,7 +200,7 @@ function add_group(original_id) {
             }
         }
         update_all_colors_and_text();
-        update_group_divs_in_network_view();
+        update_group_divs_in_network_view(id_network_view_child);
 
         if (learned_structure_data !== null) {
             update_network_view(learned_structure_data, id_network_view, id_network_view_child);
