@@ -127,6 +127,8 @@ function initialize_steps(node_under_investigation) {
         div.append('label')
             .text(get_language__label_by_id(lang_id))
             .append('div')
+            .style('overflow-y', 'scroll')
+            .style('max-height', 200 + 'px')
             .style('margin', 'var(--padding)')
             .attr('id', lang_id)
             .style('width', 'calc(' + 100 + '% - var(padding))');
@@ -146,13 +148,17 @@ function initialize_steps(node_under_investigation) {
             } else {
                 if (newValue) {
                     learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].parents.push(this.getRowId(rowIndex));
+                    learned_structure_data.nodes.filter(x => x.id === this.getRowId(rowIndex))[0].children.push(node_under_investigation.id);
                     learned_structure_data.edges.filter(x => x.edge_from === this.getRowId(rowIndex))[0].edge_to.push(node_under_investigation.id);
                 } else {
-                    learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].parents =
-                        learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].parents.filter(e => e !== this.getRowId(rowIndex));
-                    learned_structure_data.edges.filter(x => x.edge_from === this.getRowId(rowIndex))[0].edge_to =
-                        learned_structure_data.edges.filter(x => x.edge_from === this.getRowId(rowIndex))[0].edge_to.filter(e => e !== node_under_investigation.id);
+                    learned_structure_data.nodes.find(x => x.id === node_under_investigation.id).parents =
+                        learned_structure_data.nodes.find(x => x.id === node_under_investigation.id).parents.filter(e => e !== this.getRowId(rowIndex));
 
+                    learned_structure_data.nodes.find(x => x.id === this.getRowId(rowIndex)).children =
+                        learned_structure_data.nodes.find(x => x.id === this.getRowId(rowIndex)).children.filter(e => e !== node_under_investigation.id);
+
+                    learned_structure_data.edges.find(x => x.edge_from === this.getRowId(rowIndex)).edge_to =
+                        learned_structure_data.edges.find(x => x.edge_from === this.getRowId(rowIndex)).edge_to.filter(e => e !== node_under_investigation.id);
                 }
 
                 update_network_views_after_change();
@@ -288,9 +294,12 @@ function initialize_steps(node_under_investigation) {
 }
 
 
-function update_network_views_after_change() {
+function update_network_views_after_change(node_validation_network_structure, node_under_investigation) {
     update_network_view(learned_structure_data, id_network_view, id_network_view_child);
-    [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
+
+    if (!node_validation_network_structure) {
+        [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
+    }
 
     update_network_view(node_validation_network_structure, structure_validation_viewer_div, 'structure_validation_viewer_div_child');
 
@@ -303,10 +312,10 @@ function update_network_views_after_change() {
 
             return (parseFloat(d3.select('#' + circle_id + splitted_id[1]).style('cx')) > parseFloat(d3.select('#' + circle_id + splitted_id[2]).style('cx')))
         }).transition().duration(transition_duration)
-            .style('stroke', 'red').style('stroke-width', 6 + 'px');
+            .style('stroke', 'rgb(255, 0, 0)').style('stroke-width', 6 + 'px');
 
         if (related_paths.size() > 0) {
             console.log('abc')
         }
-    }, 2* transition_duration + 10);
+    }, 2 * transition_duration + 10);
 }

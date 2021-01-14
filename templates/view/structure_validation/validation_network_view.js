@@ -18,6 +18,20 @@ function update_network_overview_for_validated_nodes () {
             d3.select('#' + id_network_view_child).selectAll('path').filter(function () {
                 return this.id.split(splitter).includes(node.id);
             }).transition().duration(transition_duration / 2).style('stroke', 'grey');
+
+
         }
+    })
+
+    d3.selectAll('.' + class_network_circle).on('click', function (d) {
+
+        investigation_node_index = learned_structure_data.nodes.map(e => e.id).indexOf(this.id.split(circle_id)[1]);
+        [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
+
+        update_network_views_after_change(node_validation_network_structure, node_under_investigation);
+
+        update_network_views_node_for_validation(node_under_investigation);
+        update_network_overview_for_validated_nodes();
+        initialize_steps(node_under_investigation);
     })
 }

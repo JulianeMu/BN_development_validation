@@ -122,7 +122,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
             .on('mouseout', function (d, i) {
 
                 svg_g.selectAll('path').filter(function () {
-                    return this.getBoundingClientRect().width > 100;
+                    return this.getBoundingClientRect().width > 100 && d3.select(this).style('stroke') !== 'rgb(255, 0, 0)';
                 }).transition().duration(transition_duration / 2).style('opacity', 0);
 
                 svg_g.selectAll('*').filter(function () {
