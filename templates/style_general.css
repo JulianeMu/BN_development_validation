@@ -69,6 +69,7 @@ body{
     background-size: 50% 50%;
     background-repeat: no-repeat;
     background-position: center ;
+    cursor:pointer
 }
 
 
@@ -80,6 +81,7 @@ body{
     background-size: 50% 50%;
     background-repeat: no-repeat;
     background-position: center ;
+    cursor:pointer
 }
 
 .footer {
@@ -106,6 +108,7 @@ body{
     border: 2px solid var(--main-font-color); /* Green */
     font-size: 28px;
     text-align: center;
+    cursor:pointer
 }
 
 .button:hover {
@@ -158,4 +161,5 @@ body{
     background-repeat: no-repeat;
     background-position: center ;
     right: 0;
+    cursor:pointer;
 }
