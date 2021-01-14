@@ -475,9 +475,11 @@ function update_group_divs_in_network_view(child_div_id) {
             .style('padding-left', 5 + 'px')
             .style('opacity', 0);
 
-        const instance = group_div.node()._tippy
-        if (instance) {
-            instance.destroy();
+        if (group_div.node() !== null) {
+            const instance = group_div.node()._tippy
+            if (instance) {
+                instance.destroy();
+            }
         }
 
         tippy(group_div.node(), {

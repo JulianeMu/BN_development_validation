@@ -75,6 +75,8 @@ const lang_id_legend_effect = "lang_id_legend_effect";
 
 const lang_id_variable_type= "lang_id_variable_type";
 const lang_id_variable_identifier= "lang_id_variable_identifier";
+const lang_id_groups= "lang_id_groups";
+
 const lang_id_variable_states = "lang_id_variable_states";
 const lang_id_variable_parents = "lang_id_variable_parents";
 
@@ -133,7 +135,7 @@ var language_string = [
     {id: lang_id_variable_identifier, eng:"label:", de:"Variablen-ID"},
     {id: lang_id_variable_states, eng:"node states:", de:"Variablenstates"},
     {id: lang_id_variable_parents, eng:"parent relations:", de:"Elternrelationen"},
-
+    {id: lang_id_groups, eng: 'clinical workflow step/group:', de:'klinischer Arbeitsschritt/Gruppierung:'},
     {id: lang_id_structure_validation_data_type_personal_data, eng:"personal data", de:"patienten-spezifische Daten"},
     {id: lang_id_structure_validation_data_type_anomalies, eng:"anomalies", de:"Anomalien"},
     {id: lang_id_structure_validation_data_type_examination_data, eng:"examination data", de:"Untersuchungsdaten"},
