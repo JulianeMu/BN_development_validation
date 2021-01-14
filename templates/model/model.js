@@ -71,6 +71,25 @@ function learn_structure_from_data (callback) {
     });
 }
 
+
+function compute_chi_square (callback, node_id) {
+    const sURL = hostURL + "/compute_chi_square/";
+
+    let values = JSON.stringify(node_id);
+
+    $.ajax({
+        url: sURL,
+        type: 'POST',
+        data: values,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (response) {
+            //data = JSON.parse(response);
+            callback(JSON.parse(response));
+        }
+    });
+}
+
 function save_data_on_backend (callback) {
     const sURL = hostURL + "/save_data_on_backend/";
 

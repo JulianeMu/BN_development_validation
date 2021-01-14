@@ -7,6 +7,12 @@ class LayerObject(object):
         self.outcomes = outcomes
 
 
+class Chi2PValue(object):
+    def __init__(self, node_id, p_value):
+        self.node_id = node_id
+        self.p_value = p_value
+
+
 class OutcomeIdLabel(object):
     def __init__(self, id, label):
         self.id = id

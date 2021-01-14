@@ -12,6 +12,8 @@ import simplejson
 import pysmile_integration
 
 import global_variables as gv
+from scipy.stats import chi2_contingency
+import classes
 
 start_time = time.time()
 
@@ -57,6 +59,30 @@ def discretize_data():
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
     return jsonify(transform(discretized_data))
+
+
+@app.route('/compute_chi_square/', methods=["POST"])
+def compute_chi_square():
+    start_time_deviations = time.time()
+
+    variables_for_chi_square_test = request.get_json()
+
+    list_chi2 = [compute_chi2_in_loop(variables_for_chi_square_test, node['id']) for node in
+                 gv.subset_selection_included_in_learning if node['included_in_structural_learning']]
+
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
+
+    return jsonify(transform(list_chi2))
+
+
+def compute_chi2_in_loop(node1, node2):
+    data_crosstab = pd.crosstab(gv.dataset_categorical[node1],
+                                gv.dataset_categorical[node2],
+                                margins=False)
+
+    crosstab_rows_list = data_crosstab.values.tolist()
+
+    return classes.Chi2PValue(node_id=node2, p_value=float(chi2_contingency(crosstab_rows_list)[1]))
 
 
 def discretize_variable(variable_for_discretization):

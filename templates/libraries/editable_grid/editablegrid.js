@@ -126,7 +126,7 @@ function EditableGrid(name, config) {
 /**
  * Default properties
  */ 
-EditableGrid.prototype.enableSort = false;
+EditableGrid.prototype.enableSort = true;
 EditableGrid.prototype.enableStore = true;
 EditableGrid.prototype.doubleclick = false;
 EditableGrid.prototype.editmode = "absolute";

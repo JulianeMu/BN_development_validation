@@ -60,7 +60,8 @@ function initialize_startPage() {
 
                 let transform_x = (d3.select('#' + upload_start_open[i].id).select('svg').node().getBoundingClientRect().width - parseFloat(d3.select('#' + upload_start_open[i].id).select('svg').select('svg').attr('width'))) / 2;
                 d3.select('#' + upload_start_open[i].id).select('svg').attr('transform', 'translate(' +transform_x + ', 100)')
-                    .on('click', upload_start_open[i].function);
+                    .on('click', upload_start_open[i].function)
+                    .style('cursor','pointer');
             })
     }
 }

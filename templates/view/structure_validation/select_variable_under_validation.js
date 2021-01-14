@@ -1,7 +1,7 @@
 
 function select_variable_for_validation () {
     let unvalidated_nodes = learned_structure_data.nodes.filter(x => x.structure_validated === false);
-    let node_under_investigation = unvalidated_nodes[0];
+    let node_under_investigation = unvalidated_nodes[2];
 
     let node_validation_network_structure = {
         edges: [],

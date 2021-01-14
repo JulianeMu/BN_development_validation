@@ -1,4 +1,4 @@
-let editableGrid = null;
+let editableGrid = [];
 
 function initialize_steps(node_under_investigation) {
 
@@ -25,7 +25,6 @@ function initialize_steps(node_under_investigation) {
         group_labels.push(group.label);
     })
 
-
     preselection = "";
     if (initial_groups.filter(x => x.variables.includes(node_under_investigation.id)).length > 0) {
         preselection = initial_groups.filter(x => x.variables.includes(node_under_investigation.id))[0].id;
@@ -33,11 +32,44 @@ function initialize_steps(node_under_investigation) {
 
     append_selection(lang_id_groups, groups, group_labels, lang_id_groups, preselection);
 
-    append_editable_table(lang_id_variable_states);
+    append_states_validation(lang_id_variable_states);
+
+    append_parent_node_validation(lang_id_variable_parents);
 
 
+    function append_parent_node_validation(lang_id) {
+        compute_chi_square(function (chi2_data) {
+            chi2_data.sort((a, b) => (a.p_value > b.p_value) ? 1 : -1)
 
-    function append_editable_table(lang_id) {
+            // create data for table
+            let metadata = [];
+            metadata.push({name: "is_parent", label: "is parent", datatype: "boolean", editable: true});
+            metadata.push({name: "id", label: "label", datatype: "string", editable: false});
+            metadata.push({name: "p_value", label: "p value", datatype: "float", editable: false});
+            //metadata.push({name: 'action', label: "", datatype: 'html', editable: false});
+
+            let data = [];
+
+            chi2_data.forEach(function (d) {
+                let related_node = learned_structure_data.nodes.filter(x => x.id === d.node_id)[0];
+
+                if (d.node_id !== node_under_investigation.id) {
+                    data.push({id: d.node_id,
+                        values: {
+                            "is_parent": node_under_investigation.parents.includes(d.node_id),
+                            "id": related_node.label,
+                            "p_value": parseFloat(d.p_value)
+                        }
+                    });
+                }
+            })
+
+            append_editable_table(lang_id, metadata, data, 1);
+
+        }, node_under_investigation.id);
+    }
+
+    function append_states_validation(lang_id) {
         // create data for table
         let metadata = [];
         metadata.push({name: "id", label: "id", datatype: "string", editable: false});
@@ -50,6 +82,11 @@ function initialize_steps(node_under_investigation) {
             data.push({id: d.id, values: {"id": d.id, "label": d.label}});
         })
 
+        append_editable_table(lang_id, metadata, data, 0)
+    }
+
+    function append_editable_table(lang_id, metadata, data, index_table) {
+
         //append label and table
         let div = d3.select('#' + steps_structure_validation_div).append('div')
             .style('width', 100 + '%')
@@ -57,28 +94,33 @@ function initialize_steps(node_under_investigation) {
             .style('padding-top', 20 + 'px')
             .style('float', 'left')
 
-        //append add button
-        div.append('div').attr('class', "add_button")
-            .on('click', function () {
+        if (lang_id === lang_id_variable_states) {
+            //append add button
+            div.append('div').attr('class', "add_button")
+                .on('click', function () {
 
-                let added_node_index = node_under_investigation.outcomes.length;
+                    let added_node_index = node_under_investigation.outcomes.length;
 
-                learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.push({
-                    id: 'outcome' + added_node_index,
-                    label: 'outcome' + added_node_index,
-                    original: false
+                    learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.push({
+                        id: 'outcome' + added_node_index,
+                        label: 'outcome' + added_node_index,
+                        original: false
+                    });
+
+                    node_under_investigation.outcomes.push({
+                        id: 'outcome' + added_node_index,
+                        label: 'outcome' + added_node_index,
+                        original: false
+                    })
+
+                    editableGrid[index_table].append('outcome' + added_node_index, {
+                        "id": 'outcome' + added_node_index,
+                        "label": 'outcome' + added_node_index
+                    });
+                    d3.select('th.editablegrid-action').text('');
+
                 });
-
-                node_under_investigation.outcomes.push({
-                    id: 'outcome' + added_node_index,
-                    label: 'outcome' + added_node_index,
-                    original: false
-                })
-
-                editableGrid.append('outcome' + added_node_index, {"id": 'outcome' + added_node_index, "label": 'outcome' + added_node_index});
-                d3.select('th.editablegrid-action').text('');
-
-            });
+        }
 
         div.append('label')
             .text(get_language__label_by_id(lang_id))
@@ -88,55 +130,62 @@ function initialize_steps(node_under_investigation) {
             .style('width', 'calc(' + 100 + '% - var(padding))');
 
         // initialize table
-        editableGrid = new EditableGrid("DemoGridJsData", {
+        editableGrid[index_table] = new EditableGrid("DemoGridJsData", {
             enableSort: false
         });
-        editableGrid.load({"metadata": metadata, "data": data});
-        editableGrid.renderGrid(lang_id, "testgrid");
-        editableGrid.modelChanged = function (rowIndex, columnIndex, oldValue, newValue, row) {
-            learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id === this.getRowId(rowIndex))[0].label = newValue;
-            node_under_investigation.outcomes = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes;
+        editableGrid[index_table].load({"metadata": metadata, "data": data});
+        editableGrid[index_table].renderGrid(lang_id, "testgrid");
+
+        editableGrid[index_table].modelChanged = function (rowIndex, columnIndex, oldValue, newValue, row) {
+            console.log(this.getColumnName(columnIndex))
+            console.log(rowIndex)
+            if (this.getColumnName(columnIndex) === 'label') {
+                learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id === this.getRowId(rowIndex))[0].label = newValue;
+                node_under_investigation.outcomes = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes;
+            }
         };
 
-        // renderer for the action column to remove row
-        // just applicable to newly entered states
-        editableGrid.setCellRenderer("action", new CellRenderer({
-            render: function (cell, value) {
+        if (lang_id === lang_id_variable_states) {
+            // renderer for the action column to remove row
+            // just applicable to newly entered states
+            editableGrid[index_table].setCellRenderer("action", new CellRenderer({
+                render: function (cell, value) {
 
-                let current_outcome = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id === editableGrid.getRowId(cell.rowIndex))[0];
+                    let current_outcome = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id === editableGrid[index_table].getRowId(cell.rowIndex))[0];
 
-                let image = d3.select(cell).append('a')
-                    .style('cursor', 'pointer')
-                    .append('img')
-                    .attr('src', "resources/cancel.svg")
-                    .style('border', 0)
-                    .attr('alt', 'delete')
-                    .attr('title', 'delete')
-                    .style('display', 'block')
-                    .style('margin-left', 'auto')
-                    .style('margin-right', 'auto')
-                    .style('width', 40 + '%')
-                    .style('opacity', function () {
-                        if(current_outcome.original) {
-                            return 0.5;
+                    let image = d3.select(cell).append('a')
+                        .style('cursor', 'pointer')
+                        .append('img')
+                        .attr('src', "resources/cancel.svg")
+                        .style('border', 0)
+                        .attr('alt', 'delete')
+                        .attr('title', 'delete')
+                        .style('display', 'block')
+                        .style('margin-left', 'auto')
+                        .style('margin-right', 'auto')
+                        .style('width', 40 + '%')
+                        .style('opacity', function () {
+                            if (current_outcome.original) {
+                                return 0.5;
+                            }
+                            return 1;
+                        })
+
+
+                    image.on('click', function (d) {
+                        if (!current_outcome.original) {
+
+                            editableGrid[index_table].remove(cell.rowIndex);
+                            d3.select('th.editablegrid-action').text('');
+
+                            learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id !== current_outcome.id)
+                            node_under_investigation.outcomes = node_under_investigation.outcomes.filter(x => x.id !== current_outcome.id);
                         }
-                        return 1;
                     })
-
-
-                image.on('click', function (d) {
-                    if(!current_outcome.original) {
-
-                        editableGrid.remove(cell.rowIndex);
-                        d3.select('th.editablegrid-action').text('');
-
-                        learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x=> x.id !== current_outcome.id)
-                        node_under_investigation.outcomes = node_under_investigation.outcomes.filter(x => x.id !== current_outcome.id);
-                    }
-                })
-            }
-        }));
-        editableGrid.renderGrid(lang_id, "testgrid");
+                }
+            }));
+        }
+        editableGrid[index_table].renderGrid(lang_id, "testgrid");
 
         d3.select('th.editablegrid-action').text('');
     }
