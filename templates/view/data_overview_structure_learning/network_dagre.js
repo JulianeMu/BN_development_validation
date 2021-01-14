@@ -53,8 +53,10 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
             let found = false;
             for (let j = 0; j < initial_groups[i].variables.length; j++) {
-                if (subset_selection.filter(x => x.id === initial_groups[i].variables[j])[0].included_in_structural_learning) {
-                    found = true;
+                if (data.nodes.filter(x => x.id === initial_groups[i].variables[j]).length > 0) {
+                    if (subset_selection.filter(x => x.id === initial_groups[i].variables[j])[0].included_in_structural_learning) {
+                        found = true;
+                    }
                 }
             }
             if (initial_groups[i].variables.length > 0 && found) {
@@ -334,7 +336,6 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
 function get_y_diff(id_group_div, parent_div_id, child_div_id) {
 
-    console.log(d3.select('#' + parent_div_id).select('#' + id_group_div))
     let y_pos = d3.select('#' + parent_div_id).select('#' + id_group_div).node().getBoundingClientRect().y -
         d3.select('#' + child_div_id).node().getBoundingClientRect().y;
 

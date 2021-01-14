@@ -1291,6 +1291,7 @@ EditableGrid.prototype.getRowValues = function(rowIndex)
  */
 EditableGrid.prototype.append = function(rowId, cellValues, rowAttributes, dontSort)
 {
+
 	return this.insert(this.data.length, rowId, cellValues, rowAttributes, dontSort);
 };
 
@@ -1366,6 +1367,7 @@ EditableGrid.prototype._insert = function(rowIndex, offset, rowId, cellValues, r
  */
 EditableGrid.prototype.insert = function(rowIndex, rowId, cellValues, rowAttributes, dontSort)
 {
+
 	if (rowIndex < 0) rowIndex = 0;
 	if (rowIndex >= this.data.length && this.data.length > 0) return this.insertAfter(this.data.length - 1, rowId, cellValues, rowAttributes, dontSort);
 	return this._insert(rowIndex, 0, rowId, cellValues, rowAttributes, dontSort);
@@ -1380,6 +1382,7 @@ EditableGrid.prototype.insert = function(rowIndex, rowId, cellValues, rowAttribu
  */
 EditableGrid.prototype.insertAfter = function(rowIndex, rowId, cellValues, rowAttributes, dontSort)
 {
+
 	if (rowIndex < 0) return this.insert(0, rowId, cellValues, rowAttributes, dontSort);
 	if (rowIndex >= this.data.length) rowIndex = Math.max(0, this.data.length - 1); 
 	return this._insert(rowIndex, 1, rowId, cellValues, rowAttributes, dontSort);
