@@ -3,8 +3,6 @@ let editableGrid = [];
 function initialize_steps(node_under_investigation) {
 
     d3.select('#' + steps_structure_validation_div).selectAll('*').remove();
-    const steps = [lang_id_variable_type, lang_id_variable_identifier, lang_id_variable_states, lang_id_variable_parents];
-
 
     append_text_input(lang_id_variable_identifier, node_under_investigation.label, 'label');
 
@@ -43,9 +41,11 @@ function initialize_steps(node_under_investigation) {
 
             // create data for table
             let metadata = [];
+            //metadata.push({name: "id", label: "id", datatype: "string", hidden: true, renderable: false});
             metadata.push({name: "is_parent", label: "is parent", datatype: "boolean", editable: true});
-            metadata.push({name: "id", label: "label", datatype: "string", editable: false});
-            metadata.push({name: "p_value", label: "p value", datatype: "float", editable: false});
+            metadata.push({name: "label", label: "label", datatype: "string", editable: false});
+            metadata.push({name: "p_value", label: "p value", datatype: "number", editable: false});
+
             //metadata.push({name: 'action', label: "", datatype: 'html', editable: false});
 
             let data = [];
@@ -54,11 +54,13 @@ function initialize_steps(node_under_investigation) {
                 let related_node = learned_structure_data.nodes.filter(x => x.id === d.node_id)[0];
 
                 if (d.node_id !== node_under_investigation.id) {
-                    data.push({id: d.node_id,
+                    data.push({
+                        id: d.node_id,
                         values: {
                             "is_parent": node_under_investigation.parents.includes(d.node_id),
-                            "id": related_node.label,
-                            "p_value": parseFloat(d.p_value)
+                            "label": related_node.label,
+                            "id": related_node.id,
+                            "p_value": parseFloat(d.p_value).toFixed(6)
                         }
                     });
                 }
@@ -129,19 +131,32 @@ function initialize_steps(node_under_investigation) {
             .attr('id', lang_id)
             .style('width', 'calc(' + 100 + '% - var(padding))');
 
+        let enable_sort = false; //lang_id !== lang_id_variable_states;
         // initialize table
         editableGrid[index_table] = new EditableGrid("DemoGridJsData", {
-            enableSort: false
+            enableSort: enable_sort
         });
         editableGrid[index_table].load({"metadata": metadata, "data": data});
         editableGrid[index_table].renderGrid(lang_id, "testgrid");
 
         editableGrid[index_table].modelChanged = function (rowIndex, columnIndex, oldValue, newValue, row) {
-            console.log(this.getColumnName(columnIndex))
-            console.log(rowIndex)
             if (this.getColumnName(columnIndex) === 'label') {
                 learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id === this.getRowId(rowIndex))[0].label = newValue;
                 node_under_investigation.outcomes = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes;
+            } else {
+                if (newValue) {
+                    learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].parents.push(this.getRowId(rowIndex));
+                    learned_structure_data.edges.filter(x => x.edge_from === this.getRowId(rowIndex))[0].edge_to.push(node_under_investigation.id);
+                } else {
+                    learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].parents =
+                        learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].parents.filter(e => e !== this.getRowId(rowIndex));
+                    learned_structure_data.edges.filter(x => x.edge_from === this.getRowId(rowIndex))[0].edge_to =
+                        learned_structure_data.edges.filter(x => x.edge_from === this.getRowId(rowIndex))[0].edge_to.filter(e => e !== node_under_investigation.id);
+
+                }
+
+                update_network_views_after_change();
+
             }
         };
 
@@ -278,4 +293,20 @@ function update_network_views_after_change() {
     [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
 
     update_network_view(node_validation_network_structure, structure_validation_viewer_div, 'structure_validation_viewer_div_child');
+
+    setTimeout(() => {
+
+
+        let related_paths = d3.selectAll('.' + class_network_paths).filter(function () {
+
+            let splitted_id = this.id.split(splitter);
+
+            return (parseFloat(d3.select('#' + circle_id + splitted_id[1]).style('cx')) > parseFloat(d3.select('#' + circle_id + splitted_id[2]).style('cx')))
+        }).transition().duration(transition_duration)
+            .style('stroke', 'red').style('stroke-width', 6 + 'px');
+
+        if (related_paths.size() > 0) {
+            console.log('abc')
+        }
+    }, 2* transition_duration + 10);
 }

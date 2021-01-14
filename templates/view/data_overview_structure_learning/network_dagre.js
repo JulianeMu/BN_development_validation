@@ -101,7 +101,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     return this !== this_circle && d3.select(this).style('opacity') === '1';
                 }).transition().duration(transition_duration / 2).style('opacity', 0.2);
 
-                let related_paths = svg_g.selectAll('path').filter(function () {
+                let related_paths = svg_g.selectAll('.'+class_network_paths).filter(function () {
 
                     return this.id.split(splitter).includes(variable_label);
                 }).transition().duration(transition_duration / 2).style('opacity', 1);
@@ -275,11 +275,11 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 paths.exit().remove();//remove unneeded circles
                 paths.enter()
                     .append("path")
-                    .attr('class', class_network_edges)
+                    .attr('class', class_network_paths)
                     .lower()
                     .style('opacity', 0);
 
-                svg_g.selectAll('.' + class_network_edges).transition().duration(transition_duration)
+                svg_g.selectAll('.' + class_network_paths).transition().duration(transition_duration)
                     .attr('id', function (d) {
                         return path_id + splitter + d.v + splitter + d.w
                     })
@@ -310,6 +310,8 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                         return line(points); //line(g.edge(g.edges()[i]).points)
                     })
+                    .style('stroke', 'var(--main-font-color)')
+                    .style('stroke-width', '2px')
                     .style('opacity', function (d) {
 
                         let x1 = parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius;
@@ -426,7 +428,7 @@ function initialize_network_legend(parent_div_id) {
         .text(get_language__label_by_id(lang_id_legend_effect));
 
     legend_svg.append("path")
-        .attr('class', class_network_edges)
+        .attr('class', class_network_paths)
         .lower()
         .attr('d', function () {
             let points = [];

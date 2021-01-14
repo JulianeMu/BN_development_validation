@@ -79,7 +79,7 @@ const path_id = "path";
 const splitter = "____";
 const class_network_label_text = 'network_label_text';
 const class_network_legend_text = 'network_legend_text';
-const class_network_edges = 'network_path';
+const class_network_paths = 'network_path';
 const class_network_circle = 'network_circle';
 const transition_duration = 200;
 
