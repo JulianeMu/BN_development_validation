@@ -117,6 +117,9 @@ function initialize_prior_knowledge_view (structure_learning_div) {
                     instance.show();
                 });
             }
+
+            d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
+
         })
     })
 
@@ -161,4 +164,6 @@ function remove_blacklist_or_whitelist (group_id) {
     group_id.remove();
 
     tippy.hideAll();
+    d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
+
 }

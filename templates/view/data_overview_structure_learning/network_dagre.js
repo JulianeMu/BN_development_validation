@@ -46,6 +46,9 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
 
 function update_network_view(data, parent_div_id, child_div_id) {
 
+    let scrolltop_before = d3.select('#' + child_div_id).node().scrollTop;
+    d3.select('#' + child_div_id).node().scrollTop =  0+'px';
+
     if (data !== null) {
         let highest_y_pos = 0;
 
@@ -143,7 +146,12 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     y_pos = y_diff[0] + y_diff[2] / 2 - 22;
                 }
                 return y_pos;
-            }).each(function (d) {
+            })
+            .style('stroke', 'white')
+            .style('stroke-width', 4+'px')
+            .style('fill', 'var(--main-font-color)')
+
+        .each(function (d) {
             const instance = this._tippy
             if (instance) {
                 instance.destroy();
@@ -279,61 +287,68 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     .lower()
                     .style('opacity', 0);
 
-                svg_g.selectAll('.' + class_network_paths).transition().duration(transition_duration)
-                    .attr('id', function (d) {
-                        return path_id + splitter + d.v + splitter + d.w
-                    })
-                    .attr("d", function (d) {
-
-                        let points = [];
-
-                        //let center = parseFloat(d3.select('#' + circle_id + g.edges()[i].v).attr("cx")) + ((parseFloat(d3.select('#' + circle_id + g.edges()[i].w).attr("cx")) - parseFloat(d3.select('#' + circle_id + g.edges()[i].v).attr("cx"))) / 2)
-                        let center = parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius + 1.4 * space_edges_corner;
-
-                        points.push({
-                            x: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius,
-                            y: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cy"))
+                setTimeout(() => {
+                    svg_g.selectAll('.' + class_network_paths)
+                        .transition().duration(transition_duration)
+                        .attr('id', function (d) {
+                            return path_id + splitter + d.v + splitter + d.w
                         })
-                        points.push({
-                            x: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius + space_edges_corner,
-                            y: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cy"))
-                        })
-                        points.push({x: center, y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))})
-                        points.push({
-                            x: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) - circle_radius - space_edges_corner,
-                            y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))
-                        })
-                        points.push({
-                            x: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) - circle_radius,
-                            y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))
-                        })
+                        .attr("d", function (d) {
 
-                        return line(points); //line(g.edge(g.edges()[i]).points)
-                    })
-                    .style('stroke', 'var(--main-font-color)')
-                    .style('stroke-width', '2px')
-                    .style('opacity', function (d) {
+                            let points = [];
 
-                        let x1 = parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius;
-                        let x2 = parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) + circle_radius;
 
-                        if (x2 - x1 > 100) {
-                            return 0;
+                            //let center = parseFloat(d3.select('#' + circle_id + g.edges()[i].v).attr("cx")) + ((parseFloat(d3.select('#' + circle_id + g.edges()[i].w).attr("cx")) - parseFloat(d3.select('#' + circle_id + g.edges()[i].v).attr("cx"))) / 2)
+                            let center = parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius + 1.4 * space_edges_corner;
+
+                            points.push({
+                                x: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius,
+                                y: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cy"))
+                            })
+                            points.push({
+                                x: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius + space_edges_corner,
+                                y: parseFloat(svg_g.select('#' + circle_id + d.v).attr("cy"))
+                            })
+                            points.push({x: center, y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))})
+                            points.push({
+                                x: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) - circle_radius - space_edges_corner,
+                                y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))
+                            })
+                            points.push({
+                                x: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) - circle_radius,
+                                y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))
+                            })
+
+                            return line(points); //line(g.edge(g.edges()[i]).points)
+                        })
+                        .style('stroke', 'var(--main-font-color)')
+                        .style('stroke-width', '2px')
+                        .style('opacity', function (d) {
+
+                            let x1 = parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius;
+                            let x2 = parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) + circle_radius;
+
+                            if (x2 - x1 > 100) {
+                                return 0;
+                            }
+                            return 1;
+                        });
+
+                    svg_g.selectAll('circle').each(function (circle, i) {
+                        if (parseFloat(svg_g.style('height')) < parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius) {
+                            svg_g.style('height', parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius);
                         }
-                        return 1;
+                        if (parseFloat(svg_g.style('width')) < parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius) {
+                            svg_g.style('width', parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius);
+                        }
                     });
-
-                svg_g.selectAll('circle').each(function (circle, i) {
-                    if (parseFloat(svg_g.style('height')) < parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius) {
-                        svg_g.style('height', parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius);
-                    }
-                    if (parseFloat(svg_g.style('width')) < parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius) {
-                        svg_g.style('width', parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius);
-                    }
-                });
+                }, 10);
             }, 10);
         }
     }
+
+    d3.select('#' + child_div_id).node().scrollTop =  scrolltop_before;
+
 }
 
 function get_y_diff(id_group_div, parent_div_id, child_div_id) {

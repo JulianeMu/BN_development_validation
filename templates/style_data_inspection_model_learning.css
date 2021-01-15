@@ -33,7 +33,7 @@
 }
 
 #id_data_inspection_div{
-    width: 100%;
+    width: calc(100% - 2*var(--padding));
     overflow-y:scroll;
 }
 
