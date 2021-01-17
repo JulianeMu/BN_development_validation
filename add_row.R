@@ -22,11 +22,17 @@ library(tidyverse)
 
 add_new_row <- function(data_df, bayesian_network_structure, column_names, added_values) {
 
+  # create a list of status of categories that are added
+  # not_specified: the atribute is not specified
+  # existed_category: a value that already exists is added
+  # new_category: a new category has been added
   category_status_list <- rep(list("not_specified"), length(names(data_df)))
   names(category_status_list) <- names(data_df)
+  # is_new_category: variable for determining whether there was a new category added
   is_new_category <- FALSE
   data_added_row <- data_df
 
+  # go through every category and determine their status
   for (nc in c(1:length(column_names))){
     check_levels <- levels(data_added_row %>% pull(column_names[nc]))
     if(!added_values[nc] %in% check_levels){
@@ -39,7 +45,7 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
     }
   }
 
-  # add a row witht the given values
+  # add a row with the given values
   data_added_row <- data_added_row %>% add_row(!!column_names[1] := added_values[1])
   if(length(column_names) > 1){
     for (nc in c(2:length(column_names))){
@@ -50,19 +56,23 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
   # factorize the data and create a new dataframe
   data_added_row <- lapply(data_added_row, factor)
 
-  # sapply(data_added_row, class)
+  # change the data into a dataframe
   data_added_row <- as.data.frame(data_added_row)
-  # print(tail(data_added_row))
 
   # fit the new dataset to the network structure
   fitted = bn.fit(bayesian_network_structure, data_added_row)
 
+  # if a new category is added the "impute" function will not work
+  # check if there is a new category added
   if(!is_new_category){
     # impute the dataset in order to replace the <NA> values
     imputed = impute(fitted, data_added_row)
   }else{
+    # if there is a new category, go through all the columns
     for (nc in c(1:length(names(category_status_list)))){
-      print(names(category_status_list)[nc])
+      #print(names(category_status_list)[nc])
+      # if the status of a column is not_specified, set the value of the added row equal to the most repeated value in
+      # that column
       if(category_status_list[names(category_status_list)[nc]] == "not_specified"){
         data_added_row[nrow(data_added_row),][names(category_status_list)[nc]] <-
           names(which(table(data_added_row[names(category_status_list)[nc]]) ==
@@ -72,8 +82,8 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
     imputed = data_added_row
   }
 
-  return(list("bayesian_network_parameters" = fitted, "new_imputed_data" = imputed, "data_added_row" = data_added_row,
-              "category_status_list" = category_status_list))
+  # return the parameters and the new imputed dataset with the added row
+  return(list("bayesian_network_parameters" = fitted, "new_imputed_data" = imputed))
 }
 
 
