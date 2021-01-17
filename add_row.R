@@ -1,24 +1,24 @@
 # Title     : TODO
 # Objective : TODO
 # Created by: julianemuller
-# Created on: 13.12.20
+# Created on: 17.01.21
 
 library(bnlearn)
 library(jsonlite)
 library(tidyverse)
 
-# both dataset and the bayesian network structure need to be loaded:
-myArgs <- commandArgs(trailingOnly = TRUE)
-
-bayesian_network_structure <- bn.net(read.dsc(myArgs[1]))
-
-used_dataset <- read.csv(myArgs[2])
-
-#Changing the dataset into a dataframe with factors as columns
-used_dataset[] <- lapply(used_dataset, factor)
-sapply(used_dataset, class)
-used_dataset <- as.data.frame(used_dataset)
-#typeof(used_dataset)
+## both dataset and the bayesian network structure need to be loaded:
+#myArgs <- commandArgs(trailingOnly = TRUE)
+#
+#bayesian_network_structure <- bn.net(read.dsc(myArgs[1]))
+#
+#used_dataset <- read.csv(myArgs[2])
+#
+##Changing the dataset into a dataframe with factors as columns
+#used_dataset[] <- lapply(used_dataset, factor)
+#sapply(used_dataset, class)
+#used_dataset <- as.data.frame(used_dataset)
+##typeof(used_dataset)
 
 add_new_row <- function(data_df, bayesian_network_structure, column_names, added_values) {
 
@@ -77,12 +77,12 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
 }
 
 
-fit <- bn.fit(bayesian_network_structure, used_dataset)
-
-write.dsc('bayesianNetworkStructure.dsc', fit)
-
-# bn.net(fit) to go back to net for later refitting
-
-
-# cat(jsonlite::toJSON(list_final_contributing, pretty=TRUE))
-cat(jsonlite::toJSON(TRUE, pretty=TRUE))
+#fit <- bn.fit(bayesian_network_structure, used_dataset)
+#
+#write.dsc('bayesianNetworkStructure.dsc', fit)
+#
+## bn.net(fit) to go back to net for later refitting
+#
+#
+## cat(jsonlite::toJSON(list_final_contributing, pretty=TRUE))
+#cat(jsonlite::toJSON(TRUE, pretty=TRUE))
