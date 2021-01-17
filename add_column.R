@@ -7,18 +7,18 @@ library(bnlearn)
 library(jsonlite)
 library(tidyverse)
 
-# both dataset and the bayesian network structure need to be loaded:
-myArgs <- commandArgs(trailingOnly = TRUE)
-
-bayesian_network_structure <- bn.net(read.dsc(myArgs[1]))
-
-used_dataset <- read.csv(myArgs[2])
-
-#Changing the dataset into a dataframe with factors as columns
-used_dataset[] <- lapply(used_dataset, factor)
-sapply(used_dataset, class)
-used_dataset <- as.data.frame(used_dataset)
-#typeof(used_dataset)
+## both dataset and the bayesian network structure need to be loaded:
+#myArgs <- commandArgs(trailingOnly = TRUE)
+#
+#bayesian_network_structure <- bn.net(read.dsc(myArgs[1]))
+#
+#used_dataset <- read.csv(myArgs[2])
+#
+##Changing the dataset into a dataframe with factors as columns
+#used_dataset[] <- lapply(used_dataset, factor)
+#sapply(used_dataset, class)
+#used_dataset <- as.data.frame(used_dataset)
+##typeof(used_dataset)
 
 #function to add a randomized column with predefined categries as a list
 add_random_column <- function(data_df, bayesian_network_structure, added_column_name, categories_of_added_column) {
@@ -51,12 +51,15 @@ add_random_column <- function(data_df, bayesian_network_structure, added_column_
 
 #output <- add_random_column(used_dataset, bayesian_network_structure, "new_category", c("a", "b", "c", "d", "e"))
 
-fit <- bn.fit(bayesian_network_structure, used_dataset)
-
-write.dsc('bayesianNetworkStructure.dsc', fit)
-
-# bn.net(fit) to go back to net for later refitting
 
 
-# cat(jsonlite::toJSON(list_final_contributing, pretty=TRUE))
-cat(jsonlite::toJSON(TRUE, pretty=TRUE))
+
+#fit <- bn.fit(bayesian_network_structure, used_dataset)
+#
+#write.dsc('bayesianNetworkStructure.dsc', fit)
+#
+## bn.net(fit) to go back to net for later refitting
+#
+#
+## cat(jsonlite::toJSON(list_final_contributing, pretty=TRUE))
+#cat(jsonlite::toJSON(TRUE, pretty=TRUE))
