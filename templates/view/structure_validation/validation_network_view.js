@@ -5,7 +5,7 @@ function update_network_views_node_for_validation(node_under_investigation) {
         node_under_investigation.children.forEach(function (child) {
             d3.select('#' + structure_validation_viewer_div_child).select('#' + circle_id + child).style('fill', 'grey');//.style('opacity', 0.5);
             d3.select('#' + structure_validation_viewer_div_child).selectAll('path').filter(function () {
-                return this.id.split(splitter).includes(child);
+                return this.id.split(splitter).includes(child) && d3.select(this).style('stroke') !== 'rgb(255, 0, 0)';
             }).transition().duration(transition_duration / 2).style('stroke', 'grey')//.style('opacity', 0.5);
         })
     }, transition_duration + 10);
@@ -19,7 +19,7 @@ function update_network_overview_for_validated_nodes() {
             if (!node.structure_validated) {
                 d3.select('#' + id_network_view_child).select('#' + circle_id + node.id).style('fill', 'grey');
                 d3.select('#' + id_network_view_child).selectAll('path').filter(function () {
-                    return this.id.split(splitter).includes(node.id);
+                    return this.id.split(splitter).includes(node.id) && d3.select(this).style('stroke') !== 'rgb(255, 0, 0)';
                 }).transition().duration(transition_duration / 2).style('stroke', 'grey');
 
 

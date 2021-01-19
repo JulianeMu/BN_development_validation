@@ -20,9 +20,9 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
         .style('width', 'calc(100% - 2*' + padding + 'px)')
         .style('height', function () {
             if (bool_show_legend) {
-                return (parseFloat(d3.select('#' + parent_div_id).style('height')) - padding - 80) +'px';
+                return (parseFloat(d3.select('#' + parent_div_id).style('height')) - padding - 80) + 'px';
             }
-            return 100+'%';
+            return 100 + '%';
         })
         .style('padding', padding + 'px')
         .style('overflow-y', 'scroll')
@@ -47,7 +47,7 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
 function update_network_view(data, parent_div_id, child_div_id) {
 
     let scrolltop_before = d3.select('#' + child_div_id).node().scrollTop;
-    d3.select('#' + child_div_id).node().scrollTop =  0+'px';
+    d3.select('#' + child_div_id).node().scrollTop = 0 + 'px';
 
     if (data !== null) {
         let highest_y_pos = 0;
@@ -67,7 +67,8 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     .style('margin-top', 10 + 'px')
                     .select('p').style('opacity', 1);
 
-                highest_y_pos = get_y_diff(id_class_groups_in_network_view + initial_groups[i].id, parent_div_id, child_div_id)[1];
+                if (highest_y_pos < get_y_diff(id_class_groups_in_network_view + initial_groups[i].id, parent_div_id, child_div_id)[1])
+                    highest_y_pos = get_y_diff(id_class_groups_in_network_view + initial_groups[i].id, parent_div_id, child_div_id)[1];
             } else {
                 d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 0 + 'px')
                     .style('margin-top', 0 + 'px')
@@ -104,7 +105,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     return this !== this_circle && d3.select(this).style('opacity') === '1';
                 }).transition().duration(transition_duration / 2).style('opacity', 0.2);
 
-                let related_paths = svg_g.selectAll('.'+class_network_paths).filter(function () {
+                let related_paths = svg_g.selectAll('.' + class_network_paths).filter(function () {
 
                     return this.id.split(splitter).includes(variable_label);
                 }).transition().duration(transition_duration / 2).style('opacity', 1);
@@ -148,20 +149,20 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 return y_pos;
             })
             .style('stroke', 'white')
-            .style('stroke-width', 4+'px')
+            .style('stroke-width', 4 + 'px')
             .style('fill', 'var(--main-font-color)')
 
-        .each(function (d) {
-            const instance = this._tippy
-            if (instance) {
-                instance.destroy();
-            }
-            tippy(this, {
-                content: data.nodes.filter(x => x.id === d)[0].label,
-                followCursor: true,
-            });
+            .each(function (d) {
+                const instance = this._tippy
+                if (instance) {
+                    instance.destroy();
+                }
+                tippy(this, {
+                    content: data.nodes.filter(x => x.id === d)[0].label,
+                    followCursor: true,
+                });
 
-        }).on('end', function (d) {
+            }).on('end', function (d) {
             reposition_labels_edges();
         })
 
@@ -347,7 +348,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
         }
     }
 
-    d3.select('#' + child_div_id).node().scrollTop =  scrolltop_before;
+    d3.select('#' + child_div_id).node().scrollTop = scrolltop_before;
 
 }
 

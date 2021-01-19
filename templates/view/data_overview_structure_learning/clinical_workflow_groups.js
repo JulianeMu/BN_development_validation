@@ -382,6 +382,7 @@ function update_group_color_and_text() {
     //set color domain again
     color_clinical_workflow_groups.domain([0, initial_groups.length]);
 
+    initial_groups = initial_groups.filter(x => x !== undefined);
     for (let i = 0; i < initial_groups.length; i++) {
         let group_div = d3.select('#' + initial_groups[i].id);
 
