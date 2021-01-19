@@ -89,7 +89,8 @@ body{
     float: bottom;
     width: calc(100%);
     height: var(--footer_height); /* 55vh for pictures */
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+    margin-top: 20px;
 }
 
 .content {
@@ -162,4 +163,12 @@ body{
     background-position: center ;
     right: 0;
     cursor:pointer;
+}
+
+#forward_button{
+    background-image: url(../templates/resources/forward.svg), none;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: -45px;
 }

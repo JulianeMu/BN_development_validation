@@ -80,6 +80,8 @@ const lang_id_groups= "lang_id_groups";
 const lang_id_variable_states = "lang_id_variable_states";
 const lang_id_variable_parents = "lang_id_variable_parents";
 
+const lang_id_validated = "lang_id_validated";
+
 
 const lang_id_structure_validation_data_type_personal_data = "lang_id_structure_validation_data_type_personal_data";
 const lang_id_structure_validation_data_type_anomalies = "lang_id_structure_validation_data_type_anomalies";
@@ -140,5 +142,5 @@ var language_string = [
     {id: lang_id_structure_validation_data_type_anomalies, eng:"anomalies", de:"Anomalien"},
     {id: lang_id_structure_validation_data_type_examination_data, eng:"examination data", de:"Untersuchungsdaten"},
     {id: lang_id_structure_validation_data_type_deterministic_decisions, eng:"deterministic_decisions", de:"Entscheidungen"},
-
+    {id: lang_id_validated, eng:'validated', de:'validiert'},
 ];

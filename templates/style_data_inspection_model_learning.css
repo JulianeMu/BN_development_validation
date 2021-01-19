@@ -1,11 +1,5 @@
 
-#forward_button{
-    background-image: url(../templates/resources/forward.svg), none;
-    background-size: 50% 50%;
-    background-repeat: no-repeat;
-    background-position: left;
-    background-position-x: -45px;
-}
+
 
 .data_col_div {
     width: 300px;

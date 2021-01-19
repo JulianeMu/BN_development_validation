@@ -1,6 +1,6 @@
 let editableGrid = [];
 
-function initialize_steps(node_under_investigation) {
+function initialize_structure_validation_steps(node_under_investigation) {
 
     d3.select('#' + steps_structure_validation_div).selectAll('*').remove();
 
@@ -32,8 +32,41 @@ function initialize_steps(node_under_investigation) {
 
     append_states_validation(lang_id_variable_states);
 
+
     append_parent_node_validation(lang_id_variable_parents);
 
+    setTimeout(() => {
+            append_set_node_validated(lang_id_validated);
+        }, transition_duration);
+
+
+    function append_set_node_validated (lang_id_validated) {
+        d3.select('#' + steps_structure_validation_div).append('div')
+            .style('width', 100 + '%')
+            .style('position', 'relative')
+            .style('float', 'bottom')
+        .append('input').attr('class', 'button')
+            .attr('readonly',"readonly")
+            .attr('value', get_language__label_by_id(lang_id_validated))
+            .style('position', 'relative')
+            .style('margin', 10 + 'px')
+            .style('width', 'calc(' + 100+ '% - 80px)')
+            .on('click', function (d) {
+                learned_structure_data.nodes.find(x => x.id === node_under_investigation.id).structure_validated = true;
+                update_network_views_after_change();
+
+                let percentage_finished = (learned_structure_data.nodes.filter(x => x.structure_validated).length * 100 / learned_structure_data.nodes.length).toFixed(0);
+                console.log(percentage_finished);
+
+                d3.select('#' + 'myBar').style('width', percentage_finished + '%').text(percentage_finished+'%');
+                if (percentage_finished+'' === '100') {
+                    console.log('abc')
+                    d3.select('#' + 'forward_button').attr('disabled', null)
+                } else {
+                    d3.select('#' + 'forward_button').attr('disabled', 'disabled')
+                }
+            });
+    }
 
     function append_parent_node_validation(lang_id) {
         compute_chi_square(function (chi2_data) {

@@ -37,7 +37,7 @@ function initialize_network_views_after_node_under_investigation_comp(node_valid
     initialize_network_view(structure_validation_viewer_div, 80, false, node_validation_network_structure, 'structure_validation_viewer_div_child');
 
     setTimeout(() => {
-        initialize_steps(node_under_investigation);
+        initialize_structure_validation_steps(node_under_investigation);
         update_network_overview_for_validated_nodes();
 
         update_network_views_node_for_validation(node_under_investigation);

@@ -44,7 +44,7 @@
     <script src="view/initialize_header.js" type="text/javascript"></script>
     <script src="view/data_overview_structure_learning/network_dagre.js" type="text/javascript"></script>
 
-    <script src="view/structure_validation/steps.js" type="text/javascript"></script>
+    <script src="view/structure_validation/structure_validation_steps.js" type="text/javascript"></script>
     <script src="view/structure_validation/validation_network_view.js" type="text/javascript"></script>
     <script src="view/structure_validation/select_variable_under_validation.js" type="text/javascript"></script>
 
@@ -94,29 +94,31 @@
 
         </div>
     </div>
-<!--    <div class="footer" id="footer">-->
-<!--        <div class="content">-->
-<!--            <div id="myProgress">-->
-<!--                <div id="myBar">0%</div>-->
-<!--            </div>-->
+    <div class="footer" id="footer">
+        <div class="content">
+            <div id="myProgress">
+                <div id="myBar">0%</div>
+            </div>
 
-<!--            <input class="button" id="forward_button" style="position:relative; float: right; margin-bottom: 20px;" type="submit"-->
-<!--                   value="         Parametrization Validation">-->
-<!--        </div>-->
-<!--    </div>-->
+            <input class="button" disabled = disabled id="forward_button" style="position:relative; float: right; margin-bottom: 20px;" type="submit"
+                   value="     Parametrization Validation">
+        </div>
+    </div>
 </div>
 
 <script>
     current_html_page = 2;
 
     initialize_header(lang_id_structure_validation);
-    //initialize_steps();
+    //initialize_structure_validation_steps();
 
     function go_to_pubmed() {
         const url = "https://pubmed.ncbi.nlm.nih.gov/";
         let win = window.open(url, '_blank');
         win.focus();
     }
+
+    d3.select('#forward_button').style('background-position-x', '-70px');
 
     load_data_from_backend(function (response) {
         if (response) {
@@ -128,6 +130,7 @@
                 [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
                 initialize_network_views_after_node_under_investigation_comp(node_validation_network_structure, node_under_investigation)
 
+                d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'))
             }, transition_duration + 10);
 
         }
