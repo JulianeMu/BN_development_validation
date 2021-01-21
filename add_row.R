@@ -86,6 +86,9 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
   return(list("bayesian_network_parameters" = fitted, "new_imputed_data" = imputed))
 }
 
+#example of use case:
+#output2 <- add_new_row(used_dataset, bayesian_network_structure, c("family", "limit", "health", "gender"),
+#                       c("(2.0, 3.0]", "no", "no", "male"))
 
 #fit <- bn.fit(bayesian_network_structure, used_dataset)
 #
