@@ -60,13 +60,13 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
   data_added_row <- as.data.frame(data_added_row)
 
   # fit the new dataset to the network structure
-  fitted = bn.fit(bayesian_network_structure, data_added_row)
+  fitted <- bn.fit(bayesian_network_structure, data_added_row)
 
   # if a new category is added the "impute" function will not work
   # check if there is a new category added
   if(!is_new_category){
     # impute the dataset in order to replace the <NA> values
-    imputed = impute(fitted, data_added_row)
+    imputed <- impute(fitted, data_added_row)
   }else{
     # if there is a new category, go through all the columns
     for (nc in c(1:length(names(category_status_list)))){
@@ -79,7 +79,7 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
                         max(table(data_added_row[names(category_status_list)[nc]]))))
         }
     }
-    imputed = data_added_row
+    imputed <- data_added_row
   }
 
   # return the parameters and the new imputed dataset with the added row
