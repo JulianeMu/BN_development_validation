@@ -8,3 +8,5 @@
 /bayesianNetworkStructure.dsc
 /blacklist.csv
 /whitelist.csv
+/example_datasets/endometrialData/explaination.docx
+/example_datasets/endometrialData/imputed-data.csv

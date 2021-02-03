@@ -5,15 +5,15 @@ let initial_groups = [{
 }, {
     id: lang_id_preoperative_group,
     label: get_language__label_by_id(lang_id_preoperative_group),
-    variables: []
+    variables: ["Primarytumor"]
 }, {
     id: lang_id_biomarkers_group,
     label: get_language__label_by_id(lang_id_biomarkers_group),
-    variables: []
+    variables: ["CA125","ER","PR","L1CAM","p53"]
 }, {
     id: lang_id_imaging_group,
     label: get_language__label_by_id(lang_id_imaging_group),
-    variables: []
+    variables: ["CTMRI", "MI"]
 }, {
     id: lang_id_primary_surgical_treatment_group,
     label: get_language__label_by_id(lang_id_primary_surgical_treatment_group),
@@ -21,15 +21,15 @@ let initial_groups = [{
 }, {
     id: lang_id_final_histology_group,
     label: get_language__label_by_id(lang_id_final_histology_group),
-    variables: []
+    variables: ["LNM","LVSIb", "Histology"]
 }, {
     id: lang_id_adjuvant_therapy_group,
     label: get_language__label_by_id(lang_id_adjuvant_therapy_group),
-    variables: []
+    variables: ["Therapy"]
 }, {
     id: lang_id_follow_up_group,
     label: get_language__label_by_id(lang_id_follow_up_group),
-    variables: []
+    variables: ["X1YR","X3YR","X5YR","Rec"]
 }];
 
 let color_clinical_workflow_groups = //d3.scaleOrdinal(d3.schemeCategory10)

@@ -110,7 +110,6 @@
     current_html_page = 2;
 
     initialize_header(lang_id_structure_validation);
-    //initialize_structure_validation_steps();
 
     function go_to_pubmed() {
         const url = "https://pubmed.ncbi.nlm.nih.gov/";
@@ -126,7 +125,6 @@
             initialize_network_view(id_network_view, 50, false, learned_structure_data, id_network_view_child);
 
             setTimeout(() => {
-                //model_validation;
                 [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
                 initialize_network_views_after_node_under_investigation_comp(node_validation_network_structure, node_under_investigation)
 

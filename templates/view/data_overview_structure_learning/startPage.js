@@ -6,12 +6,12 @@ const upload_start_open = [{
     user_input: true,
     function: upload_data_func
 }, {
-    id: id_start_from_scratch_svg,
-    svg: 'resources/hand.svg',
-    button_text: lang_id_startScratch,
-    user_input: false,
-    function: start_from_scratch_func
-}, {
+//     id: id_start_from_scratch_svg,
+//     svg: 'resources/hand.svg',
+//     button_text: lang_id_startScratch,
+//     user_input: false,
+//     function: start_from_scratch_func
+// }, {
     id: id_open_session_svg,
     svg: 'resources/open_session.svg',
     button_text: lang_id_openSession,
@@ -23,7 +23,7 @@ function initialize_startPage() {
     d3.select('#' + id_header_text).text(get_language__label_by_id(lang_id_heading_BN_development_validation));
     d3.select('#' + id_main_content).select('.' + id_content).append('p').attr('id', id_intro_text).text(get_language__label_by_id(lang_id_intro));
 
-    const div_width = 33.3;
+    const div_width = 100/upload_start_open.length;
 
     for (let i = 0; i < upload_start_open.length; i++) {
 
