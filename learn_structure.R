@@ -47,35 +47,80 @@ selected_algotithms <- c(
   "pc.stable", "gs", "hc", "tabu", "mmhc", "h2pc"
 )
 
-# list of all the models
-list_test <- list()
-# list of all the strength values for each model
-list_strength <- list()
+method = "first"
+#----------first way of estimating the structure------------
+if(method == "first"){
 
-for(algorithm in selected_algotithms) try({
-  list_test[[algorithm]] <- do.call(
-    what = algorithm,
-    args = list(x  = used_dataset, whitelist = whitelist, blacklist = blacklist)
-  )
-  # find all undirected edges
-  list_of_undirected <- undirected.arcs(list_test[[algorithm]])
+  # list of all the models
+  list_test <- list()
+  # list of all the strength values for each model
+  list_strength <- list()
 
-  # if there are undirected arcs
-  if(dim(list_of_undirected)[1] > 0){
-    # remove undirected edges
-    for (i in 1:dim(list_of_undirected)[1]) {
-      list_test[[algorithm]] <- drop.arc(list_test[[algorithm]], from=list_of_undirected[i,][1], to=list_of_undirected[i,][2])
+  for(algorithm in selected_algotithms) try({
+    list_test[[algorithm]] <- do.call(
+      what = algorithm,
+      args = list(x  = used_dataset, whitelist = whitelist, blacklist = blacklist)
+    )
+    # find all undirected edges
+    list_of_undirected <- undirected.arcs(list_test[[algorithm]])
+
+    # if there are undirected arcs
+    if(dim(list_of_undirected)[1] > 0){
+      # remove undirected edges
+      for (i in 1:dim(list_of_undirected)[1]) {
+        list_test[[algorithm]] <- drop.arc(list_test[[algorithm]], from=list_of_undirected[i,][1], to=list_of_undirected[i,][2])
+      }
     }
-  }
 
-  # calculate the strength of arcs
-  list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
-    x = list_test[[algorithm]],
-    data = used_dataset
-  )
-  #print(list_strength[[algorithm]])
+    # calculate the strength of arcs
+    list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
+      x = list_test[[algorithm]],
+      data = used_dataset
+    )
+    #print(list_strength[[algorithm]])
 
-})
+  })
+
+}
+
+
+
+#----------second way of estimating the structure------------
+if(method == "second"){
+  # list of all the models
+  list_test <- list()
+  # list of all the strength values for each model
+  list_strength <- list()
+
+  for(algorithm in selected_algotithms) try({
+    list_strength[[algorithm]] <- do.call(
+      what = boot.strength,
+      args = list(data  = used_dataset, R = 200, algorithm = algorithm)
+    )
+
+    th <- 0.45
+
+    list_test[[algorithm]] <- averaged.network(list_strength[[algorithm]], threshold = th)
+    # find all undirected edges
+    list_of_undirected <- undirected.arcs(list_test[[algorithm]])
+
+    # if there are undirected arcs
+    if(dim(list_of_undirected)[1] > 0){
+      # remove undirected edges
+      for (i in 1:dim(list_of_undirected)[1]) {
+        list_test[[algorithm]] <- drop.arc(list_test[[algorithm]], from=list_of_undirected[i,][1], to=list_of_undirected[i,][2])
+      }
+    }
+
+    # calculate the strength of arcs
+    list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
+      x = list_test[[algorithm]],
+      data = used_dataset
+    )
+    #print(list_strength[[algorithm]])
+
+  })
+}
 
 # list_test[[1]]
 # graphviz.plot(list_test[[6]])
