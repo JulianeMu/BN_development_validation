@@ -47,7 +47,7 @@ selected_algotithms <- c(
   "pc.stable", "gs", "hc", "tabu", "mmhc", "h2pc"
 )
 
-method <- "second"
+method <- "first"
 
 #----------first way of estimating the structure------------
 if(method == "first"){
