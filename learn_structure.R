@@ -74,11 +74,13 @@ if(method == "first"){
     }
 
     # calculate the strength of arcs
-    list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
+    list_strength[[algorithm]] <- arc.strength(
       x = list_test[[algorithm]],
       data = used_dataset
     )
     #print(list_strength[[algorithm]])
+    list_strength[[algorithm]]$strength <- list_strength[[algorithm]]$strength/min(list_strength[[algorithm]]$strength)
+    list_strength[[algorithm]] <- list_strength[[algorithm]][order(list_strength[[algorithm]]$strength),]
 
   })
 
@@ -99,10 +101,12 @@ if(method == "second"){
       what = boot.strength,
       args = list(data  = used_dataset, R = 200, algorithm = algorithm)
     )
-
+    # set the threshold
     th <- 0.45
-
+    # calculate averaged network structure
     list_test[[algorithm]] <- averaged.network(list_strength[[algorithm]], threshold = th)
+    # only keep the strength values for arc with bigger strength than the threshold
+    list_strength[[algorithm]] <- list_strength[[algorithm]][c(which(list_strength[[algorithm]]$strength > th)),]
     # find all undirected edges
     list_of_undirected <- undirected.arcs(list_test[[algorithm]])
 
@@ -115,10 +119,10 @@ if(method == "second"){
     }
 
     # calculate the strength of arcs
-    list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
-      x = list_test[[algorithm]],
-      data = used_dataset
-    )
+    #list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
+    #  x = list_test[[algorithm]],
+    #  data = used_dataset
+    #)
     #print(list_strength[[algorithm]])
 
   })
@@ -155,6 +159,7 @@ fit <- bn.fit(list_test[[best_score]], used_dataset)
 write.dsc('bayesianNetworkStructure.dsc', fit)
 
 # bn.net(fit) to go back to net for later refitting
+
 
 cat(jsonlite::toJSON(list_strength[[best_score]], pretty=TRUE))
 cat(jsonlite::toJSON(TRUE, pretty=TRUE))
