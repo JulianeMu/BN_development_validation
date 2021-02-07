@@ -5,9 +5,9 @@
 
 library(bnlearn)
 library(jsonlite)
-print("R Debug: here")
+
 myArgs <- commandArgs(trailingOnly = TRUE)
-#print("R Debug: myArgs is ", myArgs)
+
 
 data_file_name <- 'whole_data.csv'
 whitelist_file_name <- 'whitelist.csv'
