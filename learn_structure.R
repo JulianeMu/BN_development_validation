@@ -47,7 +47,8 @@ selected_algotithms <- c(
   "pc.stable", "gs", "hc", "tabu", "mmhc", "h2pc"
 )
 
-method = "first"
+method <- "second"
+
 #----------first way of estimating the structure------------
 if(method == "first"){
 
@@ -86,6 +87,7 @@ if(method == "first"){
 
 
 #----------second way of estimating the structure------------
+# This method does not support whitelist and blacklist
 if(method == "second"){
   # list of all the models
   list_test <- list()
