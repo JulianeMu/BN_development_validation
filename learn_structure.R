@@ -5,8 +5,9 @@
 
 library(bnlearn)
 library(jsonlite)
-
+print("R Debug: here")
 myArgs <- commandArgs(trailingOnly = TRUE)
+#print("R Debug: myArgs is ", myArgs)
 
 data_file_name <- 'whole_data.csv'
 whitelist_file_name <- 'whitelist.csv'
@@ -48,6 +49,8 @@ selected_algotithms <- c(
 
 # list of all the models
 list_test <- list()
+# list of all the strength values for each model
+list_strength <- list()
 
 for(algorithm in selected_algotithms) try({
   list_test[[algorithm]] <- do.call(
@@ -57,10 +60,21 @@ for(algorithm in selected_algotithms) try({
   # find all undirected edges
   list_of_undirected <- undirected.arcs(list_test[[algorithm]])
 
-  # remove undirected edges
-  for (i in 1:dim(list_of_undirected)[1]) {
-    list_test[[algorithm]] <- drop.arc(list_test[[algorithm]], from=list_of_undirected[i,][1], to=list_of_undirected[i,][2])
+  # if there are undirected arcs
+  if(dim(list_of_undirected)[1] > 0){
+    # remove undirected edges
+    for (i in 1:dim(list_of_undirected)[1]) {
+      list_test[[algorithm]] <- drop.arc(list_test[[algorithm]], from=list_of_undirected[i,][1], to=list_of_undirected[i,][2])
+    }
   }
+
+  # calculate the strength of arcs
+  list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
+    x = list_test[[algorithm]],
+    data = used_dataset
+  )
+  #print(list_strength[[algorithm]])
+
 })
 
 # list_test[[1]]
@@ -95,5 +109,5 @@ write.dsc('bayesianNetworkStructure.dsc', fit)
 
 # bn.net(fit) to go back to net for later refitting
 
-# cat(jsonlite::toJSON(list_final_contributing, pretty=TRUE))
+cat(jsonlite::toJSON(list_strength[[best_score]], pretty=TRUE))
 cat(jsonlite::toJSON(TRUE, pretty=TRUE))
