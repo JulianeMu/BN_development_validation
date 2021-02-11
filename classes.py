@@ -34,9 +34,10 @@ class NodeIdNameOutcomes(object):
 
 
 class Edges(object):
-    def __init__(self, edge_from, edge_to):
+    def __init__(self, edge_from, edge_to, edge_strength):
         self.edge_from = edge_from
         self.edge_to = edge_to
+        self.edge_strength = edge_strength
 
 
 class NetworkStructure(object):

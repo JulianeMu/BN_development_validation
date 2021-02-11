@@ -16,7 +16,14 @@ def get_network_structure():
                                         parents=gv.network.get_parent_ids(node_id),
                                         children=gv.network.get_child_ids(node_id))
              for node_id in gv.network.get_all_node_ids()]
-    edges = [classes.Edges(edge_from=node_id, edge_to=gv.network.get_child_ids(node_id)) for node_id in gv.network.get_all_node_ids()]
+
+    edges = []
+    for node_id in gv.network.get_all_node_ids():
+        for node_to_id in gv.network.get_child_ids(node_id):
+
+            strength = float([x['strength'] for x in gv.learned_structure_strength if x['from'] == node_id and x['to'] == node_to_id][0])
+            edge = classes.Edges(edge_from=node_id, edge_to=node_to_id, edge_strength=strength)
+            edges.append(edge)
 
     return classes.NetworkStructure(nodes=nodes, edges=edges)
 

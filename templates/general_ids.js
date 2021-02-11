@@ -3,8 +3,9 @@ let current_html_page = 0;
 const html_page_begin = "index.html";
 const html_page_inspect_data_learn_model = "inspect_data_learn_model.html";
 const html_page_structure_validation = "structure_validation.html";
+const html_page_parametrization_validation = "parametrization_validation.html";
 
-const html_pages = [html_page_begin, html_page_inspect_data_learn_model, html_page_structure_validation];
+const html_pages = [html_page_begin, html_page_inspect_data_learn_model, html_page_structure_validation, html_page_parametrization_validation];
 
 
 //------------------------general ids

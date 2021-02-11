@@ -323,7 +323,9 @@ function update_network_view(data, parent_div_id, child_div_id) {
                             return line(points); //line(g.edge(g.edges()[i]).points)
                         })
                         .style('stroke', 'var(--main-font-color)')
-                        .style('stroke-width', '2px')
+                        .style('stroke-width', function (d) {
+                            return (data.edges.filter(x => x.edge_from === d.v && x.edge_to === d.w)[0].edge_strength * 3) + 'px'
+                        })
                         .style('opacity', function (d) {
 
                             let x1 = parseFloat(svg_g.select('#' + circle_id + d.v).attr("cx")) + circle_radius;
@@ -382,9 +384,7 @@ function compute_dagre_layout(data) {
     })
 
     data.edges.forEach(function (date) {
-        date.edge_to.forEach(function (edge_to) {
-            g.setEdge(date.edge_from, edge_to);
-        })
+        g.setEdge(date.edge_from, date.edge_to);
     })
 
     dagre.layout(g);

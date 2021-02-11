@@ -178,7 +178,9 @@ def learn_structure_from_data():
     cmd = [command, path2script] + [os.getcwd() + os.path.sep]
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
-    # x_json = json.loads(x)
+    x_json = json.loads(x)
+    # print(x_json[0]['from'])
+    gv.learned_structure_strength = x_json
 
     pysmile_integration.readin_network_structure()
 

@@ -12,5 +12,6 @@ subset_selection_included_in_learning = []
 whitelist = []
 blacklist = []
 learned_structure_data = None
+learned_structure_strength = None
 
 network = pysmile.Network()

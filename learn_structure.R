@@ -162,4 +162,3 @@ write.dsc('bayesianNetworkStructure.dsc', fit)
 
 
 cat(jsonlite::toJSON(list_strength[[best_score]], pretty=TRUE))
-cat(jsonlite::toJSON(TRUE, pretty=TRUE))
