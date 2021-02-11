@@ -5,6 +5,8 @@ function select_variable_for_validation () {
 
     let node_under_investigation = learned_structure_data.nodes[investigation_node_index];
 
+    console.log(learned_structure_data)
+
     let node_validation_network_structure = {
         edges: [],
         nodes: []
@@ -17,19 +19,9 @@ function select_variable_for_validation () {
     );
 
 
-    node_validation_network_structure.edges.push({
-        edge_from: node_under_investigation.id,
-        edge_to: node_under_investigation.children
-    })
+    node_validation_network_structure.edges = learned_structure_data.edges.filter(x => x.edge_from === node_under_investigation.id || x.edge_to === node_under_investigation.id);
 
-    node_under_investigation.parents.forEach(function (parent) {
-        node_validation_network_structure.edges.push({
-            edge_from: parent,
-            edge_to: [node_under_investigation.id]
-        })
-    })
-
-    return [node_validation_network_structure, node_under_investigation]
+    return [node_validation_network_structure, node_under_investigation];
 
 }
 
