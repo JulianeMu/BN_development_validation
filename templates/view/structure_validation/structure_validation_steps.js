@@ -36,17 +36,17 @@ function initialize_structure_validation_steps(node_under_investigation) {
     append_parent_node_validation(lang_id_variable_parents);
 
 
-    function append_set_node_validated (lang_id_validated) {
+    function append_set_node_validated(lang_id_validated) {
         d3.select('#' + steps_structure_validation_div).append('div')
             .style('width', 100 + '%')
             .style('position', 'relative')
             .style('float', 'right')
-        .append('input').attr('class', 'button')
-            .attr('readonly',"readonly")
+            .append('input').attr('class', 'button')
+            .attr('readonly', "readonly")
             .attr('value', get_language__label_by_id(lang_id_validated))
             .style('position', 'relative')
             .style('margin', 10 + 'px')
-            .style('width', 'calc(' + 100+ '% - 80px)')
+            .style('width', 'calc(' + 100 + '% - 80px)')
             .on('click', function (d) {
                 learned_structure_data.nodes.find(x => x.id === node_under_investigation.id).structure_validated = true;
                 learned_structure_data.nodes.find(x => x.id === node_under_investigation.id).notes_comments =
@@ -56,8 +56,8 @@ function initialize_structure_validation_steps(node_under_investigation) {
 
                 let percentage_finished = (learned_structure_data.nodes.filter(x => x.structure_validated).length * 100 / learned_structure_data.nodes.length).toFixed(0);
 
-                d3.select('#' + 'myBar').style('width', percentage_finished + '%').text(percentage_finished+'%');
-                if (percentage_finished+'' === '100') {
+                d3.select('#' + 'myBar').style('width', percentage_finished + '%').text(percentage_finished + '%');
+                if (percentage_finished + '' === '100') {
                     d3.select('#' + 'forward_button').attr('disabled', null)
                 } else {
                     d3.select('#' + 'forward_button').attr('disabled', 'disabled')
@@ -178,10 +178,17 @@ function initialize_structure_validation_steps(node_under_investigation) {
                 learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes.filter(x => x.id === this.getRowId(rowIndex))[0].label = newValue;
                 node_under_investigation.outcomes = learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].outcomes;
             } else {
+
                 if (newValue) {
                     learned_structure_data.nodes.filter(x => x.id === node_under_investigation.id)[0].parents.push(this.getRowId(rowIndex));
                     learned_structure_data.nodes.filter(x => x.id === this.getRowId(rowIndex))[0].children.push(node_under_investigation.id);
-                    learned_structure_data.edges.filter(x => x.edge_from === this.getRowId(rowIndex))[0].edge_to.push(node_under_investigation.id);
+
+                    learned_structure_data.edges.push({
+                        edge_to: node_under_investigation.id,
+                        edge_from: this.getRowId(rowIndex),
+                        edge_strength: 1
+                    });
+
                 } else {
                     learned_structure_data.nodes.find(x => x.id === node_under_investigation.id).parents =
                         learned_structure_data.nodes.find(x => x.id === node_under_investigation.id).parents.filter(e => e !== this.getRowId(rowIndex));
@@ -189,8 +196,7 @@ function initialize_structure_validation_steps(node_under_investigation) {
                     learned_structure_data.nodes.find(x => x.id === this.getRowId(rowIndex)).children =
                         learned_structure_data.nodes.find(x => x.id === this.getRowId(rowIndex)).children.filter(e => e !== node_under_investigation.id);
 
-                    learned_structure_data.edges.find(x => x.edge_from === this.getRowId(rowIndex)).edge_to =
-                        learned_structure_data.edges.find(x => x.edge_from === this.getRowId(rowIndex)).edge_to.filter(e => e !== node_under_investigation.id);
+                    learned_structure_data.edges = learned_structure_data.edges.filter(x => !(x.edge_from === this.getRowId(rowIndex) && x.edge_to === node_under_investigation.id))
                 }
 
                 update_network_views_after_change();
@@ -344,13 +350,17 @@ function update_network_views_after_change(node_validation_network_structure, no
 
             let splitted_id = this.id.split(splitter);
 
-            return (parseFloat(d3.select('#' + circle_id + splitted_id[1]).style('cx')) > parseFloat(d3.select('#' + circle_id + splitted_id[2]).style('cx')))
+            if (!this.id.includes('.')) {
+
+                if (splitted_id)
+                    if (!d3.select('#' + circle_id + splitted_id[1]).empty() && !d3.select('#' + circle_id + splitted_id[2]).empty()) {
+                        return (parseFloat(d3.select('#' + circle_id + splitted_id[1]).style('cx')) > parseFloat(d3.select('#' + circle_id + splitted_id[2]).style('cx')))
+                    }
+            }
+
         }).transition().duration(transition_duration)
             .style('stroke', 'rgb(255, 0, 0)').style('stroke-width', 6 + 'px');
 
-        if (related_paths.size() > 0) {
-            console.log('abc')
-        }
 
 
     }, 2 * transition_duration + 10);

@@ -5,8 +5,6 @@ function select_variable_for_validation () {
 
     let node_under_investigation = learned_structure_data.nodes[investigation_node_index];
 
-    console.log(learned_structure_data)
-
     let node_validation_network_structure = {
         edges: [],
         nodes: []
