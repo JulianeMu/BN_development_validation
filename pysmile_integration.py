@@ -9,10 +9,44 @@ def readin_network_structure():
     gv.network.read_file("bayesianNetworkStructure.dsc")
 
 
+def save_network_structure():
+    gv.network.write_file("bayesianNetworkStructure.dsc")
+
+
+def get_cpt(node_id):
+    cpt = gv.network.get_node_definition(node_id)
+    parents = gv.network.get_parents(node_id)
+    dim_count = 1 + len(parents)
+    dim_sizes = [0] * dim_count
+    for i in range(0, dim_count - 1):
+        dim_sizes[i] = gv.network.get_outcome_count(parents[i])
+    dim_sizes[len(dim_sizes) - 1] = gv.network.get_outcome_count(node_id)
+    coords = [0] * dim_count
+
+    cpts = []
+
+    for elem_idx in range(0, len(cpt)):
+        index_to_coords(elem_idx, dim_sizes, coords)
+        outcome = gv.network.get_outcome_id(node_id, coords[dim_count - 1])
+        parent_nodes = [classes.CPTParent(gv.network.get_node_id(parents[parent_idx]), gv.network.get_outcome_id(parents[parent_idx], coords[parent_idx])) for parent_idx in range(0, len(parents))]
+        prob = cpt[elem_idx]
+
+        cpts.append(classes.CPT(outcome, parent_nodes, prob))
+    return cpts
+
+
+def index_to_coords(index, dim_sizes, coords):
+    prod = 1
+    for i in range(len(dim_sizes) - 1, -1, -1):
+        coords[i] = int(index / prod) % dim_sizes[i]
+        prod *= dim_sizes[i]
+
+
 def get_network_structure():
 
     nodes = [classes.NodeIdNameOutcomes(id=node_id, label=gv.network.get_node_name(node_id),
                                         outcomes=[classes.OutcomeIdLabel(outcome, outcome) for outcome in gv.network.get_outcome_ids(node_id)],
+                                        cpt=get_cpt(node_id),
                                         parents=gv.network.get_parent_ids(node_id),
                                         children=gv.network.get_child_ids(node_id))
              for node_id in gv.network.get_all_node_ids()]

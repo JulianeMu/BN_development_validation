@@ -189,6 +189,28 @@ def learn_structure_from_data():
     return jsonify(transform(pysmile_integration.get_network_structure()))
 
 
+@app.route('/learn_parametrization_from_data/', methods=["POST"])
+def learn_parametrization_from_data():
+    start_time_deviations = time.time()
+
+    pysmile_integration.save_network_structure()
+
+    command = 'Rscript'
+    path2script = 'learn_parameters.R'
+
+    cmd = [command, path2script] + [os.getcwd() + os.path.sep]
+
+    # check_output will run the command and store to result
+    x = subprocess.check_output(cmd, universal_newlines=True)
+    x_json = json.loads(x)
+
+    pysmile_integration.readin_network_structure()
+
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
+
+    return jsonify(transform(pysmile_integration.get_network_structure()))
+
+
 @app.after_request
 def add_headers(response):
     response.headers.add('Access-Control-Allow-Origin', '*')

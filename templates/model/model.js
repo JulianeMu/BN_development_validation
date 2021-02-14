@@ -93,8 +93,6 @@ function compute_chi_square (callback, node_id) {
 function save_data_on_backend (callback) {
     const sURL = hostURL + "/save_data_on_backend/";
 
-
-
     let save_data = [data, initial_groups, subset_selection, whitelist, blacklist, learned_structure_data]
     let values = JSON.stringify(save_data);
 
@@ -142,7 +140,7 @@ function load_data_from_backend (callback) {
                 learned_structure_data = response[5];
             }
 
-
+            console.log(learned_structure_data)
             callback(true);
         }
     });

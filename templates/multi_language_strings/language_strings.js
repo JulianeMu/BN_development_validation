@@ -35,6 +35,7 @@ const lang_id_openSession = "lang_id_openSession";
 
 const lang_id_inspect_data_learn_structure = "lang_id_inspect_data_learn_structure";
 const lang_id_structure_validation = "lang_id_structure_validation";
+const lang_id_parametrization_validation = "lang_id_parametrization_validation";
 
 const lang_id_data_overview = "lang_id_data_overview";
 const lang_id_data_groups_workflow = "lang_id_data_groups_workflow";
@@ -102,6 +103,7 @@ var language_string = [
 
     {id: lang_id_inspect_data_learn_structure, eng: 'Inspect Data and Learn Structure', de:'Untersuche die Daten und lerne die Struktur'},
     {id: lang_id_structure_validation, eng: 'Structure Validation', de: 'Strukturvalidierung'},
+    {id: lang_id_parametrization_validation, eng: 'Parametrization Validation', de: 'Parametrisierungsvalidierung'},
     {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'},
     {id: lang_id_number_of_patients, eng: 'Number of Patients:', de:'Anzahl der Patienten:'},
 
@@ -133,11 +135,11 @@ var language_string = [
     {id: lang_id_legend_reason, eng:"reason", de:"Ursache"},
     {id: lang_id_legend_effect, eng:"effect", de:"Effekt"},
 
-    {id: lang_id_variable_type, eng:"data type:", de:"Variablentyp"},
-    {id: lang_id_variable_identifier, eng:"label:", de:"Variablen-ID"},
-    {id: lang_id_variable_states, eng:"node states:", de:"Variablenstates"},
-    {id: lang_id_variable_parents, eng:"parent relations:", de:"Elternrelationen"},
-    {id: lang_id_groups, eng: 'clinical workflow step/group:', de:'klinischer Arbeitsschritt/Gruppierung:'},
+    {id: lang_id_variable_type, eng:"is having the data type:", de:"Variablentyp"},
+    {id: lang_id_variable_identifier, eng:"The variable:", de:"Variablen-ID"},
+    {id: lang_id_variable_states, eng:"The variable can result in following outcome states:", de:"Variablenstates"},
+    {id: lang_id_variable_parents, eng:"The variable is directly impacted by:", de:"Elternrelationen"},
+    {id: lang_id_groups, eng: 'It is grouped to the clinical workflow step/group:', de:'klinischer Arbeitsschritt/Gruppierung:'},
     {id: lang_id_structure_validation_data_type_personal_data, eng:"personal data", de:"patienten-spezifische Daten"},
     {id: lang_id_structure_validation_data_type_anomalies, eng:"anomalies", de:"Anomalien"},
     {id: lang_id_structure_validation_data_type_examination_data, eng:"examination data", de:"Untersuchungsdaten"},

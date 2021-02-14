@@ -6,7 +6,7 @@
 }
 
 .top_divs_intro_overview {
-    height: 250px;
+    height: 400px;
     width: calc(50% - 2 * var(--main-margin));
     position: relative;
     float: left;

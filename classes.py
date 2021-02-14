@@ -20,13 +20,27 @@ class OutcomeIdLabel(object):
         self.original = True
 
 
+class CPT(object):
+    def __init__(self, outcome, parents, probability):
+        self.outcome = outcome
+        self.parents = parents
+        self.probability = probability
+
+
+class CPTParent(object):
+    def __init__(self, parent_node, parent_state):
+        self.parent_node = parent_node
+        self.parent_state = parent_state
+
+
 class NodeIdNameOutcomes(object):
-    def __init__(self, id, label, outcomes, parents, children):
+    def __init__(self, id, label, outcomes, parents, children, cpt):
         self.id = id
         self.label = label
         self.outcomes = outcomes
         self.parents = parents
         self.children = children
+        self.cpt = cpt
         self.structure_validated = False
         self.cpt_validated = False
         self.notes_comments = ""

@@ -1,4 +1,5 @@
 let editableGrid = [];
+const padding_top = 30;
 
 function initialize_structure_validation_steps(node_under_investigation) {
 
@@ -60,7 +61,7 @@ function initialize_structure_validation_steps(node_under_investigation) {
                 if (percentage_finished + '' === '100') {
                     d3.select('#' + 'forward_button').attr('disabled', null)
                 } else {
-                    d3.select('#' + 'forward_button').attr('disabled', 'disabled')
+                    //d3.select('#' + 'forward_button').attr('disabled', 'disabled')
                 }
             });
     }
@@ -74,7 +75,7 @@ function initialize_structure_validation_steps(node_under_investigation) {
             //metadata.push({name: "id", label: "id", datatype: "string", hidden: true, renderable: false});
             metadata.push({name: "is_parent", label: "is parent", datatype: "boolean", editable: true});
             metadata.push({name: "label", label: "label", datatype: "string", editable: false});
-            metadata.push({name: "p_value", label: "p value", datatype: "number", editable: false});
+            metadata.push({name: "p_value", label: "correlation coefficient", datatype: "number", editable: false});
 
             //metadata.push({name: 'action', label: "", datatype: 'html', editable: false});
 
@@ -107,7 +108,7 @@ function initialize_structure_validation_steps(node_under_investigation) {
         // create data for table
         let metadata = [];
         metadata.push({name: "id", label: "id", datatype: "string", editable: false});
-        metadata.push({name: "label", label: "label", datatype: "string", editable: true});
+        metadata.push({name: "label", label: "label (editable)", datatype: "string", editable: true});
         metadata.push({name: 'action', label: "", datatype: 'html', editable: false});
 
         let data = [];
@@ -125,7 +126,7 @@ function initialize_structure_validation_steps(node_under_investigation) {
         let div = d3.select('#' + steps_structure_validation_div).append('div')
             .style('width', 100 + '%')
             .style('position', 'relative')
-            .style('padding-top', 20 + 'px')
+            .style('padding-top', padding_top + 'px')
             .style('float', 'left')
 
         if (lang_id === lang_id_variable_states) {
@@ -278,7 +279,7 @@ function initialize_structure_validation_steps(node_under_investigation) {
             .style('width', 100 + '%')
             .style('position', 'relative')
             .style('float', 'left')
-            .style('padding-top', 20 + 'px')
+            .style('padding-top', padding_top + 'px')
             .append('label')
             .text(get_language__label_by_id(lang_id))
             .append('select')

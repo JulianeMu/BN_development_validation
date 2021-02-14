@@ -10,11 +10,14 @@ source("add_column.R")
 source("add_row.R")
 
 # both dataset and the bayesian network structure need to be loaded:
-myArgs <- commandArgs(trailingOnly = TRUE)
+# myArgs <- commandArgs(trailingOnly = TRUE)
 
-bayesian_network_structure <- bn.net(read.dsc(myArgs[1]))
+data_file_name <- 'bayesianNetworkStructure.dsc'
+data_file_name_csv <- 'whole_data.csv'
 
-used_dataset <- read.csv(myArgs[2])
+
+used_dataset <- read.csv(paste0(myArgs, data_file_name_csv))
+bayesian_network_structure <- bn.net(read.dsc(paste0(myArgs, data_file_name)))
 
 #Changing the dataset into a dataframe with factors as columns
 used_dataset[] <- lapply(used_dataset, factor)
