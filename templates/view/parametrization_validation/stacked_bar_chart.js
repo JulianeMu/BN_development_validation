@@ -7,8 +7,8 @@ function initialize_stacked_bar_chart(node_under_inv) {
 
     d3.select('#' + steps_structure_validation_div).append('svg')
         .attr('id', 'chart')
-        .attr('width', 650)
-        .attr('height', 420)
+        .attr('width', parseFloat(d3.select('#' + steps_structure_validation_div).style('width')))
+        .attr('height', 320)
 
     let transformed_data = [];
 
@@ -43,7 +43,7 @@ function initialize_stacked_bar_chart(node_under_inv) {
         keys = Object.keys(transformed_data[0]).filter(x => x !== "parents");
 
         let svg = d3.select("#chart"),
-            margin = {top: 35, left: 85, bottom: 0, right: 15},
+            margin = {top: 35, left: 155, bottom: 0, right: 30},
             width = +svg.attr("width") - margin.left - margin.right,
             height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -78,6 +78,8 @@ function initialize_stacked_bar_chart(node_under_inv) {
 }
 
 function update(input, speed) {
+    keys = Object.keys(input[0]).filter(x => x !== "parents");
+
     let data = input;
     let svg = d3.select("#chart");
 
@@ -92,6 +94,8 @@ function update(input, speed) {
         .call(d3.axisTop(x).ticks(null, "s"))
 
     y.domain(data.map(d => d.parents));
+
+    z.domain([1, keys.length])
 
     svg.selectAll(".y-axis").transition().duration(speed)
         .call(d3.axisLeft(y).tickSizeOuter(0))
@@ -120,17 +124,36 @@ function update(input, speed) {
         .transition().duration(speed)
         .attr("y", d => y(d.data.parents))
         .attr("x", d => x(d[0]))
-        .attr("width", d => x(d[1]) - x(d[0]));
+        .attr("width", d => x(d[1]) - x(d[0]))
+
 
     d3.selectAll('.layer').each(function (d) {
         let state = keys[this.id.split('group_')[1]];
         d3.select(this).selectAll('rect').each(function (d,i) {
-            console.log(d.data[state])
-
-            //console.log(this)
             tippy(this, {
-                content: state+': '+d.data[state].toFixed(2),
+                content: state+': '+d.data[state].toFixed(2) ,
             });
         })
     });
+
+    setTimeout(() => {
+        d3.select('#' + steps_structure_validation_div).selectAll('rect').each(function (d, i) {
+
+            let rect_y = parseFloat(d3.select(this).style('height')) / 2 +
+                parseFloat(d3.select(this).style('y')) - 17;
+
+            d3.select('#' + steps_structure_validation_div).append('input')
+                .style('margin', 'var(--padding)')
+                .style('width', '40px')
+                .attr('type', 'text')
+                .style('position', 'absolute')
+                .style('top', rect_y + 'px')
+                .style('right', ((keys.length - 1 - Math.floor(i/input.length)) * 65) + 'px')
+                .attr('value', d.data[keys[Math.floor(i/input.length)]].toFixed(2))
+            ;
+        })
+    }, 10);
+
+
+
 }
