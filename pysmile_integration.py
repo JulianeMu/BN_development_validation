@@ -24,14 +24,27 @@ def get_cpt(node_id):
     coords = [0] * dim_count
 
     cpts = []
+    outcomes_all = gv.network.get_outcome_ids(node_id)
+
+    index_out = 0
+    state_objects = []
 
     for elem_idx in range(0, len(cpt)):
+
         index_to_coords(elem_idx, dim_sizes, coords)
         outcome = gv.network.get_outcome_id(node_id, coords[dim_count - 1])
         parent_nodes = [classes.CPTParent(gv.network.get_node_id(parents[parent_idx]), gv.network.get_outcome_id(parents[parent_idx], coords[parent_idx])) for parent_idx in range(0, len(parents))]
         prob = cpt[elem_idx]
+        stateobj = classes.StateProb(outcome, prob)
+        state_objects.append(stateobj)
+        index_out += 1
 
-        cpts.append(classes.CPT(outcome, parent_nodes, prob))
+        if index_out == len(outcomes_all):
+            cpts.append(classes.CPT(parent_nodes, state_objects))
+
+            index_out = 0
+            state_objects = []
+
     return cpts
 
 

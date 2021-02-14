@@ -21,8 +21,7 @@ class OutcomeIdLabel(object):
 
 
 class CPT(object):
-    def __init__(self, outcome, parents, probability):
-        self.outcome = outcome
+    def __init__(self, parents, probability):
         self.parents = parents
         self.probability = probability
 
@@ -31,6 +30,12 @@ class CPTParent(object):
     def __init__(self, parent_node, parent_state):
         self.parent_node = parent_node
         self.parent_state = parent_state
+
+
+class StateProb(object):
+    def __init__(self, outcome, prob):
+        self.outcome = outcome
+        self.prob = prob
 
 
 class NodeIdNameOutcomes(object):
