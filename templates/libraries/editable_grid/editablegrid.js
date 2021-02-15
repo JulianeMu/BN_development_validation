@@ -531,7 +531,7 @@ EditableGrid.prototype.update = function(object)
 		var row = object.data[i];
 		if (!row.id || !row.values) continue;
 
-		// get row to update in our model
+		// get row to update_stackedBarChart in our model
 		var rowIndex = this.getRowIndex(row.id);
 		var rowData = this.data[rowIndex];
 
@@ -1256,7 +1256,7 @@ EditableGrid.prototype.remove = function(rowIndex)
 	var tr = _$(this._getRowDOMId(rowId));
 	if (tr != null) this.tBody.removeChild(tr);
 
-	// update originalRowIndex
+	// update_stackedBarChart originalRowIndex
 	for (var r = 0; r < _data.length; r++) if (_data[r].originalIndex >= originalIndex) _data[r].originalIndex--;
 
 	// delete row from data
@@ -1340,7 +1340,7 @@ EditableGrid.prototype._insert = function(rowIndex, offset, rowId, cellValues, r
 		rowData.columns.push(this.getTypedValue(c, cellValue));
 	}
 
-	// update originalRowIndex
+	// update_stackedBarChart originalRowIndex
 	for (var r = 0; r < _data.length; r++) if (_data[r].originalIndex >= originalIndex) _data[r].originalIndex++;
 
 	// append row in data
@@ -1636,7 +1636,7 @@ EditableGrid.prototype._rendergrid = function(containerid, className, tableid)
 		lastSelectedRowIndex = -1;
 		_currentPageIndex = getCurrentPageIndex();
 
-		// if we are already attached to an existing table, just update the cell contents
+		// if we are already attached to an existing table, just update_stackedBarChart the cell contents
 		if (typeof table != "undefined" && table != null) {
 
 			var _data = dataUnfiltered == null ? data : dataUnfiltered; 

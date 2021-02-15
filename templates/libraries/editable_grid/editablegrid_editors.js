@@ -207,7 +207,7 @@ CellEditor.prototype.applyEditing = function(element, newValue)
 			// format the value before applying
 			var formattedValue = formatValue(newValue);
 
-			// update model and render cell (keeping previous value)
+			// update_stackedBarChart model and render cell (keeping previous value)
 			var previousValue = editablegrid.setValueAt(element.rowIndex, element.columnIndex, formattedValue);
 
 			// if the new value is different than the previous one, let the user handle the model change
@@ -266,7 +266,7 @@ TextCellEditor.prototype.getEditor = function(element, value)
 	if (this.autoHeight) htmlInput.style.height = autoHeight + 'px'; // auto-adapt height to cell
 	htmlInput.value = this.editorValue(value);
 
-	// listen to keyup to check validity and update style of input field 
+	// listen to keyup to check validity and update_stackedBarChart style of input field
 	htmlInput.onkeyup = function(event) { this.celleditor.updateStyle(this); };
 
 	return htmlInput; 
@@ -277,7 +277,7 @@ TextCellEditor.prototype.displayEditor = function(element, htmlInput)
 	// call base method
 	CellEditor.prototype.displayEditor.call(this, element, htmlInput, -1 * this.editablegrid.borderLeft(htmlInput), -1 * (this.editablegrid.borderTop(htmlInput) + 1));
 
-	// update style of input field
+	// update_stackedBarChart style of input field
 	this.updateStyle(htmlInput);
 
 	// select text

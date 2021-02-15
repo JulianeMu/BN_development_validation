@@ -152,19 +152,6 @@ function add_clinical_workflow_step__group(data_inspection_div, group_informatio
     });
 }
 
-function get_font_color(color) {
-    // in case the luminance is bright, use black font color, otherwise white
-    let d3color = d3.color(color);
-    let luminance = 0.2126 * d3color.r + 0.7152 * d3color.g + 0.0722 * d3color.b;
-
-    let font_color = 'white';
-    if (luminance > 150) {
-        font_color = 'black';
-    }
-
-    return font_color;
-}
-
 
 function add_group(original_id) {
 
@@ -351,7 +338,7 @@ function update_variables_order () {
         let parent = content.parentNode;
         parent.insertBefore(content, parent.firstChild);
     }
-    // update order of variable divs
+    // update_stackedBarChart order of variable divs
     for (let index_groups = initial_groups.length-1; index_groups > -1; index_groups --) {
 
         let variables = initial_groups[index_groups].variables.sort().reverse();

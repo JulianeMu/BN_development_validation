@@ -49,10 +49,16 @@
     <script src="view/structure_and_parametrization_validation/select_variable_under_validation.js"
             type="text/javascript"></script>
     <script src="view/parametrization_validation/stacked_bar_chart.js" type="text/javascript"></script>
+    <script src="view/structure_validation/structure_validation_steps.js" type="text/javascript"></script>
+
+
+
+    <script src="view/general_functions.js" type="text/javascript"></script>
 
     <!--------style------------------------>
     <link href="style_general.css" rel="stylesheet">
     <link href="style_structural_validation.css" rel="stylesheet">
+    <link href="style_parametrization_validation.css" rel="stylesheet">
     <link href="style_network.css" rel="stylesheet">
 </head>
 
@@ -78,6 +84,8 @@
             <p class="h2">Parametrization Validation</p>
             <div class="structure_validation_div" id="structure_validation_div">
                 <p class="h3">Validation</p>
+                <p class="h3" id="NodeLabel">Validation2</p>
+
                 <div class="structure_validation_content_div" id="structure_validation_viewer_div"></div>
                 <div class="structure_validation_content_div" id="structure_validation_modifications_div">
                 </div>
@@ -110,6 +118,7 @@
 <script>
     current_html_page = 3;
 
+    let structure_or_parametrization = true;
     initialize_header(lang_id_parametrization_validation);
 
     function go_to_pubmed() {

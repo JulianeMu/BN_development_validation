@@ -1,0 +1,22 @@
+:root {
+    --steps_structure_validation_div_width: 0px;
+    /*--steps_structure_validation_div_width: 250px;*/
+    --notes_comments_structure_validation_div_width: 200px;
+    --structure_validation_div_height: 500px;
+}
+
+.header_stacked_bar{
+    position: absolute;
+    top:0;
+    margin: var(--padding);
+    width: 60px;
+    height: 25px;
+    font-size: 16px;
+    border-radius: var(--div-border-radius);
+}
+
+.stacked_bar_input{
+    margin:var(--padding);
+    width:45px;
+    position:absolute;
+}

@@ -156,7 +156,7 @@ CheckboxCellRenderer.prototype.render = function(element, value)
 	// convert value to boolean just in case
 	value = (value && value != 0 && value != "false") ? true : false;
 
-	// if check box already created, just update its state
+	// if check box already created, just update_stackedBarChart its state
 	if (element.firstChild) { element.firstChild.checked = value; return; }
 
 	// create and initialize checkbox

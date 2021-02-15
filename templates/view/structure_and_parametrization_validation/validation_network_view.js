@@ -32,7 +32,13 @@ function update_network_overview_for_validated_nodes() {
             [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
 
             update_network_views_after_change(node_validation_network_structure, node_under_investigation);
-            initialize_structure_validation_steps(node_under_investigation);
+
+            if (!structure_or_parametrization) {
+                initialize_structure_validation_steps(node_under_investigation);
+            } else {
+                let input = transform_data_for_stackedBarChart(node_under_investigation);
+                update_stackedBarChart(input, 0, node_under_investigation);
+            }
 
             setTimeout(() => {
                 update_network_overview_for_validated_nodes();
