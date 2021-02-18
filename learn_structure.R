@@ -99,10 +99,16 @@ if(method == "second"){
   for(algorithm in selected_algotithms) try({
     list_strength[[algorithm]] <- do.call(
       what = boot.strength,
-      args = list(data  = used_dataset, R = 200, algorithm = algorithm)
+      args = list(data  = used_dataset, R = 200, algorithm = algorithm,
+                  algorithm.args = list(whitelist = whitelist, blacklist = blacklist))
     )
-    # set the threshold
-    th <- 0.45
+
+    # var1: get the threshold from attributes
+    th <- attr(list_strength[[algorithm]], "threshold")
+
+    # var2: set the threshold
+    #th <- 0.45
+
     # calculate averaged network structure
     list_test[[algorithm]] <- averaged.network(list_strength[[algorithm]], threshold = th)
     # only keep the strength values for arc with bigger strength than the threshold
