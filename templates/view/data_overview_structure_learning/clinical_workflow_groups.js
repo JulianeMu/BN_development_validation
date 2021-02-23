@@ -5,11 +5,11 @@ let initial_groups = [{
 }, {
     id: lang_id_preoperative_group,
     label: get_language__label_by_id(lang_id_preoperative_group),
-    variables: ["Primarytumor"]
+    variables: ["Primarytumor", "Cytology"]
 }, {
     id: lang_id_biomarkers_group,
     label: get_language__label_by_id(lang_id_biomarkers_group),
-    variables: ["CA125","ER","PR","L1CAM","p53"]
+    variables: ["CA125","ER","PR","L1CAM","p53", "Pl"]
 }, {
     id: lang_id_imaging_group,
     label: get_language__label_by_id(lang_id_imaging_group),

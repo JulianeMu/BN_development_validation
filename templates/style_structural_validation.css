@@ -5,9 +5,8 @@
     --structure_validation_div_height: 800px;
 }
 
-.top_divs_intro_overview {
-    height: 400px;
-    width: calc(50% - 2 * var(--main-margin));
+.top_div_intro {
+    width: 100%;
     position: relative;
     float: left;
     margin: var(--main-margin);
@@ -17,7 +16,12 @@
 .top_div_overview {
     border-radius: var(--div-border-radius);
     background-color: white;
+    height: 620px;
     padding: 0;
+    width: 100%;
+    position: relative;
+    float: left;
+    margin: var(--main-margin);
 }
 
 .steps_structure_validation_div {

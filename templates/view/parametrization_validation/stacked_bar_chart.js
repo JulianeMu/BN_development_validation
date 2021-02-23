@@ -224,9 +224,19 @@ function update_stackedBarChart(input, speed, node_under_inv) {
             for (let j = 0; j< input[i].parent_node_states.length; j++) {
                 let text;
                 if (j === 0) {
-                    text = d3.select(this).select('text').text(input[i].parent_node_states[j].state.substr(0,10) + '...');
+                    text = d3.select(this).select('text').style('font-size', 16+'px').text(function (d) {
+                        if (input[i].parent_node_states[j].state.length>6) {
+                            return input[i].parent_node_states[j].state.substr(0,6) + '...';
+                        }
+                        return input[i].parent_node_states[j].state;
+                    });
                 } else {
-                    text = d3.select(this).append('text').attr('fill',"currentColor").attr('dy', 0.32+'em').attr('x', -100).text(input[i].parent_node_states[j].state.substr(0,10) + '...');
+                    text = d3.select(this).append('text').style('font-size', 16+'px').attr('fill',"currentColor").attr('dy', 0.32+'em').attr('x', -100).text(function (d) {
+                        if (input[i].parent_node_states[j].state.length>6) {
+                            return input[i].parent_node_states[j].state.substr(0,6) + '...';
+                        }
+                        return input[i].parent_node_states[j].state;
+                    });
                 }
 
                 const instance = text.node()._tippy

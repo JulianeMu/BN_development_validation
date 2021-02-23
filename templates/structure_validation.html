@@ -70,12 +70,12 @@
 
     <div class="main_content" id="main_content">
         <div class="content">
-            <div class="top_divs_intro_overview" id="general_information">
+            <div class="top_div_intro" id="general_information">
                 <p>Since the parametrization is highly dependent on the Bayesian network structure, you firstly have to
                     validate the learnt nodes and relations. This especially includes the correct orientation of
                     dependencies within the model. </p>
             </div>
-            <div class="top_divs_intro_overview top_div_overview" id ="id_network_view"></div>
+            <div class="top_div_overview" id ="id_network_view"></div>
             <p class="h2">Structure Validation</p>
 <!--            <div class="steps_structure_validation_div" id ="steps_structure_validation_div">-->
 <!--                <p class="h3">Steps</p>-->
@@ -113,6 +113,7 @@
 
 <script>
     current_html_page = 2;
+    let structure_or_parametrization = false;
 
     initialize_header(lang_id_structure_validation);
 
@@ -127,7 +128,7 @@
     load_data_from_backend(function (response) {
         if (response) {
 
-            initialize_network_view(id_network_view, 70, false, learned_structure_data, id_network_view_child);
+            initialize_network_view(id_network_view, 90, false, learned_structure_data, id_network_view_child);
 
             setTimeout(() => {
                 [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();

@@ -251,10 +251,51 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 labels.enter()
                     .append("text")
                     .attr('class', class_network_label_text)
-                    .attr('dy', -5 + 'px');
+                    .attr('dy', -5 + 'px')
+                ;
 
 
-                svg_g.selectAll('.' + class_network_label_text).transition().duration(transition_duration)
+                svg_g.selectAll('.' + class_network_label_text)
+                    .on('dblclick', function (d, i, j) {
+
+                        if (current_html_page === 2) {
+                            var val = data.nodes.filter(x => x.id === i)[0].label;
+
+
+                            let node_label = this;
+                            let related_node = data.nodes.filter(x => x.id === i)[0];
+
+                            let input = d3.select('#' + id_network_view_child).append('input')
+                                .attr('class', 'node_input_text')
+                                .attr('type', 'text')
+                                .attr('name', 'textInput')
+                                .attr('value', val)
+                                .style('position', 'absolute')
+                                .style('float', 'left')
+                                .style('left', d3.select(node_label).attr('x') + 'px')
+                                .style('top', d3.select(node_label).attr('y') + 'px')
+
+                            input.node().focus();
+
+                            input.node().onblur = function () {
+                                let val = this.value;
+
+                                d3.select(node_label).text(function (d) {
+                                    let l = val;
+
+                                    if (l.length > 5) {
+                                        return l.substring(0, 5) + '...';
+                                    }
+                                    return l;
+                                })
+
+                                d3.select('.node_input_text').remove();
+
+                                learned_structure_data.nodes.find(x => x.id === related_node.id).label = val;
+                            }
+                        }
+                    })
+                    .transition().duration(transition_duration)
                     .attr('id', function (d) {
                         return circle_label_id + d;
                     })
@@ -273,7 +314,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                             return l.substring(0, 5) + '...';
                         }
                         return l;
-                    });
+                    })
 
 
                 //-------------------------------------------------
@@ -324,7 +365,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         })
                         .style('stroke', 'var(--main-font-color)')
                         .style('stroke-width', function (d) {
-                            return (data.edges.filter(x => x.edge_from === d.v && x.edge_to === d.w)[0].edge_strength * 3) + 'px'
+                            return (data.edges.filter(x => x.edge_from === d.v && x.edge_to === d.w)[0].edge_strength * 10) + 'px'
                         })
                         .style('opacity', function (d) {
 
