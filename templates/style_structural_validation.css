@@ -120,7 +120,7 @@ input{
     position: relative;
     float: left;
     height: 400px;
-    width: calc(50% - 6* var(--padding));
+    width: calc(100% - 6* var(--padding));
     margin: var(--padding);
     background-color: white;
     padding: 10px;

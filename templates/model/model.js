@@ -138,9 +138,10 @@ function load_data_from_backend (callback) {
 
             if (response[5] !== null) {
                 learned_structure_data = response[5];
+                learned_structure_data_without_modifications = response[5];
+
             }
 
-            console.log(learned_structure_data)
             callback(true);
         }
     });

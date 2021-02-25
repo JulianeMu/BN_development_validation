@@ -82,9 +82,9 @@
                 <div class="edge_node_structure_validation" id="edge_validation_div" style="margin-left: 0;">
                     <p class="h2" style="margin-top: 0;margin-bottom:10px;">Edges</p>
                 </div>
-                <div class="edge_node_structure_validation" id="node_validation_div">
-                    <p class="h2" style="margin-top: 0;">Nodes</p>
-                </div>
+<!--                <div class="edge_node_structure_validation" id="node_validation_div">-->
+<!--                    <p class="h2" style="margin-top: 0;">Nodes</p>-->
+<!--                </div>-->
 
             </div>
 <!--            <div class="steps_structure_validation_div" id ="steps_structure_validation_div">-->
@@ -141,6 +141,7 @@
             initialize_network_view(id_network_view, 90, false, learned_structure_data, id_network_view_child);
 
             initialize_edge_validation();
+            initialize_node_validation();
 
             setTimeout(() => {
                 [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();

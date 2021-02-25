@@ -54,6 +54,7 @@
     margin-bottom: 10px;
     font-weight: 400;
     display:inline-block;
+    cursor: grab;
 }
 
 .arrow_right {
