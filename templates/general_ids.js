@@ -89,3 +89,7 @@ const transition_duration = 200;
 const steps_structure_validation_div = "structure_validation_modifications_div";
 const structure_validation_viewer_div = "structure_validation_viewer_div";
 const structure_validation_viewer_div_child = "structure_validation_viewer_div_child";
+
+const edge_validation_div = "edge_validation_div";
+const node_validation_div = "node_validation_div";
+const validation_div_content_class = "validation_div_content_class";

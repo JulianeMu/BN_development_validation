@@ -24,6 +24,20 @@
     margin: var(--main-margin);
 }
 
+.validation_div_content_class{
+    width: 100%;
+    overflow-y: scroll;
+    height: calc(100% - 65px);
+}
+
+.structure_val_mod_div{
+    width: 100%;
+    position: relative;
+    float: left;
+    padding: 0;
+    margin: var(--main-margin);
+}
+
 .steps_structure_validation_div {
     border-radius: var(--div-border-radius);
     background-color: white;
@@ -100,6 +114,17 @@ input{
     height: calc(100% - 30px - 2* var(--padding));
     width: calc(50% - 2* var(--padding));
     margin: var(--padding);
+}
+
+.edge_node_structure_validation {
+    position: relative;
+    float: left;
+    height: 400px;
+    width: calc(50% - 6* var(--padding));
+    margin: var(--padding);
+    background-color: white;
+    padding: 10px;
+    border-radius: var(--div-border-radius);
 }
 
 .fstdiv{

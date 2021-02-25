@@ -103,7 +103,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 let variable_label = i;
                 svg_g.selectAll('*').filter(function () {
                     return this !== this_circle && d3.select(this).style('opacity') === '1';
-                }).transition().duration(transition_duration / 2).style('opacity', 0.2);
+                }).transition().duration(transition_duration / 2).style('opacity', 0.1);
 
                 let related_paths = svg_g.selectAll('.' + class_network_paths).filter(function () {
 
@@ -130,7 +130,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 }).transition().duration(transition_duration / 2).style('opacity', 0);
 
                 svg_g.selectAll('*').filter(function () {
-                    return d3.select(this).style('opacity') == 0.2;
+                    return d3.select(this).style('opacity') == 0.1;
                 }).transition().duration(transition_duration / 2).style('opacity', 1);
             })
             .transition()
@@ -292,6 +292,19 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 d3.select('.node_input_text').remove();
 
                                 learned_structure_data.nodes.find(x => x.id === related_node.id).label = val;
+                                //console.log(data)
+                                data = learned_structure_data;
+
+                                //update tippy instance
+                                const instance = d3.select('#' + circle_id + related_node.id).node()._tippy
+                                if (instance) {
+                                    instance.destroy();
+                                }
+
+                                tippy(d3.select('#' + circle_id + related_node.id).node(), {
+                                    content: related_node.label,
+                                    followCursor: true,
+                                });
                             }
                         }
                     })
