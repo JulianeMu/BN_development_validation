@@ -36,6 +36,8 @@ let color_clinical_workflow_groups = //d3.scaleOrdinal(d3.schemeCategory10)
     d3.scaleSequential().domain([1, 10])
         .interpolator(d3.interpolatePuRd);
 
+let color_subgraphs = d3.scaleSequential().domain([1, 10])
+    .interpolator(d3.interpolateRainbow);
 
 function initialize_clinical_workflow_groups(data_inspection_div) {
     let clinical_workflow_group_div = data_inspection_div.append('div').attr('id', id_clinical_workflow_group);

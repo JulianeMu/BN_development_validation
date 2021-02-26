@@ -46,6 +46,8 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
 
 function update_network_view(data, parent_div_id, child_div_id) {
 
+    data = identify_sub_graphs(data)
+
     let scrolltop_before = d3.select('#' + child_div_id).node().scrollTop;
     d3.select('#' + child_div_id).node().scrollTop = 0 + 'px';
 
@@ -150,8 +152,9 @@ function update_network_view(data, parent_div_id, child_div_id) {
             })
             .style('stroke', 'white')
             .style('stroke-width', 4 + 'px')
-            .style('fill', 'var(--main-font-color)')
-
+            .style('fill', function (d) {
+                return color_subgraphs(data.nodes.filter(x => x.id === d)[0].graph)
+            })//'var(--main-font-color)')
             .each(function (d) {
                 const instance = this._tippy
                 if (instance) {
@@ -565,4 +568,27 @@ function update_group_divs_in_network_view(child_div_id) {
             appendTo: 'parent',
         });
     }
+}
+
+
+function identify_sub_graphs(list) {
+
+    let no_parent_nodes = list.nodes.filter(x => x.parents.length === 0);
+
+    no_parent_nodes.forEach(function (no_parent, index_no_parent) {
+        list = set_graph(list, no_parent.id, index_no_parent)
+    })
+
+    function set_graph (list, id_node, index_graph) {
+
+        list.nodes.find(x => x.id === id_node).graph = index_graph;
+
+        list.nodes.find(x => x.id === id_node).children.forEach(function (child) {
+            return set_graph(list, list.nodes.filter(x => x.id === child)[0].id, index_graph)
+        })
+
+        return list;
+    }
+
+    return list;
 }
