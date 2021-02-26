@@ -173,6 +173,14 @@ function initialize_edge_validation() {
                 .on('change', function (d) {
                     right_edge_presentation_div.style('background-color', '#C0C0C0');
 
+                    let line_triangle = d3.line()
+                        .x(function (d) {
+                            return d.x;
+                        })
+                        .y(function (d) {
+                            return d.y;
+                        });
+
                     if (this.value === radio_button_inputs[0].value) { //correct
 
                         add_edge(edge.edge_from, edge.edge_to, edge.edge_strength);
@@ -181,7 +189,6 @@ function initialize_edge_validation() {
 
                     } else if (this.value === radio_button_inputs[1].value) { //wrong
 
-
                         remove_edge(edge.edge_from, edge.edge_to);
                         remove_edge(edge.edge_to, edge.edge_from);
 
@@ -189,6 +196,25 @@ function initialize_edge_validation() {
 
                         remove_edge(edge.edge_from, edge.edge_to);
                         add_edge(edge.edge_to, edge.edge_from, edge.edge_strength);
+
+                        left_svg.append('path')
+                            .attr('class', 'turnaround')
+                            .style('stroke', 'red')//'var(--main-font-color)')
+                            .style('stroke-width', 3+'px')
+                            .attr("d", function (d) {
+
+                                let points = [];
+
+                                let circles = left_svg.selectAll('circles');
+                                circles.each(function (circ) {
+                                    points.push({
+                                        x: parseFloat(circ.node().getBoundingClientRect().x) - circle_radius_structure_val,
+                                        y: parseFloat(circ.attr("cy"))
+                                    })
+                                })
+
+                                line_triangle(points)
+                            })
 
                     }
 
@@ -222,8 +248,4 @@ function initialize_edge_validation() {
                 })
         })
     })
-}
-
-function initialize_node_validation () {
-
 }

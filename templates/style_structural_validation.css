@@ -49,7 +49,9 @@
 }
 
 .notes_comments_structure_validation_div {
-    width: var(--notes_comments_structure_validation_div_width);
+    width: calc(100% - 3*var(--main-margin)); /*var(--notes_comments_structure_validation_div_width);*/
+    height: 250px;
+    margin: var(--main-margin);
 }
 
 .structure_validation_div {

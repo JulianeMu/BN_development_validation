@@ -336,13 +336,13 @@ function initialize_structure_validation_steps(node_under_investigation) {
 function update_network_views_after_change(node_validation_network_structure, node_under_investigation) {
     update_network_view(learned_structure_data, id_network_view, id_network_view_child);
 
-    if (!node_validation_network_structure) {
-        [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
-    }
+    // if (!node_validation_network_structure) {
+    //     [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
+    // }
 
-    update_network_view(node_validation_network_structure, structure_validation_viewer_div, 'structure_validation_viewer_div_child');
-    update_network_views_node_for_validation(node_under_investigation);
-    update_network_overview_for_validated_nodes();
+   // update_network_view(node_validation_network_structure, structure_validation_viewer_div, 'structure_validation_viewer_div_child');
+    //update_network_views_node_for_validation(node_under_investigation);
+    //update_network_overview_for_validated_nodes();
 
     setTimeout(() => {
 

@@ -90,13 +90,11 @@
 <!--            <div class="steps_structure_validation_div" id ="steps_structure_validation_div">-->
 <!--                <p class="h3">Steps</p>-->
 <!--            </div>-->
-            <div class="structure_validation_div" id="structure_validation_div">
-                <p class="h3">Validation</p>
-                <div class="structure_validation_content_div" id="structure_validation_viewer_div"></div>
-                <div class="structure_validation_content_div" id="structure_validation_modifications_div">
-                </div>
-
-            </div>
+<!--            <div class="structure_validation_div" id="structure_validation_div">-->
+<!--                <p class="h3">Validation</p>-->
+<!--                <div class="structure_validation_content_div" id="structure_validation_viewer_div"></div>-->
+<!--                <div class="structure_validation_content_div" id="structure_validation_modifications_div"></div>-->
+<!--            </div>-->
             <div class="steps_structure_validation_div notes_comments_structure_validation_div" id="notes_comments_structure_validation_div">
                 <p class="h3">Notes/Comments</p>
                 <textarea class="notes_comments_input" id ="notes_comments_text" name="Text1" placeholder="Insert your notes/comments here ..."></textarea>
@@ -141,17 +139,8 @@
             initialize_network_view(id_network_view, 90, false, learned_structure_data, id_network_view_child);
 
             initialize_edge_validation();
-            initialize_node_validation();
 
-            setTimeout(() => {
-                [node_validation_network_structure, node_under_investigation] = select_variable_for_validation();
-                initialize_network_views_after_node_under_investigation_comp(function (node_under_inv) {
-                    initialize_structure_validation_steps(node_under_inv);
-                },node_validation_network_structure, node_under_investigation)
-
-                d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'))
-            }, transition_duration + 10);
-
+            d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
         }
     })
 </script>
