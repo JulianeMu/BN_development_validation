@@ -18,7 +18,7 @@
     background-color: white;
     height: 620px;
     padding: 0;
-    width: 100%;
+    width: calc(100% - 2*var(--main-margin));
     position: relative;
     float: left;
     margin: var(--main-margin);
@@ -27,7 +27,7 @@
 .validation_div_content_class{
     width: 100%;
     overflow-y: scroll;
-    height: calc(100% - 65px);
+    height: calc(100% - 155px);
 }
 
 .structure_val_mod_div{
@@ -49,7 +49,7 @@
 }
 
 .notes_comments_structure_validation_div {
-    width: calc(100% - 3*var(--main-margin)); /*var(--notes_comments_structure_validation_div_width);*/
+    width: calc(100% - 4*var(--main-margin)); /*var(--notes_comments_structure_validation_div_width);*/
     height: 250px;
     margin: var(--main-margin);
 }
@@ -121,9 +121,10 @@ input{
 .edge_node_structure_validation {
     position: relative;
     float: left;
-    height: 400px;
+    min-height: 450px;
+    height: 450px;
     width: calc(100% - 6* var(--padding));
-    margin: var(--padding);
+    margin: var(--main-margin);
     background-color: white;
     padding: 10px;
     border-radius: var(--div-border-radius);

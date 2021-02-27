@@ -13,7 +13,7 @@ function update_individual_graph_view() {
             .style('position', 'relative')
             .style('float', 'left')
             .style('width', 100+'%')
-            .style('height', 50 + 'px')
+            //.style('height', 50 + 'px')
             .style('margin-bottom', 10+'px');
 
         let left_div = individual_div.append('div')
@@ -30,7 +30,7 @@ function update_individual_graph_view() {
             .style('position', 'relative')
             .style('float', 'left')
             .style('width', 40+'px')
-            .style('height', 100 + '%')
+            .style('height', 50 + 'px')
             .style('border-radius', 'var(--div-border-radius)')
             .style('background-color', color_subgraphs(unique_graph));
 
@@ -48,6 +48,7 @@ function update_individual_graph_view() {
         let right_div = individual_div.append('div')
             .style('position', 'relative')
             .style('float', 'left')
+            .style('width', 400+'px')
             .style('margin-left', 20 + 'px')
             .style('height', 100 + '%');
 

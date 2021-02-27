@@ -130,8 +130,9 @@ function initialize_edge_validation() {
                         let points = [];
 
                         circles.forEach(function (circ) {
+
                             points.push({
-                                x: parseFloat(circ.node().getBoundingClientRect().x) - circle_radius_structure_val,
+                                x: parseFloat(circ.node().getBoundingClientRect().x) - parseFloat(left_svg.node().getBoundingClientRect().x),
                                 y: parseFloat(circ.attr("cy"))
                             })
                         })
