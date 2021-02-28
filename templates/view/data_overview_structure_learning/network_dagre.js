@@ -44,14 +44,18 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
     update_network_view(data, parent_div_id, child_div_id);
 }
 
+
 function update_network_view(data, parent_div_id, child_div_id) {
 
-    data = identify_sub_graphs(data)
+    let mouse_over_circle;
+    let circle_start;
 
     let scrolltop_before = d3.select('#' + child_div_id).node().scrollTop;
     d3.select('#' + child_div_id).node().scrollTop = 0 + 'px';
 
     if (data !== null) {
+        data = identify_sub_graphs(data)
+
         let highest_y_pos = 0;
 
         for (let i = 0; i < initial_groups.length; i++) {
@@ -82,6 +86,120 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
         let svg_g = d3.select('#' + parent_div_id).select('svg')//.select('g');
 
+        var ptdata = [];
+        var session = [];
+        var path;
+        var drawing = false;
+
+        if (current_html_page === 2) {
+            svg_g.on('mousedown', listen)// function (d) {
+                .on("touchstart", listen)
+                .on("touchend", ignore)
+                .on("touchleave", ignore)
+                .on("mouseup", ignore)
+                .on("mouseleave", ignore);
+
+        }
+
+        function listen(e) {
+
+            circle_start = mouse_over_circle;
+
+            if (circle_start) {
+                drawing = true;
+                ptdata = []; // reset point data
+                path = svg_g.append("path") // start a new line
+                    .data([ptdata])
+                    .attr("class", "line")
+                    .style('stroke', 'black')
+                    .style('stroke-width', 2 + 'px')
+                    .attr("d", line)
+                    .attr('transform', 'translate(-100,-20)');
+
+                var point;
+
+                var type = e.type;
+
+                if (type === 'mousemove' || type === "mousedown") {
+                    point = d3.pointer(e, d3.select('#' + child_div_id).node());
+                } else {
+                    // only deal with a single touch input
+                    point = d3.touches(this)[0];
+                }
+
+
+                // push a new data point onto the back
+                ptdata[0] = {x: point[0], y: point[1]};
+
+                tick();
+
+                if (type === 'mousedown') {
+                    svg_g.on("mousemove", onmove)//('mousemove'));
+                } else {
+                    svg_g.on("touchmove", onmove)//('touchmove'));
+                }
+            }
+        }
+
+        function ignore() {
+            svg_g.on("mousemove", null);
+            svg_g.on("touchmove", null);
+
+            // skip out if we're not drawing
+            if (!drawing) return;
+            drawing = false;
+
+            // add newly created line to the drawing session
+            session.push(ptdata);
+
+            // redraw the line after simplification
+            tick();
+
+            path.remove();
+            if (mouse_over_circle) {
+                if (learned_structure_data.edges.filter(x => x.edge_from === circle_start && x.edge_to === mouse_over_circle).length === 0) {
+
+                    learned_structure_data.edges.push({
+                        edge_from: circle_start,
+                        edge_strength: 1,
+                        edge_to: mouse_over_circle
+                    });
+                    learned_structure_data.nodes.find(x => x.id === circle_start).children.push(mouse_over_circle);
+                    learned_structure_data.nodes.find(x => x.id === mouse_over_circle).parents.push(circle_start);
+                }
+
+                update_group_divs_in_network_view(child_div_id);
+                update_network_view(learned_structure_data, parent_div_id, child_div_id);
+            }
+        }
+
+
+        function onmove(e) {
+            var point;
+
+            var type = e.type;
+
+            if (type === 'mousemove') {
+                point = d3.pointer(e, d3.select('#' + parent_div_id).node());//this); //d3.mouse(this);
+                let transform = d3.zoomTransform(d3.select('#' + parent_div_id).node());
+                point = transform.invert(point);  // relative to zoom
+            } else {
+                // only deal with a single touch input
+                point = d3.touches(this)[0];
+            }
+
+            // push a new data point onto the back
+            ptdata[1] = {x: point[0], y: point[1]};
+
+            tick();
+        }
+
+        function tick() {
+            path.attr("d", function (d) {
+                return line(d);
+            }) // Redraw the path:
+        }
+
 
         let circles = svg_g.selectAll("circle")
             .data(g.nodes());
@@ -105,35 +223,46 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 let variable_label = i;
                 svg_g.selectAll('*').filter(function () {
                     return this !== this_circle && d3.select(this).style('opacity') === '1';
-                }).transition().duration(transition_duration / 2).style('opacity', 0.1);
+                })
+                    .style('opacity', 0.1);
 
                 let related_paths = svg_g.selectAll('.' + class_network_paths).filter(function () {
 
                     return this.id.split(splitter).includes(variable_label);
-                }).transition().duration(transition_duration / 2).style('opacity', 1);
+                })
+                    .style('opacity', 1);
 
                 related_paths.each(function () {
                     let related_nodes = this.id.split(splitter);
 
                     for (let i = 1; i < related_nodes.length; i++) {
-                        svg_g.select('#' + circle_id + related_nodes[i]).transition().duration(transition_duration / 2).style('opacity', 1);
-                        svg_g.select('#' + circle_label_id + related_nodes[i]).transition().duration(transition_duration / 2).style('opacity', 1);
+                        svg_g.select('#' + circle_id + related_nodes[i])
+                            .style('opacity', 1);
+                        svg_g.select('#' + circle_label_id + related_nodes[i])
+                            .style('opacity', 1);
                     }
                 })
 
                 d3.select(this).style('opacity', 1);
-                svg_g.select('#' + circle_label_id + i).transition().duration(transition_duration / 2).style('opacity', 1);
+                svg_g.select('#' + circle_label_id + i)
+                    .style('opacity', 1);
 
+
+                mouse_over_circle = i;
             })
             .on('mouseout', function (d, i) {
 
+                mouse_over_circle = null;
+
                 svg_g.selectAll('path').filter(function () {
                     return this.getBoundingClientRect().width > 100 && d3.select(this).style('stroke') !== 'rgb(255, 0, 0)';
-                }).transition().duration(transition_duration / 2).style('opacity', 0);
+                })
+                    .style('opacity', 0);
 
                 svg_g.selectAll('*').filter(function () {
                     return d3.select(this).style('opacity') == 0.1;
-                }).transition().duration(transition_duration / 2).style('opacity', 1);
+                })
+                    .style('opacity', 1);
             })
             .transition()
             .duration(transition_duration)
@@ -295,7 +424,6 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 d3.select('.node_input_text').remove();
 
                                 learned_structure_data.nodes.find(x => x.id === related_node.id).label = val;
-                                //console.log(data)
                                 data = learned_structure_data;
 
                                 //update tippy instance
@@ -573,22 +701,48 @@ function update_group_divs_in_network_view(child_div_id) {
 
 function identify_sub_graphs(list) {
 
+    // start with nodes having no parents and go through all children to get the graph index
     let no_parent_nodes = list.nodes.filter(x => x.parents.length === 0);
-
     no_parent_nodes.forEach(function (no_parent, index_no_parent) {
-        list = set_graph(list, no_parent.id, index_no_parent)
+        list = set_graph(list, no_parent.id, index_no_parent, 'children')
     })
 
-    function set_graph (list, id_node, index_graph) {
+    // do the same the other way around to really get connected nodes
+    let no_children_nodes = list.nodes.filter(x => x.children.length === 0);
+    no_children_nodes.forEach(function (no_parent, index_no_parent) {
+        list = set_graph(list, no_parent.id, list.nodes.find(x => x.id === no_parent.id).graph, 'parents')
+    })
+
+    let min_graph_number = 0;
+
+    let max_graph_number = no_parent_nodes.length;
+
+    for (let i = 0; i < max_graph_number; i++) {
+        let found = false;
+        list.nodes.forEach(function (node, index) {
+            if (list.nodes[index].graph === i) {
+                list.nodes[index].graph = min_graph_number;
+                found = true;
+            }
+        })
+
+        if (found) {
+            min_graph_number++;
+        }
+
+    }
+
+
+    function set_graph(list, id_node, index_graph, child_or_parent) {
 
         list.nodes.find(x => x.id === id_node).graph = index_graph;
 
-        list.nodes.find(x => x.id === id_node).children.forEach(function (child) {
-            return set_graph(list, list.nodes.filter(x => x.id === child)[0].id, index_graph)
+        list.nodes.find(x => x.id === id_node)[child_or_parent].forEach(function (child) {
+            return set_graph(list, list.nodes.filter(x => x.id === child)[0].id, index_graph, child_or_parent)
         })
-
         return list;
     }
+
 
     return list;
 }
