@@ -220,6 +220,7 @@ function initialize_edge_validation() {
                     }
 
                     update_network_views_after_change();
+                    update_all_colors_and_text();
 
                     function remove_edge (edge_from, edge_to) {
                         learned_structure_data.nodes.find(x => x.id === edge_to).parents =

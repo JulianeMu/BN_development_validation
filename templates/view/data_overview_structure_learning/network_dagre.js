@@ -84,7 +84,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
         let g = compute_dagre_layout(data);
 
-        let svg_g = d3.select('#' + parent_div_id).select('svg')//.select('g');
+        let svg_g = d3.select('#' + parent_div_id).select('svg');
 
         var ptdata = [];
         var session = [];
@@ -111,7 +111,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 path = svg_g.append("path") // start a new line
                     .data([ptdata])
                     .attr("class", "line")
-                    .style('stroke', 'black')
+                    .style('stroke', 'var(--main-font-color)')
                     .style('stroke-width', 2 + 'px')
                     .attr("d", line)
                     .attr('transform', 'translate(-100,-20)');
@@ -168,8 +168,9 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     learned_structure_data.nodes.find(x => x.id === mouse_over_circle).parents.push(circle_start);
                 }
 
-                update_group_divs_in_network_view(child_div_id);
+                //update_group_divs_in_network_view(child_div_id);
                 update_network_view(learned_structure_data, parent_div_id, child_div_id);
+                update_all_colors_and_text();
             }
         }
 
@@ -507,7 +508,9 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                             return line(points); //line(g.edge(g.edges()[i]).points)
                         })
-                        .style('stroke', 'var(--main-font-color)')
+                        .style('stroke', function (d) {
+                            return 'var(--main-font-color)';
+                        })
                         .style('stroke-width', function (d) {
                             return (data.edges.filter(x => x.edge_from === d.v && x.edge_to === d.w)[0].edge_strength * 10) + 'px'
                         })
@@ -522,20 +525,36 @@ function update_network_view(data, parent_div_id, child_div_id) {
                             return 1;
                         });
 
+                    let circle_max_y = 0;
                     svg_g.selectAll('circle').each(function (circle, i) {
-                        if (parseFloat(svg_g.style('height')) < parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius) {
-                            svg_g.style('height', parseFloat(d3.select(this).attr('cy')) + 4 * circle_radius);
+                        if (parseFloat(svg_g.style('height')) < parseFloat(d3.select(this).attr('cy')) + 3 * circle_radius) {
+                            svg_g.style('height', parseFloat(d3.select(this).attr('cy')) + 3 * circle_radius);
                         }
-                        if (parseFloat(svg_g.style('width')) < parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius) {
-                            svg_g.style('width', parseFloat(d3.select(this).attr('cx')) + 4 * circle_radius);
+
+                        if (circle_max_y < parseFloat(d3.select(this).attr('cy')) + 3 * circle_radius) {
+                            circle_max_y = parseFloat(d3.select(this).attr('cy')) + 3 * circle_radius;
+                        }
+
+                        if (parseFloat(svg_g.style('width')) < parseFloat(d3.select(this).attr('cx')) + 3 * circle_radius) {
+                            svg_g.style('width', parseFloat(d3.select(this).attr('cx')) + 3 * circle_radius);
                         }
                     });
+
+                    if (parseFloat(svg_g.style('height')) > circle_max_y) {
+                        svg_g.style('height', circle_max_y);
+                    }
+
+                    d3.select('#' + child_div_id).style('height', circle_max_y + 20 + 'px')
+                    d3.select('#' + parent_div_id).style('height', circle_max_y + 20 + 'px')
+
+
+                    d3.select('#' + child_div_id).node().scrollTop = scrolltop_before;
+
                 }, 10);
             }, 10);
         }
     }
 
-    d3.select('#' + child_div_id).node().scrollTop = scrolltop_before;
 
 }
 
@@ -703,13 +722,18 @@ function identify_sub_graphs(list) {
 
     // start with nodes having no parents and go through all children to get the graph index
     let no_parent_nodes = list.nodes.filter(x => x.parents.length === 0);
+
+    let validated_graphs = []
     no_parent_nodes.forEach(function (no_parent, index_no_parent) {
+        validated_graphs = []
         list = set_graph(list, no_parent.id, index_no_parent, 'children')
     })
+
 
     // do the same the other way around to really get connected nodes
     let no_children_nodes = list.nodes.filter(x => x.children.length === 0);
     no_children_nodes.forEach(function (no_parent, index_no_parent) {
+        validated_graphs = []
         list = set_graph(list, no_parent.id, list.nodes.find(x => x.id === no_parent.id).graph, 'parents')
     })
 
@@ -729,18 +753,20 @@ function identify_sub_graphs(list) {
         if (found) {
             min_graph_number++;
         }
-
     }
-
 
     function set_graph(list, id_node, index_graph, child_or_parent) {
 
-        list.nodes.find(x => x.id === id_node).graph = index_graph;
+        if (!validated_graphs.includes(id_node)) {
 
-        list.nodes.find(x => x.id === id_node)[child_or_parent].forEach(function (child) {
-            return set_graph(list, list.nodes.filter(x => x.id === child)[0].id, index_graph, child_or_parent)
-        })
-        return list;
+            list.nodes.find(x => x.id === id_node).graph = index_graph;
+            validated_graphs.push(id_node);
+
+            list.nodes.find(x => x.id === id_node)[child_or_parent].forEach(function (child) {
+                return set_graph(list, list.nodes.filter(x => x.id === child)[0].id, index_graph, child_or_parent)
+            })
+            return list;
+        }
     }
 
 

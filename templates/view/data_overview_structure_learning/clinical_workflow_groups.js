@@ -359,12 +359,24 @@ function update_all_colors_and_text() {
 
     d3.selectAll('.' + id_data_col_div_class).style('border', '6px solid white');// + d3.select('#' + group_information.id).style('background-color'));
 
-    // disable checkboxes which are selected within other groups
-    initial_groups.forEach(function (group) {
-        group.variables.forEach(function (d) {
-            d3.select('#' + id_beginning_columns_div + d).style('border', '6px solid ' + d3.select('#' + group.id).style('background-color'));
-        });
-    });
+    setTimeout(() => {
+
+        d3.selectAll('.' + class_network_paths).filter(function () {
+
+            let splitted_id = this.id.split(splitter);
+
+            if (!this.id.includes('.')) {
+
+                if (splitted_id)
+                    if (!d3.select('#' + circle_id + splitted_id[1]).empty() && !d3.select('#' + circle_id + splitted_id[2]).empty()) {
+                        return (parseFloat(d3.select('#' + circle_id + splitted_id[1]).style('cx')) > parseFloat(d3.select('#' + circle_id + splitted_id[2]).style('cx')))
+                    }
+            }
+        })
+            .style('stroke', 'rgb(255, 0, 0)')
+            .style('stroke-width', 6 + 'px');
+
+    }, 3 * transition_duration + 0);
 }
 
 function update_group_color_and_text() {
