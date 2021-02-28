@@ -171,6 +171,10 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 //update_group_divs_in_network_view(child_div_id);
                 update_network_view(learned_structure_data, parent_div_id, child_div_id);
                 update_all_colors_and_text();
+                update_individual_graph_view();
+
+                append_edge_validation(learned_structure_data.edges[learned_structure_data.edges.length-1]);
+
             }
         }
 

@@ -139,9 +139,12 @@
             initialize_network_view(id_network_view, 100, false, learned_structure_data, id_network_view_child);
 
             initialize_edge_validation();
+
             update_individual_graph_view();
 
-            d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
+            setTimeout(() => {
+                d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
+            }, transition_duration)
         }
     })
 </script>

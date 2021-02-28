@@ -1,6 +1,8 @@
 
 function update_individual_graph_view() {
 
+    d3.select('#' + 'individual_graph_view').selectAll('*').remove();
+
     const allAges = learned_structure_data.nodes.map(a => a.graph);
 
     const uniqueSet = new Set(allAges)
@@ -62,6 +64,6 @@ function update_individual_graph_view() {
 
         right_div.append('p')
             .style('margin-top', 10+'px')
-            .text('nodes:  ' + nodes_array_text);
+            .text(nodes_array_text);
     })
 }
