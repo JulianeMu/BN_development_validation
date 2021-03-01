@@ -41,11 +41,11 @@ function initialize_edge_validation() {
     let edges_sort = learned_structure_data.edges.sort((a, b) => (a.edge_strength > b.edge_strength) ? 1 : ((b.edge_strength > a.edge_strength) ? -1 : 0));
 
     edges_sort.forEach(function (edge) {
-        append_edge_validation(edge)
+        append_edge_validation(edge, false)
     })
 }
 
-function append_edge_validation(edge) {
+function append_edge_validation(edge, selfmade) {
 
     let edges_validation_div_content = d3.select('#' + edge_validation_div)
         .select('.' + validation_div_content_class);
@@ -54,9 +54,15 @@ function append_edge_validation(edge) {
         .attr('id', 'edge_validation_' + edge.edge_from + splitter + edge.edge_to)
         .style('float', 'left')
         .style('position', 'relative')
-        .style('width', 'calc(' + 100 + '% - ' + 5 + 'px)')
+        .style('width', 'calc(' + 100 + '% - ' + 13 + 'px)')
         .style('height', 60 + 'px')
-        .style('margin', 5 + 'px');
+        .style('margin', 5 + 'px')
+        .style('border-radius', 'var(--div-border-radius)')
+        .style('border',  function () {
+            if (selfmade) {
+                return '4px solid var(--main-font-color)';
+            }
+        });
 
     let left_edge_presentation_div = edge_val_div.append('div')
         .style('float', 'left')

@@ -176,7 +176,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 update_all_colors_and_text();
                 update_individual_graph_view();
 
-                append_edge_validation(learned_structure_data.edges[learned_structure_data.edges.length-1]);
+                append_edge_validation(learned_structure_data.edges[learned_structure_data.edges.length-1], true);
 
             }
         }
@@ -744,7 +744,7 @@ function initialize_network_legend(parent_div_id) {
 
     max_X += 40;
 
-    last_text = legend_svg.append('text')
+    legend_svg.append('text')
         .attr('class', class_network_legend_text)
         .attr('dy', 7 + 'px')
         .attr('x', max_X)
@@ -809,55 +809,31 @@ function update_group_divs_in_network_view(child_div_id) {
 
 function identify_sub_graphs(list) {
 
-    // start with nodes having no parents and go through all children to get the graph index
-    let no_parent_nodes = list.nodes.filter(x => x.parents.length === 0);
+    let node_ids = list.nodes.map(a => a.id);
 
-    let validated_graphs = []
-    no_parent_nodes.forEach(function (no_parent, index_no_parent) {
-        validated_graphs = []
-        list = set_graph(list, no_parent.id, index_no_parent, 'children')
-    })
+    let index_graph = 0;
 
-
-    // do the same the other way around to really get connected nodes
-    let no_children_nodes = list.nodes.filter(x => x.children.length === 0);
-    no_children_nodes.forEach(function (no_parent, index_no_parent) {
-        validated_graphs = []
-        list = set_graph(list, no_parent.id, list.nodes.find(x => x.id === no_parent.id).graph, 'parents')
-    })
-
-    let min_graph_number = 0;
-
-    let max_graph_number = no_parent_nodes.length;
-
-    for (let i = 0; i < max_graph_number; i++) {
-        let found = false;
-        list.nodes.forEach(function (node, index) {
-            if (list.nodes[index].graph === i) {
-                list.nodes[index].graph = min_graph_number;
-                found = true;
-            }
-        })
-
-        if (found) {
-            min_graph_number++;
-        }
+    while (node_ids.length > 0) {
+        set_graphs(node_ids[0], index_graph);
+        index_graph ++;
     }
 
-    function set_graph(list, id_node, index_graph, child_or_parent) {
 
-        if (!validated_graphs.includes(id_node)) {
+    function set_graphs (node_id, index_graph) {
+        if (node_ids.length > 0 && node_ids.includes(node_id)) {
+            list.nodes.find(x => x.id === node_id).graph = index_graph;
+            node_ids = node_ids.filter(x => x !== node_id);
 
-            list.nodes.find(x => x.id === id_node).graph = index_graph;
-            validated_graphs.push(id_node);
-
-            list.nodes.find(x => x.id === id_node)[child_or_parent].forEach(function (child) {
-                return set_graph(list, list.nodes.filter(x => x.id === child)[0].id, index_graph, child_or_parent)
+            list.nodes.find(x => x.id === node_id).parents.forEach(function (parent) {
+                set_graphs (parent, index_graph);
             })
-            return list;
+
+            list.nodes.find(x => x.id === node_id).children.forEach(function (child) {
+
+                set_graphs (child, index_graph);
+            })
         }
     }
-
 
     return list;
 }
