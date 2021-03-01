@@ -73,6 +73,8 @@ const lang_id_heading_data_driven_structure = "lang_id_heading_data_driven_struc
 
 const lang_id_legend_reason = "lang_id_legend_reason";
 const lang_id_legend_effect = "lang_id_legend_effect";
+const lang_id_legend_sureness = "lang_id_legend_sureness";
+const lang_id_legend_individual_graphs = "lang_id_legend_individual_graphs";
 
 const lang_id_variable_type= "lang_id_variable_type";
 const lang_id_variable_identifier= "lang_id_variable_identifier";
@@ -132,8 +134,10 @@ var language_string = [
     {id: lang_id_tooltip_click_to_select, eng: "click to include/exclude from structural learning", de: "Klicken um Variable in Strukturerlernung mit einzubeziehen/auszuschließen"},
     {id: lang_id_heading_data_driven_structure, eng:"Data-Driven Bayesian Network Structure", de:"Datenbasierte Struktur des Bayes'schen Netzwerkes"},
 
-    {id: lang_id_legend_reason, eng:"reason", de:"Ursache"},
-    {id: lang_id_legend_effect, eng:"effect", de:"Effekt"},
+    {id: lang_id_legend_reason, eng:"from reason", de:"Ursache"},
+    {id: lang_id_legend_effect, eng:"to effect", de:"Effekt"},
+    {id: lang_id_legend_sureness, eng:"reliability of the relation", de:"Verlässlichkeit der Beziehung"},
+    {id: lang_id_legend_individual_graphs, eng:"individual subgraphs having no relation", de:"individuelle Subgraphen mit keiner Relation"},
 
     {id: lang_id_variable_type, eng:"is having the data type:", de:"Variablentyp"},
     {id: lang_id_variable_identifier, eng:"The variable:", de:"Variablen-ID"},

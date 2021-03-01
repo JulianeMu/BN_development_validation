@@ -5,7 +5,9 @@ function initialize_structural_learning_view(structure_learning_div) {
     const network_view_height = 700;
     // Set up an SVG group so that we can translate the final graph.
     structure_learning_div
-        .append('div').attr('id', id_network_view)
+        .append('div')
+        .attr('id', id_network_view)
+        .attr('class', 'top_div_overview')
         .style('width', '100%')
         .style('height', network_view_height + 'px')
         .style('background-color', 'white')

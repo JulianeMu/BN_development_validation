@@ -158,6 +158,10 @@
                     update_all_colors_and_text();
                     update_group_divs_in_network_view();
                     update_variables_order();
+
+                    setTimeout(() => {
+                        d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
+                    }, transition_duration)
                 })
             }, 150);
         }

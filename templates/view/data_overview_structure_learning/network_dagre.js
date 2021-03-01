@@ -9,9 +9,12 @@ let line = d3.line()
     })
     .curve(d3.curveBasis);
 
+let show_legend = false;
+
 function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, child_div_id) {
     const space_left = 100;
     const padding = 15;
+    show_legend = bool_show_legend;
 
     let network_child_div = d3.select('#' + parent_div_id)
         .append('div')
@@ -548,9 +551,14 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         svg_g.style('height', circle_max_y);
                     }
 
-                    d3.select('#' + child_div_id).style('height', circle_max_y + 20 + 'px')
-                    d3.select('#' + parent_div_id).style('height', circle_max_y + 20 + 'px')
-
+                    if (show_legend) {
+                        //svg_g.style('height', (parseFloat(svg_g.style('height')) - 120) + 'px');
+                        d3.select('#' + child_div_id).style('height', circle_max_y + 80 + 'px')
+                        d3.select('#' + parent_div_id).style('height', circle_max_y + 80 + 'px')
+                    } else {
+                        d3.select('#' + child_div_id).style('height', circle_max_y + 20 + 'px')
+                        d3.select('#' + parent_div_id).style('height', circle_max_y + 20 + 'px')
+                    }
 
                     d3.select('#' + child_div_id).node().scrollTop = scrolltop_before;
 
@@ -608,7 +616,7 @@ function initialize_network_legend(parent_div_id) {
     let legend_div = d3.select('#' + parent_div_id)
         .append('div')
         .style('position', 'absolute')
-        .style('bottom', '20px')
+        .style('bottom', '0px')
         .style('width', 'calc(100% - ' + 10 + 'px)')
         .style('height', legend_height + 'px')
         .style('border-radius', 'var(--div-border-radius)')
@@ -644,7 +652,7 @@ function initialize_network_legend(parent_div_id) {
         .attr('cy', legend_height / 2)
 
     x_pos += circle_radius + 5;
-    legend_svg.append('text')
+    let last_text = legend_svg.append('text')
         .attr('class', class_network_legend_text)
         .attr('dy', 7 + 'px')
         .attr('x', x_pos)
@@ -666,6 +674,83 @@ function initialize_network_legend(parent_div_id) {
             })
             return line(points);
         })
+
+    const legend_arg_strength = [{
+        y: legend_height / 4,
+        strength: 1
+    }, {
+        y: legend_height / 2,
+        strength: 4
+    }, {
+        y: legend_height / 4 * 3,
+        strength: 8
+    }]
+
+    let max_X = parseFloat(last_text.attr('x')) + last_text.node().getBoundingClientRect().width + 70;
+    legend_arg_strength.forEach(function (arg_strength) {
+        legend_svg.append("path")
+            .attr('class', class_network_paths)
+            .lower()
+            .attr('d', function () {
+                let points = [];
+                points.push({
+                    x: max_X,
+                    y: arg_strength.y
+                })
+                points.push({
+                    x: max_X + 50,
+                    y: arg_strength.y
+                })
+                return line(points);
+            })
+            .style('stroke-width', arg_strength.strength + 'px')
+    });
+
+    max_X += 70;
+    last_text = legend_svg.append('text')
+        .attr('class', class_network_legend_text)
+        .attr('dy', 7 + 'px')
+        .attr('x', max_X)
+        .attr('y', legend_height / 2)
+        .text(get_language__label_by_id(lang_id_legend_sureness));
+
+    max_X += last_text.node().getBoundingClientRect().width + 70;
+
+    legend_svg.append('circle')
+        .attr('class', class_network_circle)
+        .attr('r', circle_radius)
+        .attr('cx', max_X)
+        .attr('cy', legend_height / 2)
+        .style('fill', color_subgraphs(0))
+
+    max_X += 40;
+
+    legend_svg.append('circle')
+        .attr('class', class_network_circle)
+        .attr('r', circle_radius)
+        .attr('cx', max_X)
+        .attr('cy', legend_height / 2)
+        .style('fill', color_subgraphs(1))
+
+
+    max_X += 40;
+
+    legend_svg.append('circle')
+        .attr('class', class_network_circle)
+        .attr('r', circle_radius)
+        .attr('cx', max_X)
+        .attr('cy', legend_height / 2)
+        .style('fill', color_subgraphs(2))
+
+    max_X += 40;
+
+    last_text = legend_svg.append('text')
+        .attr('class', class_network_legend_text)
+        .attr('dy', 7 + 'px')
+        .attr('x', max_X)
+        .attr('y', legend_height / 2)
+        .text(get_language__label_by_id(lang_id_legend_individual_graphs));
+
 }
 
 function get_workflow_step_group(variable_id) {

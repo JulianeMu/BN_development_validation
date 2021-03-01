@@ -13,16 +13,7 @@
     padding: 0;
 }
 
-.top_div_overview {
-    border-radius: var(--div-border-radius);
-    background-color: white;
-    height: 620px;
-    padding: 0;
-    width: calc(100% - 2*var(--main-margin));
-    position: relative;
-    float: left;
-    margin: var(--main-margin);
-}
+
 
 .validation_div_content_class{
     width: 100%;

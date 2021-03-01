@@ -172,3 +172,14 @@ body{
     background-position: left;
     background-position-x: -45px;
 }
+
+.top_div_overview {
+    border-radius: var(--div-border-radius);
+    background-color: white;
+    height: 620px;
+    padding: 0;
+    width: calc(100% - 2*var(--main-margin));
+    position: relative;
+    float: left;
+    margin: var(--main-margin);
+}
