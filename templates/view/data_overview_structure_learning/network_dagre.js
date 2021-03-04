@@ -530,6 +530,47 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 return 0;
                             }
                             return 1;
+                        })
+                        .each(function (d) {
+                            const template = document.createElement('div');
+                            d3.select(template)
+                                .style('height', 300+'px')
+                                .append('p')
+                                .style('margin', 0)
+                                .node().innerHTML = '<strong>' + d.v + '</strong>  has an impact on  <strong>' + d.w+'</strong>'
+
+                            const images = [{
+                                resource: '/BN_development_validation/templates/resources/correct.png'
+                            }, {
+                                resource: '/BN_development_validation/templates/resources/cancel.png'
+                            }, {
+                                resource: '/BN_development_validation/templates/resources/transfer.png'
+                            }];
+
+                            images.forEach(function (img) {
+
+
+                            d3.select(template)
+                                .append('img')
+                                .style('width', 40+'px')
+                                .style('margin-left', 'calc(16.5% - 20px)')
+                                .style('margin-right', 'calc(16.5% - 20px)')
+                                .attr('src', img.resource)
+                            })
+
+                            const instance = this._tippy
+                            if (instance) {
+                                instance.destroy();
+                            }
+
+                            tippy(this, {
+                                content: template.innerHTML,
+                                followCursor: true,
+                                allowHTML: true,
+                                appendTo: document.body,
+                                interactive: true,
+                            });
+
                         });
 
                     let circle_max_y = 0;

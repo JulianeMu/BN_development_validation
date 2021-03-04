@@ -161,7 +161,7 @@
 
                     setTimeout(() => {
                         d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
-                    }, transition_duration)
+                    }, 2*transition_duration)
                 })
             }, 150);
         }
