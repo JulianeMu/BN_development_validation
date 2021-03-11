@@ -81,7 +81,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
             } else {
                 d3.select('#' + parent_div_id).select('#' + id_class_groups_in_network_view + initial_groups[i].id).style('height', 0 + 'px')
                     .style('margin-top', 0 + 'px')
-                    .select('p').style('opacity', 0)
+                    .select('p').style('opacity', 0);
             }
         }
 
@@ -176,7 +176,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 update_all_colors_and_text();
                 update_individual_graph_view();
 
-                append_edge_validation(learned_structure_data.edges[learned_structure_data.edges.length-1], true);
+                append_edge_validation(learned_structure_data.edges[learned_structure_data.edges.length - 1], true);
 
             }
         }
@@ -534,10 +534,10 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         .each(function (d) {
                             const template = document.createElement('div');
                             d3.select(template)
-                                .style('height', 300+'px')
+                                .style('height', 300 + 'px')
                                 .append('p')
                                 .style('margin', 0)
-                                .node().innerHTML = '<strong>' + d.v + '</strong>  has an impact on  <strong>' + d.w+'</strong>'
+                                .node().innerHTML = '<strong>' + d.v + '</strong>  has an impact on  <strong>' + d.w + '</strong>'
 
                             const images = [{
                                 resource: '/BN_development_validation/templates/resources/correct.png'
@@ -549,14 +549,15 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                             images.forEach(function (img) {
 
-
-                            d3.select(template)
-                                .append('img')
-                                .style('width', 40+'px')
-                                .style('margin-left', 'calc(16.5% - 20px)')
-                                .style('margin-right', 'calc(16.5% - 20px)')
-                                .attr('src', img.resource)
+                                d3.select(template)
+                                    .append('img')
+                                    .style('width', 40 + 'px')
+                                    .style('margin-left', 'calc(16.5% - 20px)')
+                                    .style('margin-right', 'calc(16.5% - 20px)')
+                                    .attr('src', img.resource)
+                                    .on('click', click_func)
                             })
+
 
                             const instance = this._tippy
                             if (instance) {
@@ -609,6 +610,10 @@ function update_network_view(data, parent_div_id, child_div_id) {
     }
 
 
+}
+
+function click_func () {
+    console.log('click')
 }
 
 function get_y_diff(id_group_div, parent_div_id, child_div_id) {
@@ -856,22 +861,22 @@ function identify_sub_graphs(list) {
 
     while (node_ids.length > 0) {
         set_graphs(node_ids[0], index_graph);
-        index_graph ++;
+        index_graph++;
     }
 
 
-    function set_graphs (node_id, index_graph) {
+    function set_graphs(node_id, index_graph) {
         if (node_ids.length > 0 && node_ids.includes(node_id)) {
             list.nodes.find(x => x.id === node_id).graph = index_graph;
             node_ids = node_ids.filter(x => x !== node_id);
 
             list.nodes.find(x => x.id === node_id).parents.forEach(function (parent) {
-                set_graphs (parent, index_graph);
+                set_graphs(parent, index_graph);
             })
 
             list.nodes.find(x => x.id === node_id).children.forEach(function (child) {
 
-                set_graphs (child, index_graph);
+                set_graphs(child, index_graph);
             })
         }
     }

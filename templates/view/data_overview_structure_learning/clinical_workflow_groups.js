@@ -344,12 +344,19 @@ function update_variables_order () {
     for (let index_groups = initial_groups.length-1; index_groups > -1; index_groups --) {
 
         let variables = initial_groups[index_groups].variables.sort().reverse();
+        let variables_not_available = [];
         variables.forEach(function (variable) {
 
             let content = document.getElementById(id_beginning_columns_div + variable);
-            let parent = content.parentNode;
-            parent.insertBefore(content, parent.firstChild);
+            if (content) {
+                let parent = content.parentNode;
+                parent.insertBefore(content, parent.firstChild);
+            } else {
+                variables_not_available.push(variable)
+            }
         })
+
+        initial_groups[index_groups].variables = initial_groups[index_groups].variables.filter(x => ! variables_not_available.includes(x));
     }
 }
 
