@@ -2,6 +2,8 @@ import pysmile
 import pysmile_license
 import global_variables as gv
 import classes
+import re
+import pandas as pd
 
 
 def readin_network_structure():
@@ -11,6 +13,31 @@ def readin_network_structure():
 
 def save_network_structure():
     gv.network.write_file("bayesianNetworkStructure.dsc")
+
+
+def node_distinction_computation(node_id):
+
+    differing_data = pd.DataFrame(columns=gv.dataset_categorical.columns)
+    node_handle_for_node_id = 0
+    for index in range(0, gv.max_nodes_distinction_amount): #gv.dataset_categorical.iterrows():
+
+        gv.network.clear_all_evidence()
+        gv.network.update_beliefs()
+        for node_handle in gv.network.get_all_nodes():
+
+            column = gv.network.get_node_id(node_handle)
+            if column != node_id:
+                remove_special_chars = re.sub("[^a-zA-Z0-9_.]", "_", gv.dataset_categorical[column][index])
+                gv.network.set_evidence(node_handle, remove_special_chars)
+            else:
+                node_handle_for_node_id = node_handle
+            gv.network.update_beliefs()
+
+        index_max_outcome = gv.network.get_node_value(node_id).index(max(gv.network.get_node_value(node_id)))
+        if gv.network.get_outcome_ids(node_handle_for_node_id)[index_max_outcome] != gv.dataset_categorical[node_id][index]:
+            differing_data = differing_data.append(gv.dataset_categorical.iloc[index], ignore_index=True)
+
+    return differing_data
 
 
 def get_cpt(node_id):
@@ -33,7 +60,9 @@ def get_cpt(node_id):
 
         index_to_coords(elem_idx, dim_sizes, coords)
         outcome = gv.network.get_outcome_id(node_id, coords[dim_count - 1])
-        parent_nodes = [classes.CPTParent(gv.network.get_node_id(parents[parent_idx]), gv.network.get_outcome_id(parents[parent_idx], coords[parent_idx])) for parent_idx in range(0, len(parents))]
+        parent_nodes = [classes.CPTParent(gv.network.get_node_id(parents[parent_idx]),
+                                          gv.network.get_outcome_id(parents[parent_idx], coords[parent_idx])) for
+                        parent_idx in range(0, len(parents))]
         prob = cpt[elem_idx]
         stateobj = classes.StateProb(outcome, prob)
         state_objects.append(stateobj)
@@ -56,9 +85,9 @@ def index_to_coords(index, dim_sizes, coords):
 
 
 def get_network_structure():
-
     nodes = [classes.NodeIdNameOutcomes(id=node_id, label=gv.network.get_node_name(node_id),
-                                        outcomes=[classes.OutcomeIdLabel(outcome, outcome) for outcome in gv.network.get_outcome_ids(node_id)],
+                                        outcomes=[classes.OutcomeIdLabel(outcome, outcome) for outcome in
+                                                  gv.network.get_outcome_ids(node_id)],
                                         cpt=get_cpt(node_id),
                                         parents=gv.network.get_parent_ids(node_id),
                                         children=gv.network.get_child_ids(node_id))
@@ -67,8 +96,8 @@ def get_network_structure():
     edges = []
     for node_id in gv.network.get_all_node_ids():
         for node_to_id in gv.network.get_child_ids(node_id):
-
-            strength = float([x['strength'] for x in gv.learned_structure_strength if x['from'] == node_id and x['to'] == node_to_id][0])
+            strength = float([x['strength'] for x in gv.learned_structure_strength if
+                              x['from'] == node_id and x['to'] == node_to_id][0])
             edge = classes.Edges(edge_from=node_id, edge_to=node_to_id, edge_strength=strength)
             edges.append(edge)
 
@@ -77,7 +106,8 @@ def get_network_structure():
 
 def get_node_layers():
     # get nodes having no parents to compute the layers
-    nodes_having_no_parents = [node_id for node_id in gv.network.get_all_node_ids() if len(gv.network.get_parent_ids(node_id)) == 0]
+    nodes_having_no_parents = [node_id for node_id in gv.network.get_all_node_ids() if
+                               len(gv.network.get_parent_ids(node_id)) == 0]
 
     list_nodes_information_layers = [classes.LayerObject(id=node_id, name=gv.network.get_node_name(node_id), layer=0,
                                                          outcomes=gv.network.get_outcome_ids(node_id)) for node_id in
@@ -85,13 +115,13 @@ def get_node_layers():
 
     # compute node layers dependent on causal flow
     for node in nodes_having_no_parents:
-        list_nodes_information_layers = recursive_node_layer_computation(gv.network, node, list_nodes_information_layers, 0)
+        list_nodes_information_layers = recursive_node_layer_computation(gv.network, node,
+                                                                         list_nodes_information_layers, 0)
 
     return list_nodes_information_layers
 
 
 def recursive_node_layer_computation(net, node_id, list_nodes_information, layer):
-
     layer = layer + 1
     for child_id in net.get_child_ids(node_id):
         if list_nodes_information[[x.id for x in list_nodes_information].index(child_id)].layer < layer:

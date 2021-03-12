@@ -15,3 +15,5 @@ learned_structure_data = None
 learned_structure_strength = None
 
 network = pysmile.Network()
+
+max_nodes_distinction_amount = 30

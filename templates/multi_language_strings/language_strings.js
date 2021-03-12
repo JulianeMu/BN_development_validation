@@ -36,6 +36,7 @@ const lang_id_openSession = "lang_id_openSession";
 const lang_id_inspect_data_learn_structure = "lang_id_inspect_data_learn_structure";
 const lang_id_structure_validation = "lang_id_structure_validation";
 const lang_id_parametrization_validation = "lang_id_parametrization_validation";
+const lang_id_model_validation = "lang_id_model_validation";
 
 const lang_id_data_overview = "lang_id_data_overview";
 const lang_id_data_groups_workflow = "lang_id_data_groups_workflow";
@@ -106,6 +107,7 @@ var language_string = [
     {id: lang_id_inspect_data_learn_structure, eng: 'Inspect Data and Learn Structure', de:'Untersuche die Daten und lerne die Struktur'},
     {id: lang_id_structure_validation, eng: 'Structure Validation', de: 'Strukturvalidierung'},
     {id: lang_id_parametrization_validation, eng: 'Parametrization Validation', de: 'Parametrisierungsvalidierung'},
+    {id: lang_id_model_validation, eng: 'Model Validation', de:'Modellvalidierung'},
     {id: lang_id_data_overview, eng: 'Data Overview', de:'Datenüberblick'},
     {id: lang_id_number_of_patients, eng: 'Number of Patients:', de:'Anzahl der Patienten:'},
 
@@ -134,7 +136,7 @@ var language_string = [
     {id: lang_id_tooltip_click_to_select, eng: "click to include/exclude from structural learning", de: "Klicken um Variable in Strukturerlernung mit einzubeziehen/auszuschließen"},
     {id: lang_id_heading_data_driven_structure, eng:"Data-Driven Bayesian Network Structure", de:"Datenbasierte Struktur des Bayes'schen Netzwerkes"},
 
-    {id: lang_id_legend_reason, eng:"from reason", de:"Ursache"},
+    {id: lang_id_legend_reason, eng:"from cause", de:"Ursache"},
     {id: lang_id_legend_effect, eng:"to effect", de:"Effekt"},
     {id: lang_id_legend_sureness, eng:"reliability of the relation", de:"Verlässlichkeit der Beziehung"},
     {id: lang_id_legend_individual_graphs, eng:"individual subgraphs having no relation to each other", de:"individuelle Subgraphen mit keiner Relation"},

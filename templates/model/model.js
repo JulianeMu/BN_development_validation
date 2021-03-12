@@ -62,15 +62,37 @@ function learn_structure_from_data (callback) {
         contentType: "application/json",
         dataType: 'json',
         success: function (response) {
-            //data = JSON.parse(response);
             learned_structure_data = JSON.parse(response);
 
-            //model_validation
             callback(JSON.parse(response));
         }
     });
 }
 
+function learn_parametrization_from_data (callback) {
+    const sURL = hostURL + "/learn_parametrization_from_data/";
+
+
+    $.ajax({
+        url: sURL,
+        type: 'GET',
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (response) {
+
+            node_distinction = JSON.parse(response[1]);
+            for (let i =0; i< node_distinction.length; i++) {
+
+                node_distinction[i].df = JSON.parse(node_distinction[i].df)
+            }
+
+            console.log(node_distinction)
+            learned_structure_data = JSON.parse(response[0]);
+
+            callback(true);
+        }
+    });
+}
 
 function compute_chi_square (callback, node_id) {
     const sURL = hostURL + "/compute_chi_square/";

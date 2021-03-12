@@ -4,9 +4,20 @@ const html_page_begin = "index.html";
 const html_page_inspect_data_learn_model = "inspect_data_learn_model.html";
 const html_page_structure_validation = "structure_validation.html";
 const html_page_parametrization_validation = "parametrization_validation.html";
+const html_page_model_validation = "model_validation.html";
 
-const html_pages = [html_page_begin, html_page_inspect_data_learn_model, html_page_structure_validation, html_page_parametrization_validation];
+const html_pages = [html_page_begin, html_page_inspect_data_learn_model, html_page_structure_validation, html_page_model_validation];
 
+const radio_button_inputs = [{
+    left: 20,
+    value: 'correct',
+}, {
+    left: 50,
+    value: 'wrong'
+}, {
+    left: 80,
+    value: 'turnaround'
+}];
 
 //------------------------general ids
 const id_heading = "heading";

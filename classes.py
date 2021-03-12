@@ -1,3 +1,4 @@
+import global_variables as gv
 
 class LayerObject(object):
     def __init__(self, id, name, layer, outcomes):
@@ -165,3 +166,10 @@ class NodeObjectMultipleStates(object):
         self.name = name
         self.isObserved = is_observed
         self.states = states
+
+
+class NodesDistinctionProbabilities(object):
+    def __init__(self, id, df):
+        self.node_id = id
+        self.df = df.to_json(orient="records")
+        self.percentage = len(df) * 100 / gv.max_nodes_distinction_amount

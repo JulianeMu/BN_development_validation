@@ -1,15 +1,5 @@
 
 const circle_radius_structure_val = circle_radius / 4 * 3;
-const radio_button_inputs = [{
-    left: 20,
-    value: 'correct',
-}, {
-    left: 50,
-    value: 'wrong'
-}, {
-    left: 80,
-    value: 'turnaround'
-}];
 
 function initialize_edge_validation() {
 
@@ -195,82 +185,87 @@ function append_edge_validation(edge, selfmade) {
             .on('change', function (d) {
                 right_edge_presentation_div.style('background-color', '#C0C0C0');
 
-                let line_triangle = d3.line()
-                    .x(function (d) {
-                        return d.x;
-                    })
-                    .y(function (d) {
-                        return d.y;
-                    });
 
-                if (this.value === radio_button_inputs[0].value) { //correct
-
-                    add_edge(edge.edge_from, edge.edge_to, edge.edge_strength);
-                    remove_edge(edge.edge_to, edge.edge_from);
-
-
-                } else if (this.value === radio_button_inputs[1].value) { //wrong
-
-                    remove_edge(edge.edge_from, edge.edge_to);
-                    remove_edge(edge.edge_to, edge.edge_from);
-
-                } else if (this.value === radio_button_inputs[2].value) { //turnaround
-
-                    remove_edge(edge.edge_from, edge.edge_to);
-                    add_edge(edge.edge_to, edge.edge_from, edge.edge_strength);
-
-                    left_svg.append('path')
-                        .attr('class', 'turnaround')
-                        .style('stroke', 'red')//'var(--main-font-color)')
-                        .style('stroke-width', 3+'px')
-                        .attr("d", function (d) {
-
-                            let points = [];
-
-                            let circles = left_svg.selectAll('circles');
-                            circles.each(function (circ) {
-                                points.push({
-                                    x: parseFloat(circ.node().getBoundingClientRect().x) - circle_radius_structure_val,
-                                    y: parseFloat(circ.attr("cy"))
-                                })
-                            })
-
-                            line_triangle(points)
-                        })
-
-                }
-
-                update_network_views_after_change();
-                update_all_colors_and_text();
-                update_individual_graph_view();
-
-                function remove_edge (edge_from, edge_to) {
-                    learned_structure_data.nodes.find(x => x.id === edge_to).parents =
-                        learned_structure_data.nodes.find(x => x.id === edge_to).parents.filter(e => e !== edge_from);
-
-                    learned_structure_data.nodes.find(x => x.id === edge_from).children =
-                        learned_structure_data.nodes.find(x => x.id === edge_from).children.filter(e => e !== edge_to);
-
-                    learned_structure_data.edges = learned_structure_data.edges.filter(x => !(x.edge_from === edge_from && x.edge_to === edge_to))
-                }
-
-                function add_edge (edge_from, edge_to, edge_strength) {
-
-                    if (learned_structure_data.edges.filter(x => (x.edge_from === edge_from && x.edge_to === edge_to)).length === 0) {
-
-
-                        learned_structure_data.nodes.filter(x => x.id === edge_to)[0].parents.push(edge_from);
-                        learned_structure_data.nodes.filter(x => x.id === edge_from)[0].children.push(edge_to);
-
-                        learned_structure_data.edges.push({
-                            edge_from: edge_from,
-                            edge_to: edge_to,
-                            edge_strength: edge_strength
-                        });
-                    }
-                }
+                update_edge_validation_after_validated(this.value, left_svg, edge)
             })
     })
+}
+
+function update_edge_validation_after_validated (validation_value, left_svg, edge) {
+    let line_triangle = d3.line()
+        .x(function (d) {
+            return d.x;
+        })
+        .y(function (d) {
+            return d.y;
+        });
+
+    if (validation_value === radio_button_inputs[0].value) { //correct
+
+        add_edge(edge.edge_from, edge.edge_to, edge.edge_strength);
+        remove_edge(edge.edge_to, edge.edge_from);
+
+
+    } else if (validation_value === radio_button_inputs[1].value) { //wrong
+
+        remove_edge(edge.edge_from, edge.edge_to);
+        remove_edge(edge.edge_to, edge.edge_from);
+
+    } else if (validation_value === radio_button_inputs[2].value) { //turnaround
+
+        remove_edge(edge.edge_from, edge.edge_to);
+        add_edge(edge.edge_to, edge.edge_from, edge.edge_strength);
+
+        left_svg.append('path')
+            .attr('class', 'turnaround')
+            .style('stroke', 'red')//'var(--main-font-color)')
+            .style('stroke-width', 3+'px')
+            .attr("d", function (d) {
+
+                let points = [];
+
+                let circles = left_svg.selectAll('circles');
+                circles.each(function (circ) {
+                    points.push({
+                        x: parseFloat(circ.node().getBoundingClientRect().x) - circle_radius_structure_val,
+                        y: parseFloat(circ.attr("cy"))
+                    })
+                })
+
+                line_triangle(points)
+            })
+
+    }
+
+    update_network_views_after_change();
+    update_all_colors_and_text();
+    update_individual_graph_view();
+
+    function remove_edge (edge_from, edge_to) {
+        learned_structure_data.nodes.find(x => x.id === edge_to).parents =
+            learned_structure_data.nodes.find(x => x.id === edge_to).parents.filter(e => e !== edge_from);
+
+        learned_structure_data.nodes.find(x => x.id === edge_from).children =
+            learned_structure_data.nodes.find(x => x.id === edge_from).children.filter(e => e !== edge_to);
+
+        learned_structure_data.edges = learned_structure_data.edges.filter(x => !(x.edge_from === edge_from && x.edge_to === edge_to))
+    }
+
+    function add_edge (edge_from, edge_to, edge_strength) {
+
+        if (learned_structure_data.edges.filter(x => (x.edge_from === edge_from && x.edge_to === edge_to)).length === 0) {
+
+
+            learned_structure_data.nodes.filter(x => x.id === edge_to)[0].parents.push(edge_from);
+            learned_structure_data.nodes.filter(x => x.id === edge_from)[0].children.push(edge_to);
+
+            learned_structure_data.edges.push({
+                edge_from: edge_from,
+                edge_to: edge_to,
+                edge_strength: edge_strength
+            });
+        }
+    }
 }
 
 function remove_edge_validation (edge) {

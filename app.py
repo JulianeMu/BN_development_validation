@@ -189,7 +189,7 @@ def learn_structure_from_data():
     return jsonify(transform(pysmile_integration.get_network_structure()))
 
 
-@app.route('/learn_parametrization_from_data/', methods=["POST"])
+@app.route('/learn_parametrization_from_data/', methods=["GET"])
 def learn_parametrization_from_data():
     start_time_deviations = time.time()
 
@@ -206,9 +206,12 @@ def learn_parametrization_from_data():
 
     pysmile_integration.readin_network_structure()
 
+    list_nodes_distinction_probabilities = [classes.NodesDistinctionProbabilities
+                                            (df=pysmile_integration.node_distinction_computation(column), id=column) for
+                                            column in gv.dataset_categorical]
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
-    return jsonify(transform(pysmile_integration.get_network_structure()))
+    return jsonify([transform(pysmile_integration.get_network_structure()), transform(list_nodes_distinction_probabilities)])
 
 
 @app.after_request

@@ -11,6 +11,7 @@ function update_individual_graph_view() {
     uniqueArray = uniqueArray.sort();
 
     uniqueArray.forEach(function (unique_graph) {
+
         let individual_div = d3.select('#' + 'individual_graph_view').append('div')
             .style('position', 'relative')
             .style('float', 'left')
@@ -18,11 +19,15 @@ function update_individual_graph_view() {
             //.style('height', 50 + 'px')
             .style('margin-bottom', 10+'px');
 
+        let float_right = 0;
+
         let left_div = individual_div.append('div')
             .style('position', 'relative')
             .style('float', 'left')
             .style('width', 100+'px')
             .style('height', 100 + '%');
+
+        float_right += 100;
 
         left_div.append('p')
             .style('margin-top', 10+'px')
@@ -35,22 +40,26 @@ function update_individual_graph_view() {
             .style('height', 50 + 'px')
             .style('border-radius', 'var(--div-border-radius)')
             .style('background-color', color_subgraphs(unique_graph));
+        float_right += 40;
 
         let center_div = individual_div.append('div')
             .style('position', 'relative')
             .style('float', 'left')
-            .style('width', 200+'px')
+            .style('width', 100 + 'px')
             .style('margin-left', 20 + 'px')
             .style('height', 100 + '%');
+        float_right += 120;
 
         center_div.append('p')
             .style('margin-top', 10+'px')
             .text('node count: ' + learned_structure_data.nodes.filter(x => x.graph === unique_graph).length);
 
+        float_right += 20;
+
         let right_div = individual_div.append('div')
             .style('position', 'relative')
             .style('float', 'left')
-            .style('width', 400+'px')
+            .style('width', 'calc(100% - ' + float_right +'px)')
             .style('margin-left', 20 + 'px')
             .style('height', 100 + '%');
 

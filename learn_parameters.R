@@ -9,6 +9,8 @@ library(tidyverse)
 source("add_column.R")
 source("add_row.R")
 
+myArgs <- commandArgs(trailingOnly = TRUE)
+
 # both dataset and the bayesian network structure need to be loaded:
 # myArgs <- commandArgs(trailingOnly = TRUE)
 
@@ -21,7 +23,7 @@ bayesian_network_structure <- bn.net(read.dsc(paste0(myArgs, data_file_name)))
 
 #Changing the dataset into a dataframe with factors as columns
 used_dataset[] <- lapply(used_dataset, factor)
-sapply(used_dataset, class)
+#sapply(used_dataset, class)
 used_dataset <- as.data.frame(used_dataset)
 #typeof(used_dataset)
 

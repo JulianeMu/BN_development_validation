@@ -547,15 +547,14 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 resource: '/BN_development_validation/templates/resources/transfer.png'
                             }];
 
-                            images.forEach(function (img) {
-
+                            images.forEach(function (img, index) {
                                 d3.select(template)
                                     .append('img')
                                     .style('width', 40 + 'px')
                                     .style('margin-left', 'calc(16.5% - 20px)')
                                     .style('margin-right', 'calc(16.5% - 20px)')
                                     .attr('src', img.resource)
-                                    .on('click', click_func)
+                                    .attr('onclick', 'click_func("'+d.v + '","'+ d.w+'","'+ radio_button_inputs[index].value+'")')
                             })
 
 
@@ -612,8 +611,19 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
 }
 
-function click_func () {
-    console.log('click')
+function click_func(edge_from, edge_to, index) {
+    console.log('click' + index)
+    console.log(edge_from + "   " + edge_to)
+
+    //TODO Add line down
+
+    //update_group_divs_in_network_view(child_div_id);
+    //update_network_view(learned_structure_data, parent_div_id, child_div_id);
+    //update_all_colors_and_text();
+    //update_individual_graph_view();
+
+    //append_edge_validation(learned_structure_data.edges[learned_structure_data.edges.length - 1], true);
+
 }
 
 function get_y_diff(id_group_div, parent_div_id, child_div_id) {

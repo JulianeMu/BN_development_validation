@@ -6,3 +6,4 @@ let whitelist = []; //array of objects with attributes: from and to
 
 let learned_structure_data= null;
 let learned_structure_data_without_modifications = null;
+let node_distinction = null;
