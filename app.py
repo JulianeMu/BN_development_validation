@@ -135,6 +135,7 @@ def save_data_on_backend():
     gv.blacklist = request.get_json()[4]
     gv.learned_structure_data = request.get_json()[5]
 
+    pysmile_integration.update_network_structure()
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
     return jsonify(transform(pysmile_integration.get_network_structure()))

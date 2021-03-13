@@ -1,3 +1,5 @@
+import json
+
 import pysmile
 import pysmile_license
 import global_variables as gv
@@ -16,10 +18,9 @@ def save_network_structure():
 
 
 def node_distinction_computation(node_id):
-
     differing_data = pd.DataFrame(columns=gv.dataset_categorical.columns)
     node_handle_for_node_id = 0
-    for index in range(0, gv.max_nodes_distinction_amount): #gv.dataset_categorical.iterrows():
+    for index in range(0, gv.max_nodes_distinction_amount):  # gv.dataset_categorical.iterrows():
 
         gv.network.clear_all_evidence()
         gv.network.update_beliefs()
@@ -34,7 +35,8 @@ def node_distinction_computation(node_id):
             gv.network.update_beliefs()
 
         index_max_outcome = gv.network.get_node_value(node_id).index(max(gv.network.get_node_value(node_id)))
-        if gv.network.get_outcome_ids(node_handle_for_node_id)[index_max_outcome] != gv.dataset_categorical[node_id][index]:
+        if gv.network.get_outcome_ids(node_handle_for_node_id)[index_max_outcome] != gv.dataset_categorical[node_id][
+            index]:
             differing_data = differing_data.append(gv.dataset_categorical.iloc[index], ignore_index=True)
 
     return differing_data
@@ -84,6 +86,19 @@ def index_to_coords(index, dim_sizes, coords):
         prod *= dim_sizes[i]
 
 
+def update_network_structure():
+    if gv.learned_structure_data is not None:
+
+        # remove all arcs in the first place
+        for node in gv.learned_structure_data['nodes']:
+            for child in gv.network.get_child_ids(node['id']):
+                gv.network.delete_arc(node['id'], child)
+
+        # update the edges
+        for edge in gv.learned_structure_data['edges']:
+            gv.network.add_arc(edge['edge_from'], edge['edge_to'])
+
+
 def get_network_structure():
     nodes = [classes.NodeIdNameOutcomes(id=node_id, label=gv.network.get_node_name(node_id),
                                         outcomes=[classes.OutcomeIdLabel(outcome, outcome) for outcome in
@@ -96,8 +111,11 @@ def get_network_structure():
     edges = []
     for node_id in gv.network.get_all_node_ids():
         for node_to_id in gv.network.get_child_ids(node_id):
-            strength = float([x['strength'] for x in gv.learned_structure_strength if
-                              x['from'] == node_id and x['to'] == node_to_id][0])
+            try:
+                strength = float([x['strength'] for x in gv.learned_structure_strength if
+                                  x['from'] == node_id and x['to'] == node_to_id][0])
+            except IndexError:
+                strength = 1
             edge = classes.Edges(edge_from=node_id, edge_to=node_to_id, edge_strength=strength)
             edges.append(edge)
 
