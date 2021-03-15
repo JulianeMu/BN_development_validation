@@ -11,6 +11,12 @@ let line = d3.line()
 
 let show_legend = false;
 
+// arrow head
+const markerBoxWidth = 20, markerBoxHeight = 14;
+const refX = markerBoxWidth/2, refY = markerBoxHeight/2;
+const arrowPoints = [[5, 0], [5, 14], [20, 7]];
+
+
 function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, child_div_id) {
     const space_left = 100;
     const padding = 15;
@@ -32,13 +38,29 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
         .style('overflow-x', 'scroll')
         .style('zoom', zoom + '%');
 
-    network_child_div.append("svg")
+    let svg = network_child_div.append("svg")
         .style('width', 'calc(100%-' + space_left + 'px)')
         .style('height', '90%')
         .style('left', space_left + 'px')
         .style('position', 'absolute')
         .style('fill', 'none')
 
+    svg
+        .append('defs')
+        .append('marker')
+        .attr('id', 'arrow')
+        .attr('viewBox', [0, 0, markerBoxWidth, markerBoxHeight])
+        .attr('refX', refX)
+        .attr('refY', refY)
+        .attr('markerWidth', markerBoxWidth)
+        .attr('markerHeight', markerBoxHeight)
+        .attr('orient', 'auto-start-reverse')
+        .attr('markerUnits',"userSpaceOnUse")
+        .append('path')
+        .attr('d', d3.line()(arrowPoints))
+        .attr('stroke', 'var(--main-font-color)')
+        .attr('fill', 'var(--main-font-color)')
+        .style('stroke-width', 1+'px');
 
     if (bool_show_legend) {
         initialize_network_legend(parent_div_id);
@@ -234,11 +256,14 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 })
                     .style('opacity', 0.1);
 
+                svg_g.select('defs').style('opacity', 1);
+
                 let related_paths = svg_g.selectAll('.' + class_network_paths).filter(function () {
 
                     return this.id.split(splitter).includes(variable_label);
-                })
-                    .style('opacity', 1);
+                }).style('opacity', 1);
+
+
 
                 related_paths.each(function () {
                     let related_nodes = this.id.split(splitter);
@@ -255,6 +280,9 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 svg_g.select('#' + circle_label_id + i)
                     .style('opacity', 1);
 
+                related_paths.each(function () {
+                    d3.selectAll('#arrow').style('opacity', 1).select('path').style('opacity', 1)
+                })
 
                 mouse_over_circle = i;
             })
@@ -509,7 +537,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))
                             })
                             points.push({
-                                x: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) - circle_radius,
+                                x: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cx")) - circle_radius - 10,
                                 y: parseFloat(svg_g.select('#' + circle_id + d.w).attr("cy"))
                             })
 
@@ -531,6 +559,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                             }
                             return 1;
                         })
+                        .attr('marker-end', 'url(#arrow)')
                         .each(function (d) {
                             const template = document.createElement('div');
                             d3.select(template)
@@ -554,7 +583,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                     .style('margin-left', 'calc(16.5% - 20px)')
                                     .style('margin-right', 'calc(16.5% - 20px)')
                                     .attr('src', img.resource)
-                                    .attr('onclick', 'click_func("'+d.v + '","'+ d.w+'","'+ radio_button_inputs[index].value+'")')
+                                    .attr('onclick', 'click_func("' + d.v + '","' + d.w + '","' + radio_button_inputs[index].value + '")')
                             })
 
 
@@ -690,7 +719,7 @@ function initialize_network_legend(parent_div_id) {
         .attr('y', legend_height / 2)
         .text(get_language__label_by_id(lang_id_legend_reason));
 
-    x_pos += first_text.node().getBoundingClientRect().width + circle_radius + 5;
+    x_pos += first_text.node().getBoundingClientRect().width + circle_radius + 10;
     let x_pos_circle_1 = x_pos;
 
     legend_svg.append('circle')
@@ -700,7 +729,7 @@ function initialize_network_legend(parent_div_id) {
         .attr('cy', legend_height / 2)
 
     x_pos += 100;
-    let x_pos_circle_2 = x_pos;
+    let x_pos_circle_2 = x_pos - 10;
     legend_svg.append('circle')
         .attr('class', class_network_circle)
         .attr('r', circle_radius)
@@ -715,6 +744,23 @@ function initialize_network_legend(parent_div_id) {
         .attr('y', legend_height / 2)
         .text(get_language__label_by_id(lang_id_legend_effect));
 
+    legend_svg
+        .append('defs')
+        .append('marker')
+        .attr('id', 'arrow')
+        .attr('viewBox', [0, 0, markerBoxWidth, markerBoxHeight])
+        .attr('refX', refX)
+        .attr('refY', refY)
+        .attr('markerWidth', markerBoxWidth)
+        .attr('markerHeight', markerBoxHeight)
+        .attr('orient', 'auto-start-reverse')
+        .attr('markerUnits',"userSpaceOnUse")
+        .append('path')
+        .attr('d', d3.line()(arrowPoints))
+        .attr('stroke', 'var(--main-font-color)')
+        .attr('fill', 'var(--main-font-color)')
+        .style('stroke-width', 1+'px');
+
     legend_svg.append("path")
         .attr('class', class_network_paths)
         .lower()
@@ -725,11 +771,15 @@ function initialize_network_legend(parent_div_id) {
                 y: legend_height / 2
             })
             points.push({
-                x: x_pos_circle_2 + circle_radius,
+                x: x_pos_circle_2 - circle_radius,
                 y: legend_height / 2
             })
+
             return line(points);
         })
+        .attr('marker-end', 'url(#arrow)')
+
+
 
     const legend_arg_strength = [{
         y: legend_height / 4,
@@ -747,6 +797,7 @@ function initialize_network_legend(parent_div_id) {
         legend_svg.append("path")
             .attr('class', class_network_paths)
             .lower()
+            .attr('marker-end', 'url(#arrow)')
             .attr('d', function () {
                 let points = [];
                 points.push({
