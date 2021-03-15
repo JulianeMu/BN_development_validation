@@ -31,7 +31,7 @@ function initialize_ordered_node_list_view (parent_div_id) {
 
     const percentage_div_width = 55;
 
-    node_distinction = node_distinction.sort((a,b) => (a.df.length > b.df.length) ? -1 : ((b.df.length > a.df.length) ? 1 : 0))
+    node_distinction = node_distinction.sort((a,b) => (a.distinction_probabilities_and_data.length > b.distinction_probabilities_and_data.length) ? -1 : ((b.distinction_probabilities_and_data.length > a.distinction_probabilities_and_data.length) ? 1 : 0))
     node_distinction.forEach(function (node) {
 
         let related_node = learned_structure_data.nodes.filter(x => x.id === node.node_id)[0];
@@ -90,7 +90,7 @@ function initialize_ordered_node_list_view (parent_div_id) {
             .style('float', 'left')
             .append('p')
             .style('margin', '10px 0 10px 0')
-            .text(node.df.length)
+            .text(node.distinction_probabilities_and_data.length)
 
         // node_line_div.append('svg').style('width', 100+'%').style('height', 100+'%').append("svg:defs").append("svg:marker")
         //     .attr("id", "triangle")

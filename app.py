@@ -208,7 +208,8 @@ def learn_parametrization_from_data():
     pysmile_integration.readin_network_structure()
 
     list_nodes_distinction_probabilities = [classes.NodesDistinctionProbabilities
-                                            (df=pysmile_integration.node_distinction_computation(column), id=column) for
+                                            (distinction_probabilities_and_data=
+                                             pysmile_integration.node_distinction_computation(column), id=column) for
                                             column in gv.dataset_categorical]
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 

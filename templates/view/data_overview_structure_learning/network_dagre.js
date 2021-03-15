@@ -72,7 +72,6 @@ function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, ch
 
 function update_network_view(data, parent_div_id, child_div_id) {
 
-    console.log(data)
     let mouse_over_circle;
     let circle_start;
 

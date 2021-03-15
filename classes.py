@@ -169,7 +169,17 @@ class NodeObjectMultipleStates(object):
 
 
 class NodesDistinctionProbabilities(object):
-    def __init__(self, id, df):
+    def __init__(self, id, distinction_probabilities_and_data):
         self.node_id = id
+        # self.df = df.to_json(orient="records")
+        # self.percentage = len(df) * 100 / gv.max_nodes_distinction_amount
+        self.distinction_probabilities_and_data = distinction_probabilities_and_data
+        self.percentage = len(distinction_probabilities_and_data) * 100 / gv.max_nodes_distinction_amount
+
+
+class DistinctionProbabilitiesAndData(object):
+    def __init__(self, outcomes, probabilities, data_outcome, df):
+        self.outcomes = outcomes
+        self.probabilities = probabilities
+        self.data_outcome = data_outcome
         self.df = df.to_json(orient="records")
-        self.percentage = len(df) * 100 / gv.max_nodes_distinction_amount

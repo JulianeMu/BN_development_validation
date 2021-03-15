@@ -18,7 +18,8 @@ def save_network_structure():
 
 
 def node_distinction_computation(node_id):
-    differing_data = pd.DataFrame(columns=gv.dataset_categorical.columns)
+
+    list_distinctions = []
     node_handle_for_node_id = 0
     for index in range(0, gv.max_nodes_distinction_amount):  # gv.dataset_categorical.iterrows():
 
@@ -37,9 +38,16 @@ def node_distinction_computation(node_id):
         index_max_outcome = gv.network.get_node_value(node_id).index(max(gv.network.get_node_value(node_id)))
         if gv.network.get_outcome_ids(node_handle_for_node_id)[index_max_outcome] != gv.dataset_categorical[node_id][
             index]:
+            differing_data = pd.DataFrame(columns=gv.dataset_categorical.columns)
             differing_data = differing_data.append(gv.dataset_categorical.iloc[index], ignore_index=True)
+            list_distinctions.append(
+                classes.DistinctionProbabilitiesAndData(outcomes=gv.network.get_outcome_ids(node_handle_for_node_id),
+                                                        df=differing_data,
+                                                        probabilities=gv.network.get_node_value(node_id),
+                                                        data_outcome=gv.dataset_categorical[node_id][
+                                                            index]))
 
-    return differing_data
+    return list_distinctions
 
 
 def get_cpt(node_id):
