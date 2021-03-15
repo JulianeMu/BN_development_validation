@@ -362,7 +362,5 @@ function update_network_views_after_change(node_validation_network_structure, no
         }).transition().duration(transition_duration)
             .style('stroke', 'rgb(255, 0, 0)').style('stroke-width', 6 + 'px');
 
-
-
     }, 2 * transition_duration + 10);
 }

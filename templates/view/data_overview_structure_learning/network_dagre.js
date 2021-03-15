@@ -500,9 +500,17 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 //-------------------------------------------------
                 // add edges
 
+
                 //TODO need to check why the first line is removed
+                // as a workaround, I added the first edge again. Not nice but working
+                let list_edges = []
+                g.edges().forEach(function (d) {
+                    list_edges.push(d)
+                })
+                list_edges.push(list_edges[0])
+
                 let paths = svg_g.selectAll("path")
-                    .data(g.edges())
+                    .data(list_edges)
                     //.enter();
 
                 paths.exit().remove();//remove unneeded circles
