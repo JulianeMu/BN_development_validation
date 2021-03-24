@@ -118,10 +118,10 @@ class PointObject(object):
         self.x = x
 
 
-class RelevanceObject(object):
-    def __init__(self, state, relevance):
-        self.state = state
-        self.relevance = relevance
+# class RelevanceObject(object):
+#     def __init__(self, state, relevance):
+#         self.state = state
+#         self.relevance = relevance
 
 
 class LinesObject(object):
@@ -177,9 +177,17 @@ class NodesDistinctionProbabilities(object):
         self.percentage = len(distinction_probabilities_and_data) * 100 / gv.max_nodes_distinction_amount
 
 
+class RelevanceObject(object):
+    def __init__(self, evidence_node, evidence_outcome, relevance):
+        self.evidence_node = evidence_node
+        self.evidence_outcome = evidence_outcome
+        self.relevance = relevance
+
+
 class DistinctionProbabilitiesAndData(object):
-    def __init__(self, outcomes, probabilities, data_outcome, df):
+    def __init__(self, outcomes, probabilities, data_outcome, df, relevancies):
         self.outcomes = outcomes
         self.probabilities = probabilities
         self.data_outcome = data_outcome
         self.df = df.to_json(orient="records")
+        self.relevancies = relevancies

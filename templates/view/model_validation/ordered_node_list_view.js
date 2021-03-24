@@ -49,7 +49,7 @@ function initialize_ordered_node_list_view (parent_div_id) {
             .append('p')
             .style('margin', '10px 0 10px 0')
             .text(related_node.label)
-            .on('click', function (d) {
+            .on('click', function () {
                 d3.selectAll('.nodes_overview_divs').style('background-color', 'white')
                 node_line_div.style('background-color', '#E8E8E8')
             })
@@ -77,7 +77,9 @@ function initialize_ordered_node_list_view (parent_div_id) {
             .style('width', node.percentage+'%')
             .style('height', 100+'%')
             .style('border-radius', 'var(--div-border-radius)')
-            .style('background-color', 'var(--main-font-color)')
+            .style('background-color', color_distinction_percentage(node.percentage))
+            //.style('border-color', 'var(--main-font-color)')
+            //.style('border-style', 'solid')
 
         tippy(percentage_div_bar.node(), {
             content: node.percentage.toFixed(0)+'%',

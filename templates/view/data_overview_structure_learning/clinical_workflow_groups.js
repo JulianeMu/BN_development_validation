@@ -39,6 +39,10 @@ let color_clinical_workflow_groups = //d3.scaleOrdinal(d3.schemeCategory10)
 let color_subgraphs = d3.scaleSequential().domain([1, 10])
     .interpolator(d3.interpolateRainbow);
 
+let color_distinction_percentage = d3.scaleSequential().domain([0, 100])
+    .interpolator(d3.interpolatePuRd);
+
+
 function initialize_clinical_workflow_groups(data_inspection_div) {
     let clinical_workflow_group_div = data_inspection_div.append('div').attr('id', id_clinical_workflow_group);
 
@@ -161,14 +165,14 @@ function add_group(original_id) {
     d3.select('.' + id_class_add_clinical_workflow_group_form).style('visibility', 'visible');
     d3.select('#' + id_add_group_button).attr('disabled', 'disabled');
 
-    d3.select('#' + id_group_label_name).on('input', function (d) {
+    d3.select('#' + id_group_label_name).on('input', function () {
         if (this.value.length > 0) {
             d3.select('#' + id_add_group_button).attr('disabled', null);
         } else {
             d3.select('#' + id_add_group_button).attr('disabled', 'disabled');
         }
     })
-    d3.select('#' + id_add_group_button).on('click', function (d) {
+    d3.select('#' + id_add_group_button).on('click', function () {
         let group_name = d3.select('#' + id_group_label_name).node().value;
 
         if (typeof original_id === 'string') {
@@ -201,7 +205,7 @@ function add_group(original_id) {
 
 function hide_add_group_view() {
     d3.select('#' + id_group_label_name).node().value = "";
-    d3.select('.' + id_variable_list_class).selectAll("input").each(function (d) {
+    d3.select('.' + id_variable_list_class).selectAll("input").each(function () {
         this.checked = null;
         this.disabled = null;
 
@@ -275,14 +279,12 @@ function select_variables_for_group(group_information) {
 
             checkbox_div.append('label')
                 .text(col)
-                .on('click', function (d) {
+                .on('click', function () {
 
                     if (!checkbox.attr('disabled')) {
                         checkbox.property('checked', function () {
-                            if (checkbox.property('checked')) {
-                                return false;
-                            }
-                            return true;
+                            return !checkbox.property('checked');
+
                         })
                     }
                 });
@@ -303,7 +305,7 @@ function select_variables_for_group(group_information) {
         });
     });
 
-    d3.select('#' + id_submit_group_selection_button).on('click', function (d) {
+    d3.select('#' + id_submit_group_selection_button).on('click', function () {
 
         let checked = [];
         let boxes = d3.select('.' + id_variable_list_class).selectAll("input:checked");
@@ -364,8 +366,6 @@ function update_all_colors_and_text() {
 
     update_group_color_and_text();
 
-    d3.selectAll('.' + id_data_col_div_class).style('border', '6px solid white');// + d3.select('#' + group_information.id).style('background-color'));
-
     setTimeout(() => {
 
         d3.selectAll('.' + class_network_paths).filter(function () {
@@ -383,7 +383,7 @@ function update_all_colors_and_text() {
             .style('stroke', 'rgb(255, 0, 0)')
             .style('stroke-width', 6 + 'px');
 
-    }, 3 * transition_duration + 0);
+    }, 3 * transition_duration);
 }
 
 function update_group_color_and_text() {
@@ -402,5 +402,9 @@ function update_group_color_and_text() {
         group_div.select('.arrow_right').style('border-left-color', color_clinical_workflow_groups(i + 1));
 
         group_div.style('color', get_font_color(color_clinical_workflow_groups(i + 1)));
+
+        initial_groups[i].variables.forEach(function (variable) {
+            d3.select('#' + id_beginning_columns_div + variable).style('border', '6px solid ' + color_clinical_workflow_groups(i + 1));
+        })
     }
 }

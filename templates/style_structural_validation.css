@@ -109,11 +109,16 @@ input{
     margin: var(--padding);
 }
 
+#individual_graph_view{
+    height: calc(100% - 125px);
+    overflow-y: auto;
+}
+
 .edge_node_structure_validation {
     position: relative;
     float: left;
-    min-height: 450px;
-    height: 450px;
+    min-height: 480px;
+    height: 480px;
     width: calc(100% - 6* var(--padding));
     margin: var(--main-margin);
     background-color: white;
@@ -150,7 +155,7 @@ input.invalid { background: red; color: #FDFDFD; }
 }
 
 #myBar {
-    width: 0%;
+    width: 0;
     height: 100%;
     background-color: var(--main-font-color);
     text-align: center;

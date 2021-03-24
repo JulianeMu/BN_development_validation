@@ -1,6 +1,10 @@
 import json
+from copy import copy
 
+import numpy
 import pysmile
+from scipy.spatial import distance
+
 import pysmile_license
 import global_variables as gv
 import classes
@@ -40,14 +44,59 @@ def node_distinction_computation(node_id):
             index]:
             differing_data = pd.DataFrame(columns=gv.dataset_categorical.columns)
             differing_data = differing_data.append(gv.dataset_categorical.iloc[index], ignore_index=True)
+
+            relevancies = []
+            target_outcome = gv.network.get_node_value(node_id)
+
+            sum_of_all_overall_relevancies = 0
+
+            for node_handle in gv.network.get_all_nodes():
+                column = gv.network.get_node_id(node_handle)
+                if column != node_id:
+                    net = copy(gv.network)
+                    net.update_beliefs()
+                    net.clear_evidence(node_handle)
+                    net.update_beliefs()
+
+                    overall_relevance_of_evidence_items = compute_jensen_shannon_divergence(net.get_node_value(node_id),
+                                                                                            target_outcome)
+
+                    sum_of_all_overall_relevancies += overall_relevance_of_evidence_items
+                    relevancies.append(classes.RelevanceObject(evidence_node=column,
+                                                               evidence_outcome=re.sub("[^a-zA-Z0-9_.]", "_",
+                                                                                       gv.dataset_categorical[column]
+                                                                                       [index]),
+                                                               relevance=float(overall_relevance_of_evidence_items)))
+
+            for i_rel in range(0, len(relevancies)):
+                relevancies[i_rel]['relevance_percentage'] = float(relevancies[i_rel].relevance /
+                                                                sum_of_all_overall_relevancies)
+
             list_distinctions.append(
                 classes.DistinctionProbabilitiesAndData(outcomes=gv.network.get_outcome_ids(node_handle_for_node_id),
                                                         df=differing_data,
-                                                        probabilities=gv.network.get_node_value(node_id),
+                                                        probabilities=target_outcome,
                                                         data_outcome=gv.dataset_categorical[node_id][
-                                                            index]))
+                                                            index],
+                                                        relevancies=relevancies))
 
     return list_distinctions
+
+
+def compute_jensen_shannon_divergence(state_1, state_2):
+    p1 = state_1
+    p2 = state_2
+
+    # for i in range(len(state_1)):
+    #     p1.append(float(state_1[i]))
+    #    p2.append(float(state_2[i]))
+
+    jen_shan = distance.jensenshannon(p1, p2)
+
+    if numpy.isnan(jen_shan):
+        jen_shan = 0
+
+    return jen_shan
 
 
 def get_cpt(node_id):

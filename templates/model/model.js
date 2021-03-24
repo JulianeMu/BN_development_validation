@@ -82,6 +82,7 @@ function learn_parametrization_from_data (callback) {
 
             learned_structure_data = JSON.parse(response[0]);
 
+            console.log(learned_structure_data)
             node_distinction = JSON.parse(response[1]);
             for (let i =0; i< node_distinction.length; i++) {
                 for(let j=0; j< node_distinction[i].distinction_probabilities_and_data.length; j++) {

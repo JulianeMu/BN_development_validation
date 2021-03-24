@@ -285,7 +285,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                 mouse_over_circle = i;
             })
-            .on('mouseout', function (d, i) {
+            .on('mouseout', function () {
 
                 mouse_over_circle = null;
 
@@ -317,6 +317,9 @@ function update_network_view(data, parent_div_id, child_div_id) {
             .style('stroke', 'white')
             .style('stroke-width', 4 + 'px')
             .style('fill', function (d) {
+                if (current_html_page === 3) {
+                    return color_distinction_percentage(node_distinction.filter(x => x.node_id === d)[0].percentage);
+                }
                 return color_subgraphs(data.nodes.filter(x => x.id === d)[0].graph)
             })//'var(--main-font-color)')
             .each(function (d) {
@@ -329,7 +332,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                     followCursor: true,
                 });
 
-            }).on('end', function (d) {
+            }).on('end', function () {
             reposition_labels_edges();
         })
 
@@ -352,7 +355,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                 // // sort circles by y position and x position
                 let circles_ = [];
-                svg_g.selectAll('circle').each(function (circle, i) {
+                svg_g.selectAll('circle').each(function (circle) {
                     circles_.push({
                         id: circle_id + circle,
                         cx: parseFloat(d3.select(this).attr('cx')),
@@ -423,7 +426,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
 
                 svg_g.selectAll('.' + class_network_label_text)
-                    .on('dblclick', function (d, i, j) {
+                    .on('dblclick', function (d, i) {
 
                         if (current_html_page === 2) {
                             var val = data.nodes.filter(x => x.id === i)[0].label;
@@ -447,7 +450,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                             input.node().onblur = function () {
                                 let val = this.value;
 
-                                d3.select(node_label).text(function (d) {
+                                d3.select(node_label).text(function () {
                                     let l = val;
 
                                     if (l.length > 5) {
@@ -523,7 +526,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                     svg_g.selectAll('.' + class_network_paths)
                         .transition().duration(transition_duration)
-                        .attr('id', function (d, i) {
+                        .attr('id', function (d) {
                             return path_id + splitter + d.v + splitter + d.w
                         })
                         .attr("d", function (d) {
@@ -553,7 +556,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
                             return line(points); //line(g.edge(g.edges()[i]).points)
                         })
-                        .style('stroke', function (d) {
+                        .style('stroke', function () {
                             return 'var(--main-font-color)';
                         })
                         .style('stroke-width', function (d) {
@@ -613,7 +616,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         });
 
                     let circle_max_y = 0;
-                    svg_g.selectAll('circle').each(function (circle, i) {
+                    svg_g.selectAll('circle').each(function () {
                         if (parseFloat(svg_g.style('height')) < parseFloat(d3.select(this).attr('cy')) + 3 * circle_radius) {
                             svg_g.style('height', parseFloat(d3.select(this).attr('cy')) + 3 * circle_radius);
                         }
@@ -837,7 +840,12 @@ function initialize_network_legend(parent_div_id) {
         .attr('r', circle_radius)
         .attr('cx', max_X)
         .attr('cy', legend_height / 2)
-        .style('fill', color_subgraphs(0))
+        .style('fill', function () {
+            if (current_html_page === 3) {
+                return color_distinction_percentage(10);
+            }
+            return color_subgraphs(0);
+        })
 
     max_X += 40;
 
@@ -846,7 +854,12 @@ function initialize_network_legend(parent_div_id) {
         .attr('r', circle_radius)
         .attr('cx', max_X)
         .attr('cy', legend_height / 2)
-        .style('fill', color_subgraphs(1))
+        .style('fill', function () {
+            if (current_html_page === 3) {
+                return color_distinction_percentage(50);
+            }
+            return color_subgraphs(1);
+        })
 
 
     max_X += 40;
@@ -856,7 +869,12 @@ function initialize_network_legend(parent_div_id) {
         .attr('r', circle_radius)
         .attr('cx', max_X)
         .attr('cy', legend_height / 2)
-        .style('fill', color_subgraphs(2))
+        .style('fill', function () {
+            if (current_html_page === 3) {
+                return color_distinction_percentage(100);
+            }
+            return color_subgraphs(2);
+        })
 
     max_X += 40;
 
@@ -865,7 +883,12 @@ function initialize_network_legend(parent_div_id) {
         .attr('dy', 7 + 'px')
         .attr('x', max_X)
         .attr('y', legend_height / 2)
-        .text(get_language__label_by_id(lang_id_legend_individual_graphs));
+        .text(function () {
+            if (current_html_page === 3) {
+                return get_language__label_by_id(lang_id_legend_node_distinction);
+            }
+            return get_language__label_by_id(lang_id_legend_individual_graphs);
+        });
 
 }
 

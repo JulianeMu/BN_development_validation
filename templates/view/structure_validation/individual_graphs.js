@@ -21,16 +21,17 @@ function update_individual_graph_view() {
 
         let float_right = 0;
 
+        let p_width = 100;
         let left_div = individual_div.append('div')
             .style('position', 'relative')
             .style('float', 'left')
-            .style('width', 100+'px')
+            .style('width', p_width+'px')
             .style('height', 100 + '%');
 
-        float_right += 100;
+        float_right += p_width;
 
         left_div.append('p')
-            .style('margin-top', 10+'px')
+            .style('margin', 10+'px' + ' 0 10px 0')
             .text('graph: ' + unique_graph);
 
         individual_div.append('div')
@@ -51,7 +52,7 @@ function update_individual_graph_view() {
         float_right += 120;
 
         center_div.append('p')
-            .style('margin-top', 10+'px')
+            .style('margin', 10+'px' + ' 0 10px 0')
             .text('node count: ' + learned_structure_data.nodes.filter(x => x.graph === unique_graph).length);
 
         float_right += 20;

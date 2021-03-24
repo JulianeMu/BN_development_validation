@@ -76,6 +76,7 @@ const lang_id_legend_reason = "lang_id_legend_reason";
 const lang_id_legend_effect = "lang_id_legend_effect";
 const lang_id_legend_sureness = "lang_id_legend_sureness";
 const lang_id_legend_individual_graphs = "lang_id_legend_individual_graphs";
+const lang_id_legend_node_distinction = "lang_id_legend_node_distinction";
 
 const lang_id_variable_type= "lang_id_variable_type";
 const lang_id_variable_identifier= "lang_id_variable_identifier";
@@ -140,6 +141,7 @@ var language_string = [
     {id: lang_id_legend_effect, eng:"to effect", de:"Effekt"},
     {id: lang_id_legend_sureness, eng:"reliability of the relation", de:"Verlässlichkeit der Beziehung"},
     {id: lang_id_legend_individual_graphs, eng:"individual subgraphs having no relation to each other", de:"individuelle Subgraphen mit keiner Relation"},
+    {id: lang_id_legend_node_distinction, eng:"distinctions % between computed recomm. and given inf.", de:"individuelle Subgraphen mit keiner Relation"},
 
     {id: lang_id_variable_type, eng:"is having the data type:", de:"Variablentyp"},
     {id: lang_id_variable_identifier, eng:"The variable:", de:"Variablen-ID"},
