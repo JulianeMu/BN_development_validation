@@ -143,9 +143,10 @@
 
     initialize_header(lang_id_inspect_data_learn_structure);
 
+    d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
+
     load_data_from_backend(function (response) {
         if (response) {
-
 
             initialize_inspect_data_learn_model();
 

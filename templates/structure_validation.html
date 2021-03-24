@@ -132,6 +132,8 @@
         win.focus();
     }
 
+    d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
+
     load_data_from_backend(function (response) {
         if (response) {
 

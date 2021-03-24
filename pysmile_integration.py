@@ -69,7 +69,7 @@ def node_distinction_computation(node_id):
                                                                relevance=float(overall_relevance_of_evidence_items)))
 
             for i_rel in range(0, len(relevancies)):
-                relevancies[i_rel]['relevance_percentage'] = float(relevancies[i_rel].relevance /
+                relevancies[i_rel].relevance_percentage = float(relevancies[i_rel].relevance /
                                                                 sum_of_all_overall_relevancies)
 
             list_distinctions.append(
