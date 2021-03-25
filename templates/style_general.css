@@ -123,6 +123,10 @@ body{
     color: #666666;
 }
 
+p{
+    color: var(--main-font-color)
+}
+
 .h1 {
     font-size: 28px;
     font-weight: 600;

@@ -93,6 +93,7 @@
             <div class="edge_node_structure_validation" style="height: 600px; width: calc(50% - 40px);">
                 <p class="h2" style="margin-top: 0;margin-bottom:10px;">Plausibility of Computed Recommendations per Patient Case Validation</p>
                 <p>To validate the model, we have to start with nodes having no children (impact to other nodes) since the children can have an indirect impact on the parents.</p>
+                <p id="node_under_validation_p">Node under validation:</p>
                 <div id="patient_cases_validation_view" style="height: 100%; width: 100%;"></div>
             </div>
 <!--            </div>-->
@@ -136,6 +137,7 @@
     d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
 
     load_data_from_backend(function (response) {
+        console.log(learned_structure_data)
         if (response) {
             learn_parametrization_from_data(function (response) {
                 initialize_network_view(id_network_view, 100, true, learned_structure_data, id_network_view_child);

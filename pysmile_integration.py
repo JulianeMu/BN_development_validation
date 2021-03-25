@@ -144,10 +144,13 @@ def index_to_coords(index, dim_sizes, coords):
 
 
 def update_network_structure():
+
+    update_node_labels()
     if gv.learned_structure_data is not None:
 
         # remove all arcs in the first place
         for node in gv.learned_structure_data['nodes']:
+            gv.network.set_node_name(node['id'], node['label'])
             for child in gv.network.get_child_ids(node['id']):
                 gv.network.delete_arc(node['id'], child)
 
@@ -156,7 +159,16 @@ def update_network_structure():
             gv.network.add_arc(edge['edge_from'], edge['edge_to'])
 
 
+def update_node_labels():
+    if gv.learned_structure_data is not None:
+
+        # remove all arcs in the first place
+        for node in gv.learned_structure_data['nodes']:
+            gv.network.set_node_name(node['id'], node['label'])
+
+
 def get_network_structure():
+    update_node_labels()
     nodes = [classes.NodeIdNameOutcomes(id=node_id, label=gv.network.get_node_name(node_id),
                                         outcomes=[classes.OutcomeIdLabel(outcome, outcome) for outcome in
                                                   gv.network.get_outcome_ids(node_id)],

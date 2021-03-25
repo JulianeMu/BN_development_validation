@@ -507,7 +507,6 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         return l;
                     })
 
-
                 //-------------------------------------------------
                 // add edges
 
