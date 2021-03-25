@@ -16,6 +16,7 @@ const markerBoxWidth = 20, markerBoxHeight = 14;
 const refX = markerBoxWidth / 2, refY = markerBoxHeight / 2;
 const arrowPoints = [[5, 0], [5, 14], [20, 7]];
 
+let computed_dagre_layout_x_pos;
 
 function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, child_div_id) {
     const space_left = 100;
@@ -108,6 +109,14 @@ function update_network_view(data, parent_div_id, child_div_id) {
         }
 
         let g = compute_dagre_layout(data);
+
+        computed_dagre_layout_x_pos = [];
+        g.nodes().forEach(function (d) {
+            computed_dagre_layout_x_pos.push({
+                id: d,
+                x: g.node(d).x
+            })
+        })
 
         let svg_g = d3.select('#' + parent_div_id).select('svg');
 

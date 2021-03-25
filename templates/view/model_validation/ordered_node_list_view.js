@@ -31,8 +31,11 @@ function initialize_ordered_node_list_view (parent_div_id) {
 
     const percentage_div_width = 55;
 
-    node_distinction = node_distinction.sort((a,b) => (a.distinction_probabilities_and_data.length > b.distinction_probabilities_and_data.length) ? -1 : ((b.distinction_probabilities_and_data.length > a.distinction_probabilities_and_data.length) ? 1 : 0))
-    node_distinction.forEach(function (node) {
+    computed_dagre_layout_x_pos = computed_dagre_layout_x_pos.sort((a,b) => a.x - b.x).reverse();
+
+    computed_dagre_layout_x_pos.forEach(function (d) {
+
+        let node = node_distinction.filter(x => x.node_id === d.id)[0];
 
         let related_node = learned_structure_data.nodes.filter(x => x.id === node.node_id)[0];
         let node_line_div = nodes_overview_div.append('div')
@@ -66,8 +69,6 @@ function initialize_ordered_node_list_view (parent_div_id) {
             .append('p')
             .style('margin', '10px 0 10px 0')
             .text(node.percentage.toFixed(0)+'%')
-
-
 
         let percentage_div_bar = percentage_div.append('div')
             .style('float', 'left')
