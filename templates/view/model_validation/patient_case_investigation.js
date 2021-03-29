@@ -159,13 +159,14 @@ function update_evidence_view (used_node_distinction) {
     used_node_distinction.distinction_probabilities_and_data[0].relevancies.forEach(function (relevance_object) {
         header_labels.forEach(function (header, i) {
 
-            if (i === 2) {
+             if (i === 2) {
                 let percentage_div = d3.select('#evidence_information_div').append('div')
-                    .style('width', 'calc(' + (100/header_labels.length)+'% - 5px)')
-                    .style('height', label_height+'px')
+                    //.style('width', (100 / header_labels.length) + '%')
                     .style('float', 'left')
+                    .style('position', 'relative')
+                    .style('width', 'calc(' + (100/header_labels.length)+'% - 5px)')
                     .append('div')
-                    .style('height', 60+'%')
+                    .style('height', (label_height - 19)+'px')
                     .style('width', function () {
                         if (relevance_object[ref_evidence_information[i]] > 0) {
                             return (100 / relevance_object[ref_evidence_information[i]] + '%')
@@ -180,10 +181,11 @@ function update_evidence_view (used_node_distinction) {
                     placement: "top-start",
                     appendTo: 'parent',
                 });
-            } else {
+             } else {
                 let label_div = d3.select('#evidence_information_div').append('div')
                     .style('width', (100 / header_labels.length) + '%')
                     .style('float', 'left')
+                    .style('position', 'relative')
                     .append('p')
                     .style('margin', '10px 0 10px 0')
                     .text(function () {

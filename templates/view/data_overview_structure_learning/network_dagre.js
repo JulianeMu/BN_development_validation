@@ -582,6 +582,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         })
                         .attr('marker-end', 'url(#arrow)')
                         .each(function (d) {
+
                             const template = document.createElement('div');
                             d3.select(template)
                                 .style('height', 300 + 'px')
@@ -589,23 +590,25 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 .style('margin', 0)
                                 .node().innerHTML = '<strong>' + d.v + '</strong>  has an impact on  <strong>' + d.w + '</strong>'
 
-                            const images = [{
-                                resource: '/BN_development_validation/templates/resources/correct.png'
-                            }, {
-                                resource: '/BN_development_validation/templates/resources/cancel.png'
-                            }, {
-                                resource: '/BN_development_validation/templates/resources/transfer.png'
-                            }];
-
-                            images.forEach(function (img, index) {
-                                d3.select(template)
-                                    .append('img')
-                                    .style('width', 40 + 'px')
-                                    .style('margin-left', 'calc(16.5% - 20px)')
-                                    .style('margin-right', 'calc(16.5% - 20px)')
-                                    .attr('src', img.resource)
-                                    .attr('onclick', 'click_func("' + d.v + '","' + d.w + '","' + radio_button_inputs[index].value + '")')
-                            })
+                            // if (current_html_page === 2) {
+                            //     const images = [{
+                            //         resource: '/BN_development_validation/templates/resources/correct.png'
+                            //     }, {
+                            //         resource: '/BN_development_validation/templates/resources/cancel.png'
+                            //     }, {
+                            //         resource: '/BN_development_validation/templates/resources/transfer.png'
+                            //     }];
+                            //
+                            //     images.forEach(function (img, index) {
+                            //         d3.select(template)
+                            //             .append('img')
+                            //             .style('width', 40 + 'px')
+                            //             .style('margin-left', 'calc(16.5% - 20px)')
+                            //             .style('margin-right', 'calc(16.5% - 20px)')
+                            //             .attr('src', img.resource)
+                            //             .attr('onclick', 'click_func("' + d.v + '","' + d.w + '","' + radio_button_inputs[index].value + '")')
+                            //     })
+                            // }
 
 
                             const instance = this._tippy
@@ -613,15 +616,18 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                 instance.destroy();
                             }
 
-                            tippy(this, {
-                                content: template.innerHTML,
-                                followCursor: true,
-                                allowHTML: true,
-                                appendTo: document.body,
-                                interactive: true,
-                            });
-
+                            // if opacity is 0, the tippy should not be visible
+                            if (this.style.opacity+'' !== '0') {
+                                tippy(this, {
+                                    content: template.innerHTML,
+                                    followCursor: true,
+                                    allowHTML: true,
+                                    appendTo: document.body,
+                                    interactive: true,
+                                });
+                            }
                         });
+
 
                     let circle_max_y = 0;
                     svg_g.selectAll('circle').each(function () {
