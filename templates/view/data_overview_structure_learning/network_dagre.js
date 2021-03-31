@@ -124,6 +124,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
         let svg_g = d3.select('#' + parent_div_id).select('svg');
 
         let ptdata = [];
+        let session = [];
         let path;
 
         if (current_html_page === 2) {
@@ -191,7 +192,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
             tick();
 
             path.remove();
-            if (mouse_over_circle && circle_start !== mouse_over_circle) {
+            if (mouse_over_circle){ //&& circle_start !== mouse_over_circle) {
                 if (learned_structure_data.edges.filter(x => x.edge_from === circle_start && x.edge_to === mouse_over_circle).length === 0) {
 
                     learned_structure_data.edges.push({
