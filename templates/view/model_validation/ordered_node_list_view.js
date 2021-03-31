@@ -1,6 +1,7 @@
 
 function initialize_ordered_node_list_view (parent_div_id) {
 
+    d3.select('#' + parent_div_id).selectAll('*').remove()
     let header_div = d3.select('#' + parent_div_id).append('div').style('width', 100+'%');
     const header_labels = ['Node', 'Distinction Percentage', 'Number of Distinctions'];
 

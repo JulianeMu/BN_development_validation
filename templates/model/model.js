@@ -94,6 +94,34 @@ function learn_parametrization_from_data (callback) {
     });
 }
 
+function update_cpt (callback, node_id, indexes, prob) {
+    const sURL = hostURL + "/update_cpt/";
+
+    let values = JSON.stringify([node_id, indexes, prob]);
+
+    $.ajax({
+        url: sURL,
+        type: 'POST',
+        data: values,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (response) {
+            //data = JSON.parse(response);
+
+            learned_structure_data = JSON.parse(response[0]);
+
+            node_distinction = JSON.parse(response[1]);
+            for (let i =0; i< node_distinction.length; i++) {
+                for(let j=0; j< node_distinction[i].distinction_probabilities_and_data.length; j++) {
+                    node_distinction[i].distinction_probabilities_and_data[j].df = JSON.parse(node_distinction[i].distinction_probabilities_and_data[j].df)
+                }
+            }
+
+            callback(true);
+        }
+    });
+}
+
 function compute_chi_square (callback, node_id) {
     const sURL = hostURL + "/compute_chi_square/";
 

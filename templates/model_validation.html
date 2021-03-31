@@ -84,13 +84,13 @@
 <!--                <p style="margin-left:30px;">&#9679 You can click on a node, keep the mouse down, and draw a path to a child node (from cause to effect).</p>-->
             </div>
             <div class="top_div_overview" id ="id_network_view"></div>
-            <div class="edge_node_structure_validation" style="height: 600px; width: calc(50% - 40px);">
+            <div class="edge_node_structure_validation" style="height: 800px; width: calc(50% - 40px);">
                 <p class="h2" style="margin-top: 0;margin-bottom:10px;">Nodes Ordered by Number of Distinctions between Computed Recommendation and Given
                     Information for each Patient Case</p>
                 <!--                <p>The learning algorithm has learnt following individual graphs using the best learning algorithm: </p>-->
                 <div id="nodes_overview" style="height: calc(100% - 85px); width: 100%;"></div>
             </div>
-            <div class="edge_node_structure_validation" style="height: 600px; width: calc(50% - 40px);">
+            <div class="edge_node_structure_validation" style="height: 800px; width: calc(50% - 40px);">
                 <p class="h2" style="margin-top: 0;margin-bottom:10px;">Plausibility of Computed Recommendations per Patient Case Validation</p>
                 <p>To validate the model, we have to start with nodes having no children (impact to other nodes) since the children can have an indirect impact on the parents.</p>
                 <p id="node_under_validation_p">Node under validation:</p>
@@ -137,16 +137,12 @@
     d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
 
     load_data_from_backend(function (response) {
-        console.log(learned_structure_data)
         if (response) {
-            learn_parametrization_from_data(function (response) {
+            learn_parametrization_from_data(function () {
                 initialize_network_view(id_network_view, 100, true, learned_structure_data, id_network_view_child);
 
                 initialize_ordered_node_list_view('nodes_overview');
                 initialize_patient_case_investigation('patient_cases_validation_view');
-                //initialize_edge_validation();
-
-                //update_individual_graph_view();
 
                 setTimeout(() => {
                     d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));

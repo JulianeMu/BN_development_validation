@@ -216,6 +216,24 @@ def learn_parametrization_from_data():
     return jsonify([transform(pysmile_integration.get_network_structure()), transform(list_nodes_distinction_probabilities)])
 
 
+@app.route('/update_cpt/', methods=["POST"])
+def update_cpt():
+    start_time_deviations = time.time()
+    node_id = request.get_json()[0]
+    indexes = request.get_json()[1]
+    prob = request.get_json()[2]
+
+    pysmile_integration.update_cpt(node_id=node_id, indexes=indexes, prob=prob)
+
+    list_nodes_distinction_probabilities = [classes.NodesDistinctionProbabilities
+                                            (distinction_probabilities_and_data=
+                                             pysmile_integration.node_distinction_computation(column), id=column) for
+                                            column in gv.dataset_categorical]
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
+
+    return jsonify([transform(pysmile_integration.get_network_structure()), transform(list_nodes_distinction_probabilities)])
+
+
 @app.after_request
 def add_headers(response):
     response.headers.add('Access-Control-Allow-Origin', '*')

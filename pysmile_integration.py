@@ -136,6 +136,16 @@ def get_cpt(node_id):
     return cpts
 
 
+def update_cpt(node_id, indexes, prob):
+
+    cpt = gv.network.get_node_definition(node_id)
+
+    for index in range(0, len(indexes)):
+        cpt[indexes[index]] = prob[index]
+
+    gv.network.set_node_definition(node_id, cpt)
+
+
 def index_to_coords(index, dim_sizes, coords):
     prod = 1
     for i in range(len(dim_sizes) - 1, -1, -1):

@@ -18,6 +18,9 @@ const arrowPoints = [[5, 0], [5, 14], [20, 7]];
 
 let computed_dagre_layout_x_pos;
 
+let path_drawing = false;
+
+
 function initialize_network_view(parent_div_id, zoom, bool_show_legend, data, child_div_id) {
     const space_left = 100;
     const padding = 15;
@@ -120,10 +123,8 @@ function update_network_view(data, parent_div_id, child_div_id) {
 
         let svg_g = d3.select('#' + parent_div_id).select('svg');
 
-        var ptdata = [];
-        var session = [];
-        var path;
-        var drawing = false;
+        let ptdata = [];
+        let path;
 
         if (current_html_page === 2) {
             svg_g.on('mousedown', listen)// function (d) {
@@ -140,7 +141,7 @@ function update_network_view(data, parent_div_id, child_div_id) {
             circle_start = mouse_over_circle;
 
             if (circle_start) {
-                drawing = true;
+                path_drawing = true;
                 ptdata = []; // reset point data
                 path = svg_g.append("path") // start a new line
                     .data([ptdata])
@@ -179,18 +180,18 @@ function update_network_view(data, parent_div_id, child_div_id) {
             svg_g.on("mousemove", null);
             svg_g.on("touchmove", null);
 
-            // skip out if we're not drawing
-            if (!drawing) return;
-            drawing = false;
+            // skip out if we're not path_drawing
+            if (!path_drawing) return;
+            path_drawing = false;
 
-            // add newly created line to the drawing session
+            // add newly created line to the path_drawing session
             session.push(ptdata);
 
             // redraw the line after simplification
             tick();
 
             path.remove();
-            if (mouse_over_circle) {
+            if (mouse_over_circle && circle_start !== mouse_over_circle) {
                 if (learned_structure_data.edges.filter(x => x.edge_from === circle_start && x.edge_to === mouse_over_circle).length === 0) {
 
                     learned_structure_data.edges.push({
@@ -299,12 +300,12 @@ function update_network_view(data, parent_div_id, child_div_id) {
                 mouse_over_circle = null;
 
                 svg_g.selectAll('path').filter(function () {
-                    return this.getBoundingClientRect().width > 100 && d3.select(this).style('stroke') !== 'rgb(255, 0, 0)';
+                    return this.getBoundingClientRect().width > 100 && d3.select(this).style('stroke') !== 'rgb(255, 0, 0)' && d3.select(this).attr('class') !== 'line';
                 })
                     .style('opacity', 0);
 
                 svg_g.selectAll('*').filter(function () {
-                    return d3.select(this).style('opacity') == 0.1;
+                    return d3.select(this).style('opacity')+'' === '0.1';
                 })
                     .style('opacity', 1);
             })
@@ -624,6 +625,8 @@ function update_network_view(data, parent_div_id, child_div_id) {
                                     allowHTML: true,
                                     appendTo: document.body,
                                     interactive: true,
+                                    onShow() {
+                                        return !path_drawing}
                                 });
                             }
                         });
