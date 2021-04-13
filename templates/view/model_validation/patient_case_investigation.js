@@ -65,12 +65,32 @@ function initialize_patient_case_investigation(parent_div_id) {
 
 function update_patient_case_investigation_view () {
 
-    let used_node_distinction = node_distinction.filter(x=> x.node_id === computed_dagre_layout_x_pos[index_node].id)[0];
+    let used_node_distinction = get_distinction_with_differentiation();
 
-    d3.select('#node_under_validation_p').style('color', 'var(--main-font-color)').node().innerHTML = 'Node under validation: <u>' + learned_structure_data.nodes.filter(x=> x.id === used_node_distinction.node_id)[0].label.bold()+'</u>';
+    // in case the node has no distinctions, go to next one
+    function get_distinction_with_differentiation() {
+        let used_node_distinction = node_distinction.filter(x=> x.node_id === computed_dagre_layout_x_pos[index_node].id)[0];
 
-    update_evidence_view(used_node_distinction);
-    update_outcome_view(used_node_distinction);
+        if (used_node_distinction.distinction_probabilities_and_data.length > 0) {
+            return used_node_distinction
+        } else {
+            index_node +=1;
+            if (index_node === node_distinction.length) {
+                return false;
+            }
+            return get_distinction_with_differentiation();
+        }
+    }
+
+    if (!used_node_distinction) {
+
+    } else {
+
+        d3.select('#node_under_validation_p').style('color', 'var(--main-font-color)').node().innerHTML = 'Node under validation: <u>' + learned_structure_data.nodes.filter(x => x.id === used_node_distinction.node_id)[0].label.bold() + '</u>';
+
+        update_evidence_view(used_node_distinction);
+        update_outcome_view(used_node_distinction);
+    }
 
 }
 
@@ -319,7 +339,7 @@ function update_evidence_view (used_node_distinction) {
                     .style('height', (label_height - 19)+'px')
                     .style('width', function () {
                         if (relevance_object[ref_evidence_information[i]] > 0) {
-                            return (100 / relevance_object[ref_evidence_information[i]] + '%')
+                            return ((100 * relevance_object[ref_evidence_information[i]]) + '%')
                         } else return 0;
                     })
                     .style('background-color', 'var(--main-font-color)')
