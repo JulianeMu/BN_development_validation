@@ -140,6 +140,7 @@
         if (response) {
             learn_parametrization_from_data(function () {
 
+                console.log(learned_structure_data)
                 initialize_network_view(id_network_view, 100, true, learned_structure_data, id_network_view_child);
 
                 initialize_ordered_node_list_view('nodes_overview');
