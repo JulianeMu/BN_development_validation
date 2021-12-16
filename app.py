@@ -40,11 +40,10 @@ def is_number(s):
 def get_initial_data():
     start_time_deviations = time.time()
 
-    print("--- %s seconds ---" % (time.time() - start_time_deviations))
-
     dataset_categorical = gv.dataset_categorical.to_json(orient="records")
 
     # subset_selection_included_in_learning = json.dumps(gv.subset_selection_included_in_learning)
+    print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
     return jsonify([dataset_categorical, gv.subset_selection_included_in_learning, gv.whitelist, gv.blacklist])
 

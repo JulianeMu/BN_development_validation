@@ -330,6 +330,8 @@ function update_network_view(data, parent_div_id, child_div_id) {
             .style('fill', function (d) {
                 if (current_html_page === 3) {
                     return color_distinction_percentage(node_distinction.filter(x => x.node_id === d)[0].percentage);
+                } else if (current_html_page === 1) {
+                    return 'var(--main-font-color)';
                 }
                 return color_subgraphs(data.nodes.filter(x => x.id === d)[0].graph)
             })//'var(--main-font-color)')
@@ -853,61 +855,62 @@ function initialize_network_legend(parent_div_id) {
 
     max_X += last_text.node().getBoundingClientRect().width + 70;
 
-    legend_svg.append('circle')
-        .attr('class', class_network_circle)
-        .attr('r', circle_radius)
-        .attr('cx', max_X)
-        .attr('cy', legend_height / 2)
-        .style('fill', function () {
-            if (current_html_page === 3) {
-                return color_distinction_percentage(10);
-            }
-            return color_subgraphs(0);
-        })
+    if (current_html_page !== 1) {
+        legend_svg.append('circle')
+            .attr('class', class_network_circle)
+            .attr('r', circle_radius)
+            .attr('cx', max_X)
+            .attr('cy', legend_height / 2)
+            .style('fill', function () {
+                if (current_html_page === 3) {
+                    return color_distinction_percentage(10);
+                }
+                return color_subgraphs(0);
+            })
 
-    max_X += 40;
+        max_X += 40;
 
-    legend_svg.append('circle')
-        .attr('class', class_network_circle)
-        .attr('r', circle_radius)
-        .attr('cx', max_X)
-        .attr('cy', legend_height / 2)
-        .style('fill', function () {
-            if (current_html_page === 3) {
-                return color_distinction_percentage(50);
-            }
-            return color_subgraphs(1);
-        })
+        legend_svg.append('circle')
+            .attr('class', class_network_circle)
+            .attr('r', circle_radius)
+            .attr('cx', max_X)
+            .attr('cy', legend_height / 2)
+            .style('fill', function () {
+                if (current_html_page === 3) {
+                    return color_distinction_percentage(50);
+                }
+                return color_subgraphs(1);
+            })
 
 
-    max_X += 40;
+        max_X += 40;
 
-    legend_svg.append('circle')
-        .attr('class', class_network_circle)
-        .attr('r', circle_radius)
-        .attr('cx', max_X)
-        .attr('cy', legend_height / 2)
-        .style('fill', function () {
-            if (current_html_page === 3) {
-                return color_distinction_percentage(100);
-            }
-            return color_subgraphs(2);
-        })
+        legend_svg.append('circle')
+            .attr('class', class_network_circle)
+            .attr('r', circle_radius)
+            .attr('cx', max_X)
+            .attr('cy', legend_height / 2)
+            .style('fill', function () {
+                if (current_html_page === 3) {
+                    return color_distinction_percentage(100);
+                }
+                return color_subgraphs(2);
+            })
 
-    max_X += 40;
+        max_X += 40;
 
-    legend_svg.append('text')
-        .attr('class', class_network_legend_text)
-        .attr('dy', 7 + 'px')
-        .attr('x', max_X)
-        .attr('y', legend_height / 2)
-        .text(function () {
-            if (current_html_page === 3) {
-                return get_language__label_by_id(lang_id_legend_node_distinction);
-            }
-            return get_language__label_by_id(lang_id_legend_individual_graphs);
-        });
-
+        legend_svg.append('text')
+            .attr('class', class_network_legend_text)
+            .attr('dy', 7 + 'px')
+            .attr('x', max_X)
+            .attr('y', legend_height / 2)
+            .text(function () {
+                if (current_html_page === 3) {
+                    return get_language__label_by_id(lang_id_legend_node_distinction);
+                }
+                return get_language__label_by_id(lang_id_legend_individual_graphs);
+            });
+    }
 }
 
 function get_workflow_step_group(variable_id) {
