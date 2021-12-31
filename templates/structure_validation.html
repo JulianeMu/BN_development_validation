@@ -35,6 +35,9 @@
     <script src="model/model.js" type="text/javascript"></script>
     <script src="model/model_variables.js" type="text/javascript"></script>
     <script src="model/evaluation_study_networks.js" type="text/javascript"></script>
+    <script src="model/agriculture_study_network.js" type="text/javascript"></script>
+
+
     <!--------controller------------------------>
     <script src="controller/controller.js" type="text/javascript"></script>
 
@@ -45,8 +48,10 @@
     <script src="view/data_overview_structure_learning/network_dagre.js" type="text/javascript"></script>
 
     <script src="view/structure_validation/structure_validation_steps.js" type="text/javascript"></script>
-    <script src="view/structure_and_parametrization_validation/validation_network_view.js" type="text/javascript"></script>
-    <script src="view/structure_and_parametrization_validation/select_variable_under_validation.js" type="text/javascript"></script>
+    <script src="view/structure_and_parametrization_validation/validation_network_view.js"
+            type="text/javascript"></script>
+    <script src="view/structure_and_parametrization_validation/select_variable_under_validation.js"
+            type="text/javascript"></script>
     <script src="view/general_functions.js" type="text/javascript"></script>
 
     <script src="view/structure_validation/structure_validation.js"></script>
@@ -78,26 +83,32 @@
                     validate the learnt nodes and relations. This especially includes the correct orientation of
                     dependencies within the model.</p>
                 <p>You have following interactive validation functionalities:</p>
-                <p style="margin-left:30px;">&#9679 You can update the node names via double-click on the node label.</p>
-<!--                <p style="margin-left:30px;">&#9679 You can drag and drop the nodes to change the clinical workflow steps/groups.</p>-->
-                <p style="margin-left:30px;">&#9679 You can click on a node, keep the mouse down, and draw a path to a child node (from cause to effect).</p>
+                <p style="margin-left:30px;">&#9679 You can update the node names via double-click on the node
+                    label.</p>
+                <!--                <p style="margin-left:30px;">&#9679 You can drag and drop the nodes to change the clinical workflow steps/groups.</p>-->
+                <p style="margin-left:30px;">&#9679 You can click on a node, keep the mouse down, and draw a path to a
+                    child node (from cause to effect).</p>
             </div>
-            <div class="top_div_overview" id ="id_network_view"></div>
+            <div class="top_div_overview" id="id_network_view"></div>
             <div class="edge_node_structure_validation" style="width: calc(50% - 40px);">
                 <p class="h2" style="margin-top: 0;margin-bottom:10px;">Graphs</p>
                 <p>The learning algorithm has learnt following individual graphs using the best learning algorithm: </p>
                 <div id="individual_graph_view"></div>
             </div>
-<!--            <div class="structure_val_mod_div" id="structure_val_mod_div" style="width: 50%;">-->
-<!--                <p class="h2" style="margin-bottom: 0;">Structure Validation</p>-->
-                <div class="edge_node_structure_validation" id="edge_validation_div" style="float: left; margin-right: var(--main-margin);width: calc(50% - 40px);">
-                    <p class="h2" style="margin-top: 0;margin-bottom:10px;">Edges</p>
-                    <p>To validate the structure of the network, you need to validate following edges between nodes. It is always from left (cause) to right (effect).</p>
-                </div>
-<!--            </div>-->
-            <div class="steps_structure_validation_div notes_comments_structure_validation_div" id="notes_comments_structure_validation_div">
+            <!--            <div class="structure_val_mod_div" id="structure_val_mod_div" style="width: 50%;">-->
+            <!--                <p class="h2" style="margin-bottom: 0;">Structure Validation</p>-->
+            <div class="edge_node_structure_validation" id="edge_validation_div"
+                 style="float: left; margin-right: var(--main-margin);width: calc(50% - 40px);">
+                <p class="h2" style="margin-top: 0;margin-bottom:10px;">Edges</p>
+                <p>To validate the structure of the network, you need to validate following edges between nodes. It is
+                    always from left (cause) to right (effect).</p>
+            </div>
+            <!--            </div>-->
+            <div class="steps_structure_validation_div notes_comments_structure_validation_div"
+                 id="notes_comments_structure_validation_div">
                 <p class="h3">Notes/Comments</p>
-                <textarea class="notes_comments_input" id ="notes_comments_text" name="Text1" placeholder="Insert your notes/comments here ..."></textarea>
+                <textarea class="notes_comments_input" id="notes_comments_text" name="Text1"
+                          placeholder="Insert your notes/comments here ..."></textarea>
                 <input class="button" id="pubmed_button" onclick="go_to_pubmed()"
                        style="position:relative; float: right;">
             </div>
@@ -115,7 +126,7 @@
                    margin-bottom: 20px; background-position-x: -45px;"
                    type="submit"
                    value="     Model Validation">
-<!--            disabled = "disabled" -->
+            <!--            disabled = "disabled" -->
         </div>
     </div>
 </div>
@@ -137,8 +148,73 @@
     load_data_from_backend(function (response) {
         if (response) {
 
-            console.log(learned_structure_data)
-            //learned_structure_data =evaluation_study_network_5;
+            //learned_structure_data =evaluation_study_network_0;
+            if (agriculture_data) create_agrigulture_net();
+
+/*            let found_edges_in_all_evaluationnetworks = [];
+            evaluation_study_network_0.edges.forEach(function (edge) {
+                if (evaluation_study_network_1.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                    if (evaluation_study_network_2.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                        if (evaluation_study_network_3.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                            if (evaluation_study_network_4.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                                if (evaluation_study_network_5.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                                    found_edges_in_all_evaluationnetworks.push(edge);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            console.log(found_edges_in_all_evaluationnetworks)
+
+            let list_relation = [];
+            let sum_all_relations = 0;
+            let sum_equal = 0;
+
+            let edges_differ = [];
+            const evaluation_study_networks = [evaluation_study_network_0, evaluation_study_network_1, evaluation_study_network_2, evaluation_study_network_3, evaluation_study_network_4, evaluation_study_network_5];
+            evaluation_study_networks.forEach(function (network, index_net) {
+                let differing = [];
+                evaluation_study_network_1.edges.forEach(function (edge_1) {
+                    if (!network.edges.find(x => x.edge_from === edge_1.edge_from && x.edge_to === edge_1.edge_to)) {
+                        differing.push(edge_1);
+                    }
+                });
+                network.edges.forEach(function (edge) {
+                    if (!evaluation_study_network_1.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                        if(!differing.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)){
+                            differing.push(edge);
+                        }
+                    }
+                    sum_all_relations++;
+                    if (list_relation.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                        sum_equal++;
+                        list_relation.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to).number += 1;
+                    } else {
+                        list_relation.push({
+                            edge_from: edge.edge_from,
+                            edge_to: edge.edge_to,
+                            number: 1
+                        })
+                    }
+                })
+
+                edges_differ.push({
+                    index_net: index_net,
+                    differing:differing
+                })
+            })
+
+            console.log(list_relation)
+            console.log(sum_all_relations)
+            console.log(sum_equal)
+
+            console.log(edges_differ)*/
+
+
+            color_clinical_workflow_groups.domain([0, initial_groups.length]);
+
 
             initialize_network_view(id_network_view, 100, true, learned_structure_data, id_network_view_child);
 
@@ -148,7 +224,7 @@
 
             setTimeout(() => {
                 d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));
-            }, transition_duration)
+            }, 2 * transition_duration)
         }
     })
 </script>

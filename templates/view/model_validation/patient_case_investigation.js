@@ -133,7 +133,7 @@ function update_outcome_view (used_node_distinction) {
         .style('width', 'calc(' + 100 + '% - ' + 5 + 'px)');
 
     let color_stacked_bar_chart = d3.scaleSequential().domain([0, used_node_distinction.distinction_probabilities_and_data[index_patient].outcomes.length])
-        .interpolator(d3.interpolatePuRd);
+        .interpolator(d3.interpolateBlues);
 
     used_node_distinction.distinction_probabilities_and_data[index_patient].probabilities.forEach(function (prob, index) {
         let prob_bar_div = prob_distribution_div.append('div')

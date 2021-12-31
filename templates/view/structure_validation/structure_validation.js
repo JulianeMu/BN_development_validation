@@ -31,11 +31,28 @@ function initialize_edge_validation() {
     let edges_sort = learned_structure_data.edges.sort((a, b) => (a.edge_strength > b.edge_strength) ? 1 : ((b.edge_strength > a.edge_strength) ? -1 : 0));
 
     edges_sort.forEach(function (edge) {
-        append_edge_validation(edge, false)
+        append_edge_validation(edge, false, false)
     })
+
+    compute_chi_square(function (chi2_data) {
+        chi2_data.sort((a, b) => (a.p_value > b.p_value) ? 1 : -1)
+        chi2_data.forEach(function (potential_chi2) {
+            if (potential_chi2.p_value < 0.05
+                && !edges_sort.find(x => x.edge_from === potential_chi2.node_id && x.edge_to === potential_chi2.node_id_2)
+                    && !edges_sort.find(x => x.edge_from === potential_chi2.node_id_2 && x.edge_to === potential_chi2.node_id)) {
+
+                let potential_edge = {
+                    edge_from: potential_chi2.node_id,
+                    edge_strength: 0.5,
+                    edge_to: potential_chi2.node_id_2
+                };
+                append_edge_validation(potential_edge, false, true)
+            }
+        })
+    });
 }
 
-function append_edge_validation(edge, selfmade) {
+function append_edge_validation(edge, selfmade, potential_edge) {
 
     let edges_validation_div_content = d3.select('#' + edge_validation_div)
         .select('.' + validation_div_content_class);
@@ -97,19 +114,24 @@ function append_edge_validation(edge, selfmade) {
             .style('top', 0)
             .style('background-color', function (d) {
                 if (initial_groups.findIndex(item => item.variables.includes(edge[info.value])) > -1) {
-                    return color_clinical_workflow_groups(initial_groups.findIndex(item => item.variables.includes(edge[info.value])) + 1)
+                    return color_cl_workflow_groups(initial_groups.findIndex(item => item.variables.includes(edge[info.value])) + 1)
                 } else {
                     return 'white';
                 }
             })
-            .style('opacity', 0.5)
+            //.style('opacity', 0.5)
 
         const instance = div.node()._tippy
         if (instance) {
             instance.destroy();
         }
+
+        let label = "";
+        if (initial_groups.filter(item => item.variables.includes(edge[info.value])).length>0) {
+            label = initial_groups.filter(item => item.variables.includes(edge[info.value]))[0].label
+        }
         tippy(div.node(), {
-            content: initial_groups.filter(item => item.variables.includes(edge[info.value]))[0].label,
+            content: label,
             followCursor: true,
         });
 
@@ -140,10 +162,10 @@ function append_edge_validation(edge, selfmade) {
                 .attr("d", function (d) {
                     let points = [];
 
-                    circles.forEach(function (circ) {
+                    circles.forEach(function (circ, index) {
 
                         points.push({
-                            x: parseFloat(circ.node().getBoundingClientRect().x) - parseFloat(left_svg.node().getBoundingClientRect().x),
+                            x: parseFloat(circ.node().getBoundingClientRect().x) - parseFloat(left_svg.node().getBoundingClientRect().x) - index * 0.5 * circle_radius,
                             y: parseFloat(circ.attr("cy"))
                         })
                     })
@@ -154,6 +176,13 @@ function append_edge_validation(edge, selfmade) {
                 .style('stroke-width', function (d) {
                     return (edge.edge_strength * 10) + 'px'
                 })
+                .attr('marker-end', 'url(#arrow)')
+                .each(function () {
+                    if (potential_edge) {
+                        d3.select(this)
+                            .style("stroke-dasharray", ("10, 10"))
+                    }
+                })
         }
 
         left_svg.append('text')
@@ -162,6 +191,15 @@ function append_edge_validation(edge, selfmade) {
             .attr('y', (2 * circle_radius + 10) + 'px')
             .text(learned_structure_data.nodes.filter(x => x.id === edge[info.value])[0].label)
             .style('cursor', 'default')
+            .style('fill', function (d) {
+
+                d = learned_structure_data.nodes.filter(x => x.id === edge[info.value])[0].id;
+                let index_group = initial_groups.findIndex(item => item.variables.filter(x => x === d).length > 0);
+
+                if (index_group > -1) {
+                    return get_font_color(color_cl_workflow_groups(index_group + 1));
+                }
+            })
     })
 
     let right_edge_presentation_div = edge_val_div.append('div')
@@ -184,7 +222,6 @@ function append_edge_validation(edge, selfmade) {
             .text(r_input.value)
             .on('change', function (d) {
                 right_edge_presentation_div.style('background-color', '#C0C0C0');
-
 
                 update_edge_validation_after_validated(this.value, left_svg, edge)
             })

@@ -31,6 +31,7 @@ function export_data_to_FLASK (callback, data) {
     });
 }
 
+
 function query_data_from_FLASK (callback) {
     const sURL = hostURL + "/get_initial_data/";
 
@@ -123,16 +124,12 @@ function update_cpt (callback, node_id, indexes, prob) {
     });
 }
 
-function compute_chi_square (callback, node_id) {
+function compute_chi_square (callback) {
     const sURL = hostURL + "/compute_chi_square/";
-
-    let values = JSON.stringify(node_id);
 
     $.ajax({
         url: sURL,
-        type: 'POST',
-        data: values,
-        contentType: "application/json",
+        type: 'GET',
         dataType: 'json',
         success: function (response) {
             //data = JSON.parse(response);

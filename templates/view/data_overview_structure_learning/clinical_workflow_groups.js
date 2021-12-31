@@ -32,15 +32,42 @@ let initial_groups = [{
     variables: ["X1YR","X3YR","X5YR","Rec"]
 }];
 
-let color_clinical_workflow_groups = //d3.scaleOrdinal(d3.schemeCategory10)
-    d3.scaleSequential().domain([1, 10])
-        .interpolator(d3.interpolatePuRd);
+
+let initial_groups_agrigulture = [{
+    id: lang_id_agrigulture_controlling_factors_group,
+    label: get_language__label_by_id(lang_id_agrigulture_controlling_factors_group),
+    variables: ["Soil", "Weather"]
+}, {
+    id: lang_id_agrigulture_management_interventions_group,
+    label: get_language__label_by_id(lang_id_agrigulture_management_interventions_group),
+    variables: ["Fungicide_Application", "Water_Application", "Pesticide_Application", "Trash_Burning", "Heat_Treatment", "Fertilizer_Application"]
+}, {
+    id: lang_id_agrigulture_management_objective_group,
+    label: get_language__label_by_id(lang_id_agrigulture_management_objective_group),
+    variables: ["Yield"]
+}];
+
+if (agriculture_data) initial_groups = initial_groups_agrigulture;
+const workflow_group_opacity = 0.5;
+
+function color_cl_workflow_groups (index_group, left_arrow) {
+    let color = d3.rgb(color_clinical_workflow_groups(index_group))
+
+    let c = 'rgba('+color.r+',' + color.g+',' + color.b+','+workflow_group_opacity+')';
+    if (left_arrow) {
+        c = 'rgba('+color.r+',' + color.g+',' + color.b+','+0+')';
+    }
+    return c;
+}
+
+let color_clinical_workflow_groups = d3.scaleSequential().domain([1, 10])
+    .interpolator(d3.interpolatePuRd);
 
 let color_subgraphs = d3.scaleSequential().domain([1, 10])
     .interpolator(d3.interpolateRainbow);
 
 let color_distinction_percentage = d3.scaleSequential().domain([0, 100])
-    .interpolator(d3.interpolatePuRd);
+    .interpolator(d3.interpolateReds);
 
 
 function initialize_clinical_workflow_groups(data_inspection_div) {
@@ -67,7 +94,6 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
         add_clinical_workflow_step__group(clinical_workflow_group_div_sortable, initial_groups[i]);
     }
 
-
     sortable('.sortable')[0].addEventListener('sortupdate', function(e) {
 
         let groups_updated = [];
@@ -89,7 +115,9 @@ function initialize_clinical_workflow_groups(data_inspection_div) {
 
 
 function add_clinical_workflow_step__group(data_inspection_div, group_information) {
-    let group_div = data_inspection_div.append('div').attr('class', id_class_clinical_workflow_group).attr('id', group_information.id);
+    let group_div = data_inspection_div.append('div')
+        .attr('class', id_class_clinical_workflow_group)
+        .attr('id', group_information.id);
 
     group_div.on('click', function () {
         select_variables_for_group(group_information);
@@ -260,7 +288,7 @@ function select_variables_for_group(group_information) {
     hide_add_group_view();
 
 
-    d3.select('.' + id_class_select_group_variables).style('visibility', 'visible').style('border-color', color_clinical_workflow_groups(initial_groups.findIndex(x => x.id === group_information.id) + 1));
+    d3.select('.' + id_class_select_group_variables).style('visibility', 'visible').style('border-color', color_cl_workflow_groups(initial_groups.findIndex(x => x.id === group_information.id) + 1));
 
     d3.select('#' + id_select_variable_group_name).text(group_information.label);
 
@@ -397,14 +425,15 @@ function update_group_color_and_text() {
         group_div.html('<span class="arrow_left"></span>' + initial_groups[i].label + '<span class="arrow_right"></span>')
 
         // fill with correct color
-        group_div.style('background-color', color_clinical_workflow_groups(i + 1))
-        group_div.select('.arrow_left').style('background-color', color_clinical_workflow_groups(i + 1));
-        group_div.select('.arrow_right').style('border-left-color', color_clinical_workflow_groups(i + 1));
 
-        group_div.style('color', get_font_color(color_clinical_workflow_groups(i + 1)));
+        group_div.style('background-color', color_cl_workflow_groups(i + 1))
+        group_div.select('.arrow_left').style('background-color', color_cl_workflow_groups(i + 1), true);
+        group_div.select('.arrow_right').style('border-left-color', color_cl_workflow_groups(i + 1));
+
+        group_div.style('color', get_font_color(color_cl_workflow_groups(i + 1)));
 
         initial_groups[i].variables.forEach(function (variable) {
-            d3.select('#' + id_beginning_columns_div + variable).style('border', '6px solid ' + color_clinical_workflow_groups(i + 1));
+            d3.select('#' + id_beginning_columns_div + variable).style('border', '6px solid ' + color_cl_workflow_groups(i + 1));
         })
     }
 }

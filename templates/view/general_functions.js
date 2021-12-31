@@ -12,8 +12,8 @@ function get_font_color(color) {
     let luminance = 0.2126 * d3color.r + 0.7152 * d3color.g + 0.0722 * d3color.b;
 
     let font_color = 'white';
-    if (luminance > 150) {
-        font_color = 'black';
+    if (luminance > 50) {
+        font_color = '#444168';
     }
 
     return font_color;

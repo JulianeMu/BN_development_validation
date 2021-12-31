@@ -510,6 +510,14 @@ function update_network_view(data, parent_div_id, child_div_id) {
                         }
                         return l;
                     })
+                    .style('fill', function (d) {
+
+                        let index_group = initial_groups.findIndex(item => item.variables.filter(x => x === d).length > 0);
+
+                        if (index_group > -1) {
+                            return get_font_color(color_cl_workflow_groups(index_group + 1));
+                        }
+                    })
 
                 //-------------------------------------------------
                 // add edges
@@ -670,21 +678,6 @@ function update_network_view(data, parent_div_id, child_div_id) {
         }
     }
 
-
-}
-
-function click_func(edge_from, edge_to, index) {
-    console.log('click' + index)
-    console.log(edge_from + "   " + edge_to)
-
-    //TODO Add line down
-
-    //update_group_divs_in_network_view(child_div_id);
-    //update_network_view(learned_structure_data, parent_div_id, child_div_id);
-    //update_all_colors_and_text();
-    //update_individual_graph_view();
-
-    //append_edge_validation(learned_structure_data.edges[learned_structure_data.edges.length - 1], true);
 
 }
 
@@ -936,8 +929,8 @@ function update_group_divs_in_network_view(child_div_id) {
             .style('height', 0 + 'px')
             .style('position', 'relative')
             .style('float', 'left')
-            .style('opacity', 0.5)
-            .style('background-color', color_clinical_workflow_groups(initial_groups.findIndex(x => x.id === initial_groups[i].id) + 1))
+            //.style('opacity', workflow_group_opacity)
+            .style('background-color', color_cl_workflow_groups(initial_groups.findIndex(x => x.id === initial_groups[i].id) + 1))
             .style('border-radius', 6 + 'px')
             .append('p')
             .attr('id', 'network_group_label_' + initial_groups[i].id)

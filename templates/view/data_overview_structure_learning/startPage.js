@@ -57,7 +57,9 @@ function initialize_startPage() {
         d3.xml(upload_start_open[i].svg)
             .then(data => {
                 d3.select('#' + id_main_content).select('#' + upload_start_open[i].id).select('svg').node().append(data.documentElement)
+                    //.style('width', '100px')
 
+                //d3.select('#' + upload_start_open[i].id).select('svg').select('svg').attr('width', 150+'px')
                 let transform_x = (d3.select('#' + upload_start_open[i].id).select('svg').node().getBoundingClientRect().width - parseFloat(d3.select('#' + upload_start_open[i].id).select('svg').select('svg').attr('width'))) / 2;
                 d3.select('#' + upload_start_open[i].id).select('svg').attr('transform', 'translate(' +transform_x + ', 100)')
                     .on('click', upload_start_open[i].function)

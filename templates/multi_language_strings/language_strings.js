@@ -50,6 +50,11 @@ const lang_id_primary_surgical_treatment_group = "lang_id_primary_surgical_treat
 const lang_id_final_histology_group = "lang_id_final_histology_group";
 const lang_id_adjuvant_therapy_group = "lang_id_adjuvant_therapy_group";
 
+const lang_id_agrigulture_management_interventions_group = "lang_id_agrigulture_management_interventions_group";
+const lang_id_agrigulture_controlling_factors_group = "lang_id_agrigulture_controlling_factors_group";
+const lang_id_agrigulture_management_objective_group = "lang_id_agrigulture_management_objective_group";
+
+
 const lang_id_tooltip_header_backwards = "lang_id_tooltip_header_backwards";
 const lang_id_tooltip_header_save = "lang_id_tooltip_header_save";
 
@@ -114,14 +119,18 @@ var language_string = [
 
     {id: lang_id_data_groups_workflow, eng: 'Clinical Workflow Steps/Groups', de:'Klinische Arbeitsweise/Gruppierungen'},
 
-    {id: lang_id_preoperative_group, eng: 'preoperative diagnostics', de:'präoperativ'},
+    {id: lang_id_preoperative_group, eng: 'Preoperative Diagnostics', de:'präoperativ'},
     {id: lang_id_biomarkers_group, eng: 'Biomarkers', de:'Biomarker'},
     {id: lang_id_imaging_group, eng: 'Imaging', de:'Bildinformationen'},
     {id: lang_id_follow_up_group, eng: 'Follow-up', de:'Nachsorge'},
-    {id: lang_id_baseline_characteristics_group, eng: 'Baseline characteristics', de:'Grundcharackteristika'},
-    {id: lang_id_primary_surgical_treatment_group, eng:'Primary surgical treatment', de:'Erste chirurgische Behandlung'},
-    {id: lang_id_final_histology_group, eng:'Final histology', de:'Finale Histologie'},
-    {id: lang_id_adjuvant_therapy_group, eng: 'Adjuvant therapy', de:'Adjuvante Therapie'},
+    {id: lang_id_baseline_characteristics_group, eng: 'Baseline Characteristics', de:'Grundcharackteristika'},
+    {id: lang_id_primary_surgical_treatment_group, eng:'Primary Surgical Treatment', de:'Erste chirurgische Behandlung'},
+    {id: lang_id_final_histology_group, eng:'Final Histology', de:'Finale Histologie'},
+    {id: lang_id_adjuvant_therapy_group, eng: 'Adjuvant Therapy', de:'Adjuvante Therapie'},
+
+    {id: lang_id_agrigulture_management_interventions_group, eng: 'Management Interventions', de: 'Management Interventions'},
+    {id: lang_id_agrigulture_controlling_factors_group, eng: 'Controlling Factors', de: 'Controlling Factors'},
+    {id: lang_id_agrigulture_management_objective_group, eng: 'Management Objectives', de: 'Management Objectives'},
 
     {id: lang_id_tooltip_add_clinical_workflow_group, eng: 'add clinical workflow step/group', de:'füge klinischen Arbeitsschritt/Gruppierung hinzu'},
     {id: lang_id_context_menu_remove_group, eng: 'remove', de:'entfernen'},

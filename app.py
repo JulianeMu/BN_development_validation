@@ -60,15 +60,27 @@ def discretize_data():
     return jsonify(transform(discretized_data))
 
 
-@app.route('/compute_chi_square/', methods=["POST"])
+@app.route('/compute_chi_square/', methods=["GET"])
 def compute_chi_square():
     start_time_deviations = time.time()
 
-    variables_for_chi_square_test = request.get_json()
+    # variables_for_chi_square_test = request.get_json()
 
-    list_chi2 = [compute_chi2_in_loop(variables_for_chi_square_test, node['id']) for node in
-                 gv.subset_selection_included_in_learning if node['included_in_structural_learning']]
+    list_chi2 = []
+    for index, node in enumerate(gv.subset_selection_included_in_learning):
+        if node['included_in_structural_learning']:
+            for index2, node2 in enumerate(gv.subset_selection_included_in_learning):
+                if index2 > index and node2['included_in_structural_learning']:
+                    list_chi2.append(compute_chi2_in_loop(node2['id'], node['id']))
 
+    # list_chi2 = [[compute_chi2_in_loop(node2['id'], node['id']) for node2 in
+    #              gv.subset_selection_included_in_learning if node['included_in_structural_learning']
+    #              and node['id'] != node2['id']]
+    #             for node in
+    #             gv.subset_selection_included_in_learning if node['included_in_structural_learning']]
+
+    #print(len(list_test))
+    print(len(list_chi2))
     print("--- %s seconds ---" % (time.time() - start_time_deviations))
 
     return jsonify(transform(list_chi2))
@@ -81,7 +93,7 @@ def compute_chi2_in_loop(node1, node2):
 
     crosstab_rows_list = data_crosstab.values.tolist()
 
-    return classes.Chi2PValue(node_id=node2, p_value=float(chi2_contingency(crosstab_rows_list)[1]))
+    return classes.Chi2PValue(node_id=node2, node_id_2=node1, p_value=float(chi2_contingency(crosstab_rows_list)[1]))
 
 
 def discretize_variable(variable_for_discretization):

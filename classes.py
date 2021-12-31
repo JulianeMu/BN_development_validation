@@ -9,8 +9,9 @@ class LayerObject(object):
 
 
 class Chi2PValue(object):
-    def __init__(self, node_id, p_value):
+    def __init__(self, node_id, node_id_2, p_value):
         self.node_id = node_id
+        self.node_id_2 = node_id_2
         self.p_value = p_value
 
 

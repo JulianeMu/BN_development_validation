@@ -33,7 +33,11 @@ def node_distinction_computation(node_id):
 
             column = gv.network.get_node_id(node_handle)
             if column != node_id:
-                remove_special_chars = re.sub("[^a-zA-Z0-9_.]", "_", gv.dataset_categorical[column][index])
+                remove_special_chars = re.sub("[^a-zA-Z0-9_]", "_", gv.dataset_categorical[column][index])
+#                remove_special_chars = remove_special_chars.replace('.', '_')
+                if not remove_special_chars[0].isalpha():
+                    remove_special_chars = 'x' + remove_special_chars
+
                 gv.network.set_evidence(node_handle, remove_special_chars)
             else:
                 node_handle_for_node_id = node_handle
@@ -63,7 +67,7 @@ def node_distinction_computation(node_id):
 
                     sum_of_all_overall_relevancies += overall_relevance_of_evidence_items
                     relevancies.append(classes.RelevanceObject(evidence_node=column,
-                                                               evidence_outcome=re.sub("[^a-zA-Z0-9_.]", "_",
+                                                               evidence_outcome=re.sub("[^a-zA-Z0-9_]", "_",
                                                                                        gv.dataset_categorical[column]
                                                                                        [index]),
                                                                relevance=float(overall_relevance_of_evidence_items)))

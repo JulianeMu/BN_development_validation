@@ -116,6 +116,16 @@ function initialize_prior_knowledge_view (structure_learning_div) {
 
                     instance.show();
                 });
+
+
+
+                console.log(whitelist)
+
+                learn_structure_from_data(function (response) {
+                    update_network_view(response, id_network_view, id_network_view_child);
+                });
+                //update_network_view(learned_structure_data, id_network_view, id_network_view_child);
+
             }
 
             d3.select('#' + id_main_content).style('height', d3.select('#' + id_main_content).select('.' + id_content).style('height'));

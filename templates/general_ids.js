@@ -104,3 +104,6 @@ const structure_validation_viewer_div_child = "structure_validation_viewer_div_c
 const edge_validation_div = "edge_validation_div";
 const node_validation_div = "node_validation_div";
 const validation_div_content_class = "validation_div_content_class";
+
+const agriculture_data = false;
+
