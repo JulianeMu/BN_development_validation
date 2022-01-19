@@ -187,7 +187,9 @@ def learn_structure_from_data():
             copied_df = copied_df.drop(column['id'], axis=1)
     copied_df.to_csv(csv_data_file_name, index=False)
 
-    cmd = [command, path2script] + [os.getcwd() + os.path.sep]
+    cmd = [command, path2script] + [os.getcwd()]
+    #cmd = [command, path2script] + [os.getcwd() + os.path.sep]
+
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
     x_json = json.loads(x)
@@ -209,8 +211,8 @@ def learn_parametrization_from_data():
 
     command = 'Rscript'
     path2script = 'learn_parameters.R'
-
-    cmd = [command, path2script] + [os.getcwd() + os.path.sep]
+    #cmd = [command, path2script] + [os.getcwd() + os.path.sep]
+    cmd = [command, path2script] + [os.getcwd()]
 
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)

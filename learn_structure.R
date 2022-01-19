@@ -13,17 +13,18 @@ data_file_name <- 'whole_data.csv'
 whitelist_file_name <- 'whitelist.csv'
 blacklist_file_name <- 'blacklist.csv'
 
-used_dataset <- read.csv(paste0(myArgs, data_file_name))
+used_dataset <- read.csv(file.path(myArgs, data_file_name)) #paste0(myArgs, data_file_name))
 
 whitelist <- NULL
 blacklist <- NULL
 
-if (file.size(paste0(myArgs, whitelist_file_name)) > 1) {
-  whitelist <- read.csv(paste0(myArgs, whitelist_file_name))
+#if (file.size(paste0(myArgs, whitelist_file_name)) > 1) {
+if (file.size(file.path(myArgs, whitelist_file_name)) > 1) {
+  whitelist <- read.csv(file.path(myArgs, whitelist_file_name))
 }
 
-if (file.size(paste0(myArgs, blacklist_file_name)) > 1) {
-  blacklist <- read.csv(paste0(myArgs, blacklist_file_name))
+if (file.size(file.path(myArgs, blacklist_file_name)) > 1) {
+  blacklist <- read.csv(file.path(myArgs, blacklist_file_name))
 }
 
 used_dataset[] <- lapply(used_dataset, factor) # convert all columns to factors
