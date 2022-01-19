@@ -187,7 +187,9 @@ def learn_structure_from_data():
             copied_df = copied_df.drop(column['id'], axis=1)
     copied_df.to_csv(csv_data_file_name, index=False)
 
-    cmd = [command, path2script] + [os.getcwd()]
+    cmd = [command, path2script] + [correct_file_sep_for_windows(os.getcwd())]
+    print(cmd)
+
     #cmd = [command, path2script] + [os.getcwd() + os.path.sep]
 
     # check_output will run the command and store to result
@@ -203,6 +205,10 @@ def learn_structure_from_data():
     return jsonify(transform(pysmile_integration.get_network_structure()))
 
 
+def correct_file_sep_for_windows(path_string):
+    return path_string.replace("\\", "\\")
+
+
 @app.route('/learn_parametrization_from_data/', methods=["GET"])
 def learn_parametrization_from_data():
     start_time_deviations = time.time()
@@ -212,7 +218,8 @@ def learn_parametrization_from_data():
     command = 'Rscript'
     path2script = 'learn_parameters.R'
     #cmd = [command, path2script] + [os.getcwd() + os.path.sep]
-    cmd = [command, path2script] + [os.getcwd()]
+    cmd = [command, path2script] + [correct_file_sep_for_windows(os.getcwd())]
+    print(cmd)
 
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
