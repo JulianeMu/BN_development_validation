@@ -148,13 +148,32 @@
     load_data_from_backend(function (response) {
         if (response) {
 
-            initialize_inspect_data_learn_model();
+            query_data_from_FLASK(function (succes) {
+                if (succes) {
+                    initialize_inspect_data_learn_model_view();
+                }
+            });
 
             setTimeout(() => {
-
                 learn_structure_from_data(function (response) {
 
-                    update_network_view(response, id_network_view, id_network_view_child);
+                    //TODO: this is just a workaround for the paper figure and needs to be fixed for whitelist and blacklist
+                    // if (agriculture_data) {
+                    //     if (learned_structure_data.edges.find(x => x.edge_from === "Water_Application" && x.edge_to === 'Yield')) {
+                    //         learned_structure_data.edges.find(x => x.edge_from === "Water_Application" && x.edge_to === 'Yield').edge_strength = 1
+                    //     } else {
+                    //         learned_structure_data.edges.push({
+                    //             edge_from: "Water_Application",
+                    //             edge_strength: 1,
+                    //             edge_to: 'Yield'
+                    //         });
+                    //         learned_structure_data.nodes.find(x => x.id === "Water_Application").children.push('Yield');
+                    //         learned_structure_data.nodes.find(x => x.id === 'Yield').parents.push("Water_Application");
+                    //     }
+                    // }
+                    console.log(learned_structure_data)
+
+                    update_network_view(learned_structure_data, id_network_view, id_network_view_child);
                     update_all_colors_and_text();
                     update_group_divs_in_network_view();
                     update_variables_order();

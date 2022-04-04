@@ -188,12 +188,12 @@ def learn_structure_from_data():
     copied_df.to_csv(csv_data_file_name, index=False)
 
     cmd = [command, path2script] + [correct_file_sep_for_windows(os.getcwd())]
-    print(cmd)
 
     #cmd = [command, path2script] + [os.getcwd() + os.path.sep]
 
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
+
     x_json = json.loads(x)
     # print(x_json[0]['from'])
     gv.learned_structure_strength = x_json

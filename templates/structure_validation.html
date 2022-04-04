@@ -148,71 +148,78 @@
     load_data_from_backend(function (response) {
         if (response) {
 
-            //learned_structure_data =evaluation_study_network_0;
             if (agriculture_data) create_agrigulture_net();
 
-/*            let found_edges_in_all_evaluationnetworks = [];
-            evaluation_study_network_0.edges.forEach(function (edge) {
-                if (evaluation_study_network_1.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
-                    if (evaluation_study_network_2.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
-                        if (evaluation_study_network_3.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
-                            if (evaluation_study_network_4.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
-                                if (evaluation_study_network_5.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
-                                    found_edges_in_all_evaluationnetworks.push(edge);
+            else {
+                learned_structure_data = evaluation_study_network_0;
+                let found_edges_in_all_evaluationnetworks = [];
+                evaluation_study_network_0.edges.forEach(function (edge) {
+                    if (evaluation_study_network_1.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                        if (evaluation_study_network_2.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                            if (evaluation_study_network_3.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                                if (evaluation_study_network_4.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                                    if (evaluation_study_network_5.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                                        found_edges_in_all_evaluationnetworks.push(edge);
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            });
-
-            console.log(found_edges_in_all_evaluationnetworks)
-
-            let list_relation = [];
-            let sum_all_relations = 0;
-            let sum_equal = 0;
-
-            let edges_differ = [];
-            const evaluation_study_networks = [evaluation_study_network_0, evaluation_study_network_1, evaluation_study_network_2, evaluation_study_network_3, evaluation_study_network_4, evaluation_study_network_5];
-            evaluation_study_networks.forEach(function (network, index_net) {
-                let differing = [];
-                evaluation_study_network_1.edges.forEach(function (edge_1) {
-                    if (!network.edges.find(x => x.edge_from === edge_1.edge_from && x.edge_to === edge_1.edge_to)) {
-                        differing.push(edge_1);
-                    }
                 });
-                network.edges.forEach(function (edge) {
-                    if (!evaluation_study_network_1.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
-                        if(!differing.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)){
-                            differing.push(edge);
+
+                console.log(found_edges_in_all_evaluationnetworks)
+
+                let list_relation = [];
+                let sum_all_relations = 0;
+                let sum_equal = 0;
+
+                let edges_differ = [];
+                const evaluation_study_networks = [evaluation_study_network_0, evaluation_study_network_1, evaluation_study_network_2, evaluation_study_network_3, evaluation_study_network_4, evaluation_study_network_5];
+                evaluation_study_networks.forEach(function (network, index_net) {
+                    let differing = [];
+                    evaluation_study_network_1.edges.forEach(function (edge_1) {
+                        if (!network.edges.find(x => x.edge_from === edge_1.edge_from && x.edge_to === edge_1.edge_to)) {
+                            differing.push(edge_1);
                         }
-                    }
-                    sum_all_relations++;
-                    if (list_relation.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
-                        sum_equal++;
-                        list_relation.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to).number += 1;
-                    } else {
-                        list_relation.push({
-                            edge_from: edge.edge_from,
-                            edge_to: edge.edge_to,
-                            number: 1
-                        })
-                    }
+                    });
+                    network.edges.forEach(function (edge) {
+                        if (!evaluation_study_network_1.edges.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                            if (!differing.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                                differing.push(edge);
+                            }
+                        }
+                        sum_all_relations++;
+                        if (list_relation.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to)) {
+                            sum_equal++;
+                            list_relation.find(x => x.edge_from === edge.edge_from && x.edge_to === edge.edge_to).number += 1;
+                        } else {
+                            list_relation.push({
+                                edge_from: edge.edge_from,
+                                edge_to: edge.edge_to,
+                                number: 1
+                            })
+                        }
+                    })
+
+                    edges_differ.push({
+                        index_net: index_net,
+                        differing: differing
+                    })
                 })
+                console.log('list relation:')
 
-                edges_differ.push({
-                    index_net: index_net,
-                    differing:differing
-                })
-            })
+                console.log(list_relation)
+                console.log('sum all relations:')
 
-            console.log(list_relation)
-            console.log(sum_all_relations)
-            console.log(sum_equal)
+                console.log(sum_all_relations)
 
-            console.log(edges_differ)*/
+                console.log('sum equal:')
+                console.log(sum_equal)
 
+                console.log('edges differ:')
+                console.log(edges_differ)
 
+            }
             color_clinical_workflow_groups.domain([0, initial_groups.length]);
 
 

@@ -63,9 +63,16 @@ function learn_structure_from_data (callback) {
         contentType: "application/json",
         dataType: 'json',
         success: function (response) {
+
             learned_structure_data = JSON.parse(response);
 
-            console.log(learned_structure_data)
+            console.log('learn structure')
+
+            for( let i = 0; i< whitelist.length; i++) {
+                // set user-defined edges having a strength of 1
+                learned_structure_data.edges.find(x=> x.edge_from === whitelist[i].from && x.edge_to === whitelist[i].to).edge_strength = 1;
+            }
+
             callback(JSON.parse(response));
         }
     });
@@ -190,6 +197,7 @@ function load_data_from_backend (callback) {
 
             }
 
+            console.log('loaddata')
             callback(true);
         }
     });
