@@ -253,11 +253,12 @@ def update_cpt():
 
     return jsonify([transform(pysmile_integration.get_network_structure()), transform(list_nodes_distinction_probabilities)])
 
-
 @app.after_request
-def add_headers(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:63342')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
     return response
 
 
