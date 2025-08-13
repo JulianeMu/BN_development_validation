@@ -56,7 +56,7 @@ add_random_column <- function(data_df, bayesian_network_structure, added_column_
 
 #fit <- bn.fit(bayesian_network_structure, used_dataset)
 #
-#write.dsc('bayesianNetworkStructure.dsc', fit)
+#write.dsc('bayesianNetworkStructure.xdsl', fit)
 #
 ## bn.net(fit) to go back to net for later refitting
 #

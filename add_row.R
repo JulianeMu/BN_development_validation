@@ -92,7 +92,7 @@ add_new_row <- function(data_df, bayesian_network_structure, column_names, added
 
 #fit <- bn.fit(bayesian_network_structure, used_dataset)
 #
-#write.dsc('bayesianNetworkStructure.dsc', fit)
+#write.dsc('bayesianNetworkStructure.xdsl', fit)
 #
 ## bn.net(fit) to go back to net for later refitting
 #

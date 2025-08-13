@@ -9,8 +9,8 @@ library(tidyverse)
 
 myArgs <- commandArgs(trailingOnly = TRUE)
 
-learned_structure_file_name <- 'bayesianNetworkStructure.dsc'
-validated_structure_file_name <- 'bayesianNetworkStructure.dsc' # TODO: add the name of the actual file
+learned_structure_file_name <- 'bayesianNetworkStructure.xdsl'
+validated_structure_file_name <- 'bayesianNetworkStructure.xdsl' # TODO: add the name of the actual file
 
 bayesian_network_structure_learned <- bn.net(read.dsc(paste0(myArgs, learned_structure_file_name)))
 bayesian_network_structure_validated <- bn.net(read.dsc(paste0(myArgs, validated_structure_file_name)))

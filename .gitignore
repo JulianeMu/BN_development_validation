@@ -5,8 +5,9 @@
 /resources/TNM_engl.xdsl
 /.idea/
 /whole_data.csv
-/bayesianNetworkStructure.dsc
+/bayesianNetworkStructure.xdsl
 /blacklist.csv
 /whitelist.csv
 /example_datasets/endometrialData/explaination.docx
 /example_datasets/endometrialData/imputed-data.csv
+*.pyc

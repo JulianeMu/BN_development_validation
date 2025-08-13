@@ -14,11 +14,11 @@ import pandas as pd
 
 def readin_network_structure():
     gv.network = pysmile.Network()
-    gv.network.read_file("bayesianNetworkStructure.dsc")
+    gv.network.read_file("bayesianNetworkStructure.xdsl")
 
 
 def save_network_structure():
-    gv.network.write_file("bayesianNetworkStructure.dsc")
+    gv.network.write_file("bayesianNetworkStructure.xdsl")
 
 
 def node_distinction_computation(node_id):
@@ -32,13 +32,20 @@ def node_distinction_computation(node_id):
         for node_handle in gv.network.get_all_nodes():
 
             column = gv.network.get_node_id(node_handle)
-            if column != node_id:
-                remove_special_chars = re.sub("[^a-zA-Z0-9_]", "_", gv.dataset_categorical[column][index])
-#                remove_special_chars = remove_special_chars.replace('.', '_')
-                if not remove_special_chars[0].isalpha():
-                    remove_special_chars = 'x' + remove_special_chars
 
-                gv.network.set_evidence(node_handle, remove_special_chars)
+            if column != node_id:
+                remove_special_chars = "state__" + re.sub("[^a-zA-Z0-9_]", "_", gv.dataset_categorical[column][index])
+                # print("-----------")
+                # print(remove_special_chars)
+                # print(node_handle)
+                # print(gv.network.get_outcome_ids(node_handle))
+                # print(remove_special_chars in gv.network.get_outcome_ids(node_handle))
+                idx = gv.network.get_outcome_ids(node_handle).index(remove_special_chars)
+                # print("TEST")
+                try:
+                    gv.network.set_evidence(node_handle, gv.network.get_outcome_ids(node_handle)[idx])
+                except pysmile.SMILEException:
+                    print("Error in setting evidence for: " + column + " -- " + remove_special_chars)
             else:
                 node_handle_for_node_id = node_handle
             gv.network.update_beliefs()
@@ -47,7 +54,7 @@ def node_distinction_computation(node_id):
         if gv.network.get_outcome_ids(node_handle_for_node_id)[index_max_outcome] != gv.dataset_categorical[node_id][
             index]:
             differing_data = pd.DataFrame(columns=gv.dataset_categorical.columns)
-            differing_data = differing_data.append(gv.dataset_categorical.iloc[index], ignore_index=True)
+            differing_data = pd.concat([differing_data, gv.dataset_categorical.iloc[index]], ignore_index=True)
 
             relevancies = []
             target_outcome = gv.network.get_node_value(node_id)

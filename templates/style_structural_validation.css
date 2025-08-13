@@ -83,7 +83,7 @@
 #pubmed_button{
     float: bottom;
     position: relative;
-    background-image: url(../templates/resources/img.png), none;
+    background-image: url(resources/img.png), none;
     background-size: 101% 104%;
     background-repeat: no-repeat;
     background-position: left;

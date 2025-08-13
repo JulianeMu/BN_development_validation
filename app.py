@@ -2,6 +2,7 @@ import json
 
 import jsonpickle
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import time
 import pandas as pd
 import numpy as np
@@ -18,7 +19,9 @@ import classes
 start_time = time.time()
 
 app = Flask(__name__)
+CORS(app)
 
+pd.DataFrame.iteritems = pd.DataFrame.items
 
 # this creates the json object for more complex structures
 def transform(my_object):
@@ -187,15 +190,14 @@ def learn_structure_from_data():
             copied_df = copied_df.drop(column['id'], axis=1)
     copied_df.to_csv(csv_data_file_name, index=False)
 
-    cmd = [command, path2script] + [correct_file_sep_for_windows(os.getcwd())]
+    # cmd = [command, path2script] + [correct_file_sep_for_windows(os.getcwd())]
 
-    #cmd = [command, path2script] + [os.getcwd() + os.path.sep]
+    cmd = [command, path2script] + [os.getcwd() + os.path.sep]
 
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
 
     x_json = json.loads(x)
-    # print(x_json[0]['from'])
     gv.learned_structure_strength = x_json
 
     pysmile_integration.readin_network_structure()
@@ -219,7 +221,6 @@ def learn_parametrization_from_data():
     path2script = 'learn_parameters.R'
     #cmd = [command, path2script] + [os.getcwd() + os.path.sep]
     cmd = [command, path2script] + [correct_file_sep_for_windows(os.getcwd())]
-    print(cmd)
 
     # check_output will run the command and store to result
     x = subprocess.check_output(cmd, universal_newlines=True)
@@ -270,7 +271,6 @@ def index():
 
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
-    port = 5000  # the custom port you want
-    app.run(host='127.0.0.1', port=port)
+    # app.debug = True
+    app.run(port = 5000)
+    # app.run(host='127.0.0.1', port=port)

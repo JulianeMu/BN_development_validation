@@ -65,7 +65,7 @@ body{
     float: left;
     width: var(--header_images_width);
     height: 100%;
-    background-image: url(../templates/resources/save.svg), none;
+    background-image: url(resources/save.svg), none;
     background-size: 50% 50%;
     background-repeat: no-repeat;
     background-position: center ;
@@ -77,7 +77,7 @@ body{
     float: left;
     width: var(--header_images_width);
     height: 100%;
-    background-image: url(../templates/resources/back.svg), none;
+    background-image: url(resources/back.svg), none;
     background-size: 50% 50%;
     background-repeat: no-repeat;
     background-position: center ;
@@ -159,7 +159,7 @@ body{
     position: absolute;
     width: calc(0.4* var(--header_images_width));
     height: calc(0.4* var(--header_images_width));
-    background-image: url(../templates/resources/add.svg), none;
+    background-image: url(resources/add.svg), none;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center ;
@@ -168,7 +168,7 @@ body{
 }
 
 #forward_button{
-    background-image: url(../templates/resources/forward.svg), none;
+    background-image: url(resources/forward.svg), none;
     background-size: 50% 50%;
     background-repeat: no-repeat;
     background-position: left;

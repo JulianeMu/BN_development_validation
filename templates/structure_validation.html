@@ -148,9 +148,10 @@
     load_data_from_backend(function (response) {
         if (response) {
 
-            if (agriculture_data) create_agrigulture_net();
+            if (agriculture_data) {
+                // create_agrigulture_net();
 
-            else {
+            }else {
                 learned_structure_data = evaluation_study_network_0;
                 let found_edges_in_all_evaluationnetworks = [];
                 evaluation_study_network_0.edges.forEach(function (edge) {

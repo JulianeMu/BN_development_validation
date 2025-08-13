@@ -9,17 +9,20 @@ library(tidyverse)
 source("add_column.R")
 source("add_row.R")
 
+source("import_xdsl.R")
+source("export_xdsl.R")
+
 myArgs <- commandArgs(trailingOnly = TRUE)
 
 # both dataset and the bayesian network structure need to be loaded:
 # myArgs <- commandArgs(trailingOnly = TRUE)
 
-data_file_name <- 'bayesianNetworkStructure.dsc'
+data_file_name <- 'bayesianNetworkStructure.xdsl'
 data_file_name_csv <- 'whole_data.csv'
 
 
-used_dataset <- read.csv(file.path(myArgs, data_file_name_csv))
-bayesian_network_structure <- bn.net(read.dsc(file.path(myArgs, data_file_name)))
+used_dataset <- read.csv(file.path(data_file_name_csv))
+bayesian_network_structure <- transform_to_bnlearn(read_xdsl(data_file_name))$structure
 
 #Changing the dataset into a dataframe with factors as columns
 used_dataset[] <- lapply(used_dataset, factor)
@@ -29,9 +32,9 @@ used_dataset <- as.data.frame(used_dataset)
 
 
 
-fit <- bn.fit(bayesian_network_structure, used_dataset)
+fit <- apply_bn_fit(bayesian_network_structure, used_dataset)
 
-write.dsc('bayesianNetworkStructure.dsc', fit)
+bn_to_xdsl(fit$fitted, "bayesianNetworkStructure.xdsl")
 
 # bn.net(fit) to go back to net for later refitting
 

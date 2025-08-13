@@ -102,7 +102,7 @@
     position: absolute;
     width: calc(0.3 * var(--header_images_width));
     height: calc(0.3 * var(--header_images_width));
-    background-image: url(../templates/resources/cancel.svg), none;
+    background-image: url(resources/cancel.svg);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center ;

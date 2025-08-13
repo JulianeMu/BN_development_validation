@@ -5,26 +5,25 @@
 
 library(bnlearn)
 library(jsonlite)
+library(xml2)
 
-myArgs <- commandArgs(trailingOnly = TRUE)
-
+source("export_xdsl.R")
 
 data_file_name <- 'whole_data.csv'
 whitelist_file_name <- 'whitelist.csv'
 blacklist_file_name <- 'blacklist.csv'
 
-used_dataset <- read.csv(file.path(myArgs, data_file_name)) #paste0(myArgs, data_file_name))
+used_dataset <- read.csv(file.path(data_file_name))
 
 whitelist <- NULL
 blacklist <- NULL
 
-#if (file.size(paste0(myArgs, whitelist_file_name)) > 1) {
-if (file.size(file.path(myArgs, whitelist_file_name)) > 1) {
-  whitelist <- read.csv(file.path(myArgs, whitelist_file_name))
+if (file.size(file.path(whitelist_file_name)) > 1) {
+  whitelist <- read.csv(file.path(whitelist_file_name))
 }
 
-if (file.size(file.path(myArgs, blacklist_file_name)) > 1) {
-  blacklist <- read.csv(file.path(myArgs, blacklist_file_name))
+if (file.size(file.path(blacklist_file_name)) > 1) {
+  blacklist <- read.csv(file.path(blacklist_file_name))
 }
 
 used_dataset[] <- lapply(used_dataset, factor) # convert all columns to factors
@@ -126,16 +125,25 @@ if(method == "second"){
     }
 
     # calculate the strength of arcs
-    #list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
+     # calculate the strength of arcs
+    list_strength[[algorithm]] <- arc.strength(
+      x = list_test[[algorithm]],
+      data = used_dataset
+    )
+    #print(list_strength[[algorithm]])
+    list_strength[[algorithm]]$strength <- list_strength[[algorithm]]$strength/min(list_strength[[algorithm]]$strength)
+    list_strength[[algorithm]] <- list_strength[[algorithm]][order(list_strength[[algorithm]]$strength),]
+
+
+    # list_strength[[algorithm]] <- arc.strength_data <- arc.strength(
     #  x = list_test[[algorithm]],
     #  data = used_dataset
-    #)
+    # )
     #print(list_strength[[algorithm]])
 
   })
 }
 
-# list_test[[1]]
 # graphviz.plot(list_test[[6]])
 
 # a list of scores for each algorithm
@@ -163,7 +171,9 @@ best_score <- which(M_score == max(M_score))[1] # use first one because it could
 
 fit <- bn.fit(list_test[[best_score]], used_dataset)
 
-write.dsc('bayesianNetworkStructure.dsc', fit)
+# Als XDSL speichern
+bn_to_xdsl(fit, "bayesianNetworkStructure.xdsl")
+
 
 # bn.net(fit) to go back to net for later refitting
 
