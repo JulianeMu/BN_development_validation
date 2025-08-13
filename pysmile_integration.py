@@ -10,11 +10,19 @@ import global_variables as gv
 import classes
 import re
 import pandas as pd
+from xdsl_node_sorter import sort_xdsl_nodes
 
 
 def readin_network_structure():
-    gv.network = pysmile.Network()
-    gv.network.read_file("bayesianNetworkStructure.xdsl")
+    success = sort_xdsl_nodes("bayesianNetworkStructure.xdsl")
+    if success:
+    # Lade das sortierte Netzwerk
+        gv.network = pysmile.Network()
+        gv.network.read_file("bayesianNetworkStructure_sorted.xdsl")
+        print("✅ Netzwerk erfolgreich geladen!")
+    
+    # gv.network = pysmile.Network()
+    # gv.network.read_file("bayesianNetworkStructure.xdsl")
 
 
 def save_network_structure():
