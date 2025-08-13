@@ -6,8 +6,10 @@
 /.idea/
 /whole_data.csv
 /bayesianNetworkStructure.xdsl
+/bayesianNetworkStructure_sorted.xdsl
 /blacklist.csv
 /whitelist.csv
 /example_datasets/endometrialData/explaination.docx
 /example_datasets/endometrialData/imputed-data.csv
 *.pyc
+.DS_Store
