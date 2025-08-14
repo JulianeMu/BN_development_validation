@@ -12,9 +12,9 @@ To run the application you need to do following steps:
 - [ ] install "R version 4.5.1 (2025-06-13)"
   - [ ] `install.packages("https://www.bnlearn.com/releases/bnlearn_latest.tar.gz", repos = NULL, type = "source")`
   - [ ] `install.packages('jsonlite')`
-  - [ ] `install.packages('bnlearn')`
   - [ ] `install.packages('xml2')`
   - [ ] `install.packages('tidyverse')`
+  - [ ] versions: bnlearn_5.1, jsonlite_2.0.0, xml2_1.3.8, tidyverse_2.0.0
 - [ ] create a BayesFusion account (https://www.bayesfusion.com/) and download the python 3.12 wrapper for SMILE. (**free for academia**)
   - MacOS: pysmile-academic-2.4.0-macosx-python-3.12.tar.gz
   - Windows systems: pysmile-academic-2.4.0-win-x64-python-3.12.zip
