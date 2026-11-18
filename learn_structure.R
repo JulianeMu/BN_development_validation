@@ -163,11 +163,12 @@ for(algorithm in selected_algotithms) for(name in "score") try({
   )
 })
 
-# sort the score array
-for(j in colnames(M_score)) M_score <- M_score[order(M_score[,j]),]
-
-# find the highest score(indicating the best algorithm)
-best_score <- which(M_score == max(M_score))[1] # use first one because it could be that there are multiple best ones
+# find the algorithm with the highest score and select it by name.
+# (The earlier version sorted the scores and used the position of the maximum
+# as an index into the unsorted list of models, which returned the last
+# algorithm regardless of the scores.) which.max ignores algorithms that
+# failed (NA) and returns the first one in case of ties.
+best_score <- names(which.max(M_score[, "score"]))
 
 fit <- bn.fit(list_test[[best_score]], used_dataset)
 
